@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign In{% endblock %}
+
+{% block content %}
+ <div>
+   <h1>Authenticate yourself with Yammer to play Face It</h1>
+   <div>
+     <a href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}">Login with Yammer</a>
+   </div>
+ </div>
+{% endblock %}

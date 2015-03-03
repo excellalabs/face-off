@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load replace %}
+
+{% block content %}
+  <div>
+    <h1>Face It</h1>
+ 
+    <p>
+      <ul>
+        {% for user in users %}
+          <li style="display:inline-block">
+            <img src='{{ user.mugshot_url_template|replace:"/{width}/256"|replace:"/{height}/256" }}'>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <div>Who is {{ answer.full_name }}?
+      </div>
+      <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+    </p>
+  </div>
+{% endblock %}
