@@ -13,5 +13,7 @@ Setup
 * Install Vagrant and Virtualbox
 * Initialize the vagrant box - `vagrant up`
 * Log into the server - `vagrant ssh`
+* Install Bower Components - ./manage.py bower install
+* Run Static File collection - ./manage.py collectstatic
 * Launch the app - `./manage.py runserver 0.0.0.0:8000`
 * Access the app in your browser - `http://localhost:8111`

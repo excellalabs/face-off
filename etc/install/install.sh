@@ -76,6 +76,9 @@ fi
 if ! command -v lessc; then
     npm install -g less
 fi
+if ! command -v bower; then
+    npm install -g bower
+fi
 
 # ---
 
