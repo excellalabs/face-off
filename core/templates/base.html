@@ -15,9 +15,10 @@
     <title>{% block title %}Face It{% endblock %}</title>
     {% load pipeline %}
 
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/paper/bootstrap.min.css" rel="stylesheet">
+
     {% compress css %}
         {% comment %} Core CSS includes (for inclusion on all pages) {% endcomment %}
-        {% stylesheet 'css' %}
     {% endcompress %}
 
     {% compress css %}

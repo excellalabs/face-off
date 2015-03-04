@@ -13,7 +13,6 @@ TEMPLATE_DEBUG = DEBUG
 PIPELINE_ENABLED = True
 
 ADMINS = (
-    ('Emmanuel Apau', 'emmanuel.apau@excella.com'),
 )
 
 DATABASES = {
@@ -106,20 +105,19 @@ STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
 
-# CSS Files.
-PIPELINE_CSS = {
-    # Project libraries.
-    'css': {
-        'source_filenames': (
-            'bower_components/bootstrap/dist/css/bootstrap.css',
-            'css/themes/paper/*.less',
-        ),
-        # Compress passed libraries and have
-        # the output in`css/css.min.css`.
-        'output_filename': 'css/css.min.css',
-    }
-    # ...
-}
+# CSS Files. Eventually remove CDN TODO
+# PIPELINE_CSS = {
+#     # Project libraries.
+#     'css': {
+#         'source_filenames': (
+#             'bower_components/bootstrap/dist/css/bootstrap.css',
+#         ),
+#         # Compress passed libraries and have
+#         # the output in`css/css.min.css`.
+#         'output_filename': 'css/css.min.css',
+#     }
+#     # ...
+# }
 # JavaScript files.
 PIPELINE_JS = {
     # Project JavaScript libraries.
@@ -134,10 +132,6 @@ PIPELINE_JS = {
     }
     # ...
 }
-
-# PIPELINE_COMPILERS = (
-#     'pipeline.compilers.less.LessCompiler',
-# )
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '-_9f3*2^6vul3^qz^x+(s^w8ko(4k#v!ftkji8fq+&=@^%xh^8'
