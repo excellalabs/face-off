@@ -112,7 +112,7 @@ PIPELINE_CSS = {
     'css': {
         'source_filenames': (
             'bower_components/bootstrap/dist/css/bootstrap.css',
-            'css/themes/paper/*.scss',
+            'css/themes/paper/*.less',
         ),
         # Compress passed libraries and have
         # the output in`css/css.min.css`.
@@ -127,8 +127,7 @@ PIPELINE_JS = {
         'source_filenames': (
             'bower_components/jquery/dist/jquery.js',
             'bower_components/bootstrap/js/bootstrap.js',
-            'jquery/jquery.min.js',
-            'underscore/underscore.js',
+            'bower_components/underscore/underscore.js',
         ),
         # Compress all passed files into `js/js.min.js`.
         'output_filename': 'js/js.min.js',
@@ -136,9 +135,9 @@ PIPELINE_JS = {
     # ...
 }
 
-PIPELINE_COMPILERS = (
-    'pipeline.compilers.less.LessCompiler',
-)
+# PIPELINE_COMPILERS = (
+#     'pipeline.compilers.less.LessCompiler',
+# )
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '-_9f3*2^6vul3^qz^x+(s^w8ko(4k#v!ftkji8fq+&=@^%xh^8'
