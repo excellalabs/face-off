@@ -69,12 +69,16 @@ if ! command -v npm; then
     ./configure && make && make install
     cd ..
     rm -rf node-v0.10.0/ node-v0.10.0.tar.gz
+    npm install -g npm
 fi
 if ! command -v coffee; then
     npm install -g coffee-script
 fi
 if ! command -v lessc; then
     npm install -g less
+fi
+if ! command -v bower; then
+    npm install -g bower
 fi
 
 # ---
