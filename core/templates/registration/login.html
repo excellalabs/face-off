@@ -3,10 +3,15 @@
 {% block title %}Sign In{% endblock %}
 
 {% block content %}
- <div>
-   <h1>Authenticate yourself with Yammer to play Face It</h1>
-   <div>
-     <a href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}">Login with Yammer</a>
-   </div>
- </div>
+    <div class="page-header" id="banner">
+        <div class="row text-center">
+            <h1>Authenticate yourself with Yammer to play Face It</h1>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div>
+            <a class="btn btn-primary" href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}">Login with
+                Yammer</a>
+        </div>
+    </div>
 {% endblock %}

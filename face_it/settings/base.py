@@ -10,9 +10,9 @@ sys.path.append(os.path.join(PROJECT_ROOT, "lib"))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+PIPELINE_ENABLED = True
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
 )
 
 DATABASES = {
@@ -66,6 +66,9 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = ''
 
+# Bower Configuration
+BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'core/static')
+
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
@@ -81,6 +84,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(BOWER_COMPONENTS_ROOT, 'bower_components'),
 )
 
 # List of finder classes that know how to find static files in
@@ -88,9 +92,46 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
+    'djangobower.finders.BowerFinder',
+    'pipeline.finders.PipelineFinder',
 )
+
+#Use Django Pipeline for static file storage
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+#No Compressing for now TODO
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+
+# CSS Files. Eventually remove CDN TODO
+# PIPELINE_CSS = {
+#     # Project libraries.
+#     'css': {
+#         'source_filenames': (
+#             'bower_components/bootstrap/dist/css/bootstrap.css',
+#         ),
+#         # Compress passed libraries and have
+#         # the output in`css/css.min.css`.
+#         'output_filename': 'css/css.min.css',
+#     }
+#     # ...
+# }
+# JavaScript files.
+PIPELINE_JS = {
+    # Project JavaScript libraries.
+    'js': {
+        'source_filenames': (
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/bootstrap/js/bootstrap.js',
+            'bower_components/underscore/underscore.js',
+        ),
+        # Compress all passed files into `js/js.min.js`.
+        'output_filename': 'js/js.min.js',
+    }
+    # ...
+}
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '-_9f3*2^6vul3^qz^x+(s^w8ko(4k#v!ftkji8fq+&=@^%xh^8'
@@ -153,6 +194,8 @@ INSTALLED_APPS = (
 
     'core',
     'social.apps.django_app.default',
+    'djangobower',
+    'pipeline'
 )
 
 EMAIL_SUBJECT_PREFIX = '[face_it] '

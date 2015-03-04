@@ -2,3 +2,6 @@
 /static
 *.pyc
 /face_it/settings/local.py
+*.idea
+bower_components
+.DS_Store

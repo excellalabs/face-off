@@ -49,7 +49,7 @@ def users(request):
             page += 1
 
         photo_users = []
-        pattern = re.compile('.+no_photo.png$')
+        pattern = re.compile('.+no_photo.png$')  # Filters Users with No Photo
         for user in users:
             if not pattern.match(user['mugshot_url']):
                 photo_users.append(user)
