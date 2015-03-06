@@ -84,7 +84,6 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(BOWER_COMPONENTS_ROOT, 'bower_components'),
 )
 
 # List of finder classes that know how to find static files in
@@ -94,7 +93,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
-    'djangobower.finders.BowerFinder',
     'pipeline.finders.PipelineFinder',
 )
 
@@ -106,18 +104,21 @@ PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
 
 # CSS Files. Eventually remove CDN TODO
-# PIPELINE_CSS = {
-#     # Project libraries.
-#     'css': {
-#         'source_filenames': (
-#             'bower_components/bootstrap/dist/css/bootstrap.css',
-#         ),
-#         # Compress passed libraries and have
-#         # the output in`css/css.min.css`.
-#         'output_filename': 'css/css.min.css',
-#     }
-#     # ...
-# }
+PIPELINE_CSS = {
+    # Project libraries.
+    'css': {
+        'source_filenames': (
+            'bower_components/bootstrap-social/bootstrap-social.css',
+            'bower_components/font-awesome/css/font-awesome.css',
+            'css/*.css',
+        ),
+        # Compress passed libraries and have
+        # the output in`css/css.min.css`.
+        'output_filename': 'css/css.min.css',
+        'variant': 'datauri',
+    }
+    # ...
+}
 # JavaScript files.
 PIPELINE_JS = {
     # Project JavaScript libraries.
@@ -251,3 +252,19 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+# Custom User Creation
+AUTH_USER_MODEL = 'core.UserProfile'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.create_user',
+    'core.user_pipeline.post_user_creation',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details'
+)
