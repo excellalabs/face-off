@@ -13,5 +13,6 @@ Setup
 * Install Vagrant and Virtualbox
 * Initialize the vagrant box - `vagrant up`
 * Log into the server - `vagrant ssh`
+* Start Redis Cache server prior in a separate tab - `redis-server` 
 * Launch the app - `./manage.py runserver 0.0.0.0:8000`
 * Access the app in your browser - `http://localhost:8111`
