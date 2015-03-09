@@ -196,7 +196,7 @@ INSTALLED_APPS = (
     'core',
     'social.apps.django_app.default',
     'djangobower',
-    'pipeline'
+    'pipeline',
 )
 
 EMAIL_SUBJECT_PREFIX = '[face_it] '
@@ -247,9 +247,13 @@ LOGGING = {
 
 # Cache Backend
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "IGNORE_EXCEPTIONS": True,  # Redis is only used for cache so we do not want exceptions when Redis is down
+        }
     }
 }
 

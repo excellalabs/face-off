@@ -3,10 +3,8 @@ from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
-from django.core.cache import cache
-import requests
-import random
-import re
+from django_redis import get_redis_connection
+import requests, re, ast, random
 
 
 def custom_login(request):
@@ -18,55 +16,40 @@ def custom_login(request):
 
 @login_required
 def users(request):
-    social = request.user.social_auth.get(provider='yammer')
-    access_token = social.extra_data['access_token']
-    response = None
-    users = []
-    page = 1
+    redis_con = get_redis_connection("default")
+    # Unique Set per Network
+    if request.user.email:
+        network = request.user.email.split('@')[1]
+    else:
+        network = 'default'
 
-    # TODO this caching is badly executed!!!!!
-    # cache expiration should be tweaked
-    # key should be something like '<org-key>-photo_users'
-    photo_users = cache.get('photo_users')
-    if photo_users:
-        print "GOT CACHE"
-    if not photo_users:
-        print "NO CACHE"
+    if redis_con.exists(network + '_users'):
+        print "Cache Retrieved"
+    else:
+        print "Cache Loaded"
+        users = []
         social = request.user.social_auth.get(provider='yammer')
         access_token = social.extra_data['access_token']
-        response = None
-        users = []
-        page = 1
 
-        while True:
-            response = requests.get(
-                'https://www.yammer.com/api/v1/users.json?page=%d' % page,
-                headers = {'Authorization': 'Bearer %s' % access_token['token']}
-            )
-            if response.json() == []:
-                break
-            users.extend(response.json())
-            page += 1
+        response = requests.get(
+            'https://www.yammer.com/api/v1/users.json?',
+            headers={'Authorization': 'Bearer %s' % access_token['token']}
+        )
+        users.extend(response.json())
 
-        photo_users = []
-        pattern = re.compile('.+no_photo.png$')  # Filters Users with No Photo
+        pattern = re.compile('.+no_photo.png$')  # Filters out users with no photo
         for user in users:
             if not pattern.match(user['mugshot_url']):
-                photo_users.append(user)
+                redis_con.sadd(user['network_name'] + '_users', {
+                    'name': user['full_name'],
+                    'mugshot': user['mugshot_url_template'],
+                })
+        redis_con.expire(network + '_users', 43200)  # Redis cache expiration set to 12hrs(43200s)
 
-        cache.set('users', users, 6000)
-        cache.set('photo_users', photo_users, 6000)
+    users = []
+    for x in range(0, 4):
+        users.append(ast.literal_eval(redis_con.srandmember(network + '_users')))
+    answer = random.choice(users)
 
-    for user in photo_users:
-        if user['state'] != 'active':
-            print user['full_name'] + " " + user['state']
-    length = len(photo_users)
-
-    user_array = []
-    for sample in random.sample(range(length), 4):
-        user = photo_users[sample]
-        user_array.append(user)
-    answer = random.choice(user_array)
-
-    context = RequestContext(request, {'users': user_array, 'answer': answer})
+    context = RequestContext(request, {'users': users, 'answer': answer})
     return render_to_response('users.html', context_instance=context)

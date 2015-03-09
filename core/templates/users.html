@@ -9,15 +9,15 @@
     </div>
     <div>
         <p>
-        <ul>
+        <ul class="text-center">
             {% for user in users %}
                 <li style="display:inline-block">
-                    <img src='{{ user.mugshot_url_template|replace:"/{width}/256"|replace:"/{height}/256" }}'>
+                    <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
                 </li>
             {% endfor %}
         </ul>
 
-        <div>Who is {{ answer.full_name }}?
+        <div class="text-center">Who is {{ answer.name }}?
         </div>
         <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
         </p>
