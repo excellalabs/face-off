@@ -7,13 +7,13 @@
             <h1><font size ="6">Face It</font></h1>
         </div>
     </div>
-        <div><font size ="5">Who is {{ answer.full_name }}?</font></div>
+        <div><font size ="5">Who is {{ answer.name }}?</font></div>
     <div class="container">
         <ul class = "row ">
             {% for user in users%}
                 <li style="display:inline-block">
                     <button type = "button" class ="btn btn-default">
-                     <img src='{{ user.mugshot_url_template|replace:"/{width}/256"|replace:"/{height}/256" }}'>
+                     <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
                      </button>
                 </li>
             {% endfor %}
