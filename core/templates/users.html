@@ -13,7 +13,7 @@
             {% for user in users%}
                 <li style="display:inline-block">
                     <button type = "button" class ="btn btn-default">
-                     <img src='{{ user.mugshot_url|replace:"/{width}/256"|replace:"/{height}/256" }}'>
+                     <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
                      </button>
                 </li>
             {% endfor %}
