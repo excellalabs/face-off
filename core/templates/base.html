@@ -19,6 +19,7 @@
 
     {% compress css %}
         {% comment %} Core CSS includes (for inclusion on all pages) {% endcomment %}
+        {% stylesheet 'css' %}
     {% endcompress %}
 
     {% compress css %}
@@ -29,8 +30,7 @@
     {% endcompress %}
 
 </head>
-<body>
-<div class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <a href="../" class="navbar-brand">Excella</a>
@@ -42,15 +42,30 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}">Login</a></li>
+                <li><a href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}">*</a></li>
             </ul>
         </div>
     </div>
+</nav>
+
+<body>
+<div class="container">
+    {% block content %}{% endblock %}
 </div>
 
-<div class="container">
-{% block content %}{% endblock %}
-</div>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">© 2015 Company, Inc. All Rights Reserved</p>
+        <ul class="pull-right list-inline">
+            <li>
+                <a href="https://github.com/kave/face_it">GitHub Project</a>
+            </li>
+            <li>
+                <a href="https://github.com/kave/face_it/issues">Issues</a>
+            </li>
+        </ul>
+    </div>
+</footer>
 
 {% comment %}
     JavaScript at the bottom for fast page loading:

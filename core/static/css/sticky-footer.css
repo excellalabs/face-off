@@ -1,0 +1,19 @@
+html {
+    min-height: 100%;
+    position: relative;
+}
+body {
+    margin-bottom: 60px;
+}
+.footer {
+    bottom: 0;
+    height: 60px;
+    position: absolute;
+    width: 100%;
+}
+.container {
+    width: auto;
+}
+.container .text-muted {
+    margin: 20px 0;
+}
