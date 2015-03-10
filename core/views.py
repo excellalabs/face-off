@@ -14,7 +14,7 @@ def custom_login(request):
         return login(request)
 
 
-@login_required
+@login_required(login_url='/login/')
 def users(request):
     redis_con = get_redis_connection("default")
     # Unique Set per Network
