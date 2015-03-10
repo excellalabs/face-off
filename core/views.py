@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django_redis import get_redis_connection
 import requests, re, ast, random
 
-
 def custom_login(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
@@ -47,8 +46,10 @@ def users(request):
         redis_con.expire(network + '_users', 43200)  # Redis cache expiration set to 12hrs(43200s)
 
     users = []
-    for x in range(0, 4):
-        users.append(ast.literal_eval(redis_con.srandmember(network + '_users')))
+    while len(users) < 4:
+        tmp = ast.literal_eval(redis_con.srandmember(network + '_users'))
+        if tmp not in users:
+            users.append(tmp)
     answer = random.choice(users)
 
     context = RequestContext(request, {'users': users, 'answer': answer})

@@ -4,21 +4,34 @@
 {% block content %}
     <div class="page-header" id="banner">
         <div class="row">
-            <h1>Face It</h1>
+            <h1 class="text-center">Who is {{ answer.name }}? </h1>
         </div>
     </div>
     <div>
         <p>
         <ul class="text-center">
             {% for user in users %}
-                <li style="display:inline-block">
-                    <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
-                </li>
+                <div id="colleague{{ forloop.counter0 }}" class="flip-container"
+                     onclick="$('#colleague{{ forloop.counter0 }}').addClass('clickFlip');">
+                    <div class="flipper">
+                        <li class="no-bullets">
+                            <div class="front">
+                                <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
+                            </div>
+
+                            <div class="back panel panel-default">
+                                <div class="panel-heading">Colleague</div>
+                                <div class="panel-body">
+                                    <h3 class="img-responsive center-block">{{ user.name }}</h3>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                </div>
             {% endfor %}
         </ul>
 
-        <div class="text-center">Who is {{ answer.name }}?
-        </div>
+
         <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
         </p>
     </div>
