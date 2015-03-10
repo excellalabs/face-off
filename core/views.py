@@ -45,12 +45,27 @@ def users(request):
                 })
         redis_con.expire(network + '_users', 43200)  # Redis cache expiration set to 12hrs(43200s)
 
+    user_round_matrix = [four_random_cards(redis_con,network) for x in range(5)]
+    answer = random.choice(user_round_matrix[0])
+
+    context = RequestContext(request, {'users': user_round_matrix[0], 'answer': answer, 'round': 0})
+    return render_to_response('users.html', context_instance=context)
+
+
+def next_round(request):
+    round = int(request.GET['round']) + 1
+    user_round_matrix = request.GET['matrix']
+
+    answer = random.choice(user_round_matrix[round])
+    context = RequestContext(request, {'users': user_round_matrix[round], 'answer': answer, 'round': round})
+
+    return render_to_response('users.html', context_instance=context)
+
+
+def four_random_cards(redis_con, network):
     users = []
     while len(users) < 4:
         tmp = ast.literal_eval(redis_con.srandmember(network + '_users'))
         if tmp not in users:
             users.append(tmp)
-    answer = random.choice(users)
-
-    context = RequestContext(request, {'users': users, 'answer': answer})
-    return render_to_response('users.html', context_instance=context)
+    return users
