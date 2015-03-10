@@ -34,7 +34,9 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
+        {% if user.yammer_url %}
         	<img src='{{ user.yammer_url|replace:"/{width}/60"|replace:"/{height}/60" }}' align="left">
+        {% endif %}
             <a href="../" class="navbar-brand"><font size ="10">Excella Face it</font></a>
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
