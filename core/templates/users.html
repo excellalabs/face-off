@@ -4,20 +4,61 @@
 {% block content %}
     <div class="page-header" id="banner">
         <div class="row">
-            <h1><font size="6">Face It</font></h1>
+            <h1 class="text-center">Who is {{ answer.name }}? </h1>
         </div>
     </div>
-        <div><font size ="5">Who is {{ answer.name }}?</font></div>
-    <div class="container">
-        <ul class = "row ">
-            {% for user in users%}
-                <li style="display:inline-block">
-                    <button type = "button" class ="btn btn-default">
-                     <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
-                     </button>
-                </li>
+    <div>
+        <p>
+        <ul class="text-center">
+            {% for user in users %}
+                <div id="colleague{{ forloop.counter0 }}" class="flip-container"
+                     onclick="flip({{ forloop.counter0 }})">
+                    <div class="flipper">
+                        <li class="no-bullets">
+                            <div class="front">
+                                <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
+                            </div>
+
+                            <div class="back panel panel-primary">
+                                <div class="panel-heading">Colleague</div>
+                                <div class="panel-body">
+                                    <h3>{{ user.name }}</h3>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                </div>
             {% endfor %}
         </ul>
+        <ul class="text-center">
+            <a id="nextRound" href="#" class="btn btn-primary invisible">Next Round</a>
+        </ul>
+        </p>
     </div>
+    <script>
+        function flip(id){
+            $('#colleague' + id).addClass('clickFlip');
+            {# disable onclick on other images, disable them & present next round button#}
+            for(var x=0; x<4; x++){
+                if(x != id){
+                    $('#colleague' + x).removeAttr('onclick');
+                    $('#colleague' + x).addClass('greyOut');
+                    $('a#nextRound').removeClass('invisible');
+                }
+            }
+        }
+{#        function nextRound(){#}
+{#            $.ajax({#}
+{#                url: '127.0.0.1:8000/round',#}
+{#                type: 'get',#}
+{#                success: function(data) {#}
+{#                    alert(data);#}
+{#                },#}
+{#                failure: function(data) {#}
+{#                    alert('Got an error dude');#}
+{#                }#}
+{#            });#}
+{#        }#}
+    </script>
 {% endblock %}
 
