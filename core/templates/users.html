@@ -7,15 +7,17 @@
             <h1><font size="6">Face It</font></h1>
         </div>
     </div>
-    <div><font size="5">Who is {{ answer.name }}?</font></div>
-    <ul class="row ">
-        {% for user in users %}
-            <li style="display:inline-block">
-                <button type="button" class="btn btn-default">
-                    <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
-                </button>
-            </li>
-        {% endfor %}
-    </ul>
-    <p><a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a></p>
+        <div><font size ="5">Who is {{ answer.name }}?</font></div>
+    <div class="container">
+        <ul class = "row ">
+            {% for user in users%}
+                <li style="display:inline-block">
+                    <button type = "button" class ="btn btn-default">
+                     <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
+                     </button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
+
