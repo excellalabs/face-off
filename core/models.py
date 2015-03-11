@@ -10,7 +10,7 @@ class UserProfile(AbstractUser):
         return self.username
 
 
-class Metrics(models.Model):
+class UserMetrics(models.Model):
     user = models.ForeignKey(UserProfile, unique=True, related_name='user')
 
     times_won = models.IntegerField(blank=True, default=0)
@@ -21,3 +21,12 @@ class Metrics(models.Model):
 
     def __unicode__(self):
         return self.user.full_name
+
+class MostKnown(models.Model):
+    most_known_colleague = models.CharField(max_length=200, blank=True)
+    #Timestamp for each entry for historical graphing
+    date_time = models.DateField('Timestamp')
+
+class GlobalMetrics(models.Model):
+    network = models.CharField(max_length=200, blank=True, unique=True)
+    most_known = models.ForeignKey(MostKnown)
