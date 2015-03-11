@@ -30,7 +30,7 @@ class MostKnown(models.Model):
     date_time = models.DateField('Timestamp')
 
     class Meta:
-        verbose_name = "Most Know Colleague"
+        verbose_name = "Most known Colleague"
         verbose_name_plural ="Most known Colleagues"
 
 class GlobalMetrics(models.Model):
