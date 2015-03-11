@@ -197,6 +197,7 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     'djangobower',
     'pipeline',
+    'face_it',
 )
 
 EMAIL_SUBJECT_PREFIX = '[face_it] '
