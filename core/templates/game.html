@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load replace %}
+{% load resolve %}
+{% load cards %}
+
+{% block content %}
+    <div>
+        <p>
+        <ul id="cards" class="text-center">
+            {% render_cards cards round answer %}
+        </ul>
+        </p>
+    </div>
+{% endblock %}
+

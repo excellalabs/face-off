@@ -1,10 +1,11 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render, render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
 from django_redis import get_redis_connection
-import requests, re, ast, random
+import requests, re, ast, random, HTMLParser
+
 
 def custom_login(request):
     if request.user.is_authenticated():
@@ -14,7 +15,7 @@ def custom_login(request):
 
 
 @login_required(login_url='/login/')
-def users(request):
+def cards(request):
     redis_con = get_redis_connection("default")
     # Unique Set per Network
     if request.user.email:
@@ -45,22 +46,28 @@ def users(request):
                 })
         redis_con.expire(network + '_users', 43200)  # Redis cache expiration set to 12hrs(43200s)
 
-    user_round_matrix = [four_random_cards(redis_con,network) for x in range(5)]
+    user_round_matrix = [four_random_cards(redis_con, network) for x in range(5)]
     answer = random.choice(user_round_matrix[0])
 
-    context = RequestContext(request, {'users': user_round_matrix[0], 'answer': answer, 'round': 0})
-    return render_to_response('users.html', context_instance=context)
+    context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer, 'round': 0})
+    return render_to_response('game.html', context_instance=context)
 
 
+@login_required
 def next_round(request):
     round = int(request.GET['round']) + 1
-    user_round_matrix = request.GET['matrix']
 
-    answer = random.choice(user_round_matrix[round])
-    context = RequestContext(request, {'users': user_round_matrix[round], 'answer': answer, 'round': round})
+    card_matrix = HTMLParser.HTMLParser().unescape(request.GET['matrix'])
+    card_matrix = ast.literal_eval(card_matrix)
 
-    return render_to_response('users.html', context_instance=context)
+    answer = random.choice(card_matrix[round])
+    context = RequestContext(request, {'cards': card_matrix, 'round': round, 'answer': answer})
 
+    return render_to_response('cards.html', context_instance=context)
+
+@login_required
+def results(request):
+    return render(request, 'results.html')
 
 def four_random_cards(redis_con, network):
     users = []
