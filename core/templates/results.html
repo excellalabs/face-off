@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load stars %}
 
 {% block content %}
     <div class="page-header" id="banner">
@@ -8,8 +9,16 @@
             </h1>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Score: {% show_stars request.GET.score %}</h2>
+        </div>
+        <div class="col-md-4">
+            <a id="endGame" href="{% url 'core:cards' %}" class="btn btn-primary">Play Again!</a>
+        </div>
+    </div>
     <div class="row text-center">
-        <a id="endGame" href="{% url 'core:cards' %}" class="btn btn-primary">Play Again!</a>
+
     </div>
 {% endblock %}
 
