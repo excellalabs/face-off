@@ -4,8 +4,7 @@
 
 <div class="page-header" id="banner">
     <div class="row">
-        <h1 class="text-center">Who is {{ answer.name }}? </h1>
-        <div id="countdown" class="text-center"> </div>
+        <h1 class="text-center" style="padding-top: 40px">Who is {{ answer.name }}? </h1>
     </div>
 </div>
 {% with cards|resolve:round as list %}
@@ -50,12 +49,12 @@
 </ul>
 
 <div class="row">
-    <div class="text-left">
+    <div class="col-md-8">
         <h2>Score: {% show_stars score %}</h2>
     </div>
-</div>
-<div class="text-right">
-
+    <div class="class=col-md-4">
+        <div id="countdown"></div>
+    </div>
 </div>
 
 <script>
