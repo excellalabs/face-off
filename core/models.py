@@ -20,12 +20,14 @@ class UserMetrics(models.Model):
         ordering = ["user__last_name"]
 
     def __unicode__(self):
-        return self.user.full_name
+        return self.user.get_full_name() + " - lifetime points: " + str(self.times_won)
+
 
 class MostKnown(models.Model):
     most_known_colleague = models.CharField(max_length=200, blank=True)
-    #Timestamp for each entry for historical graphing
+    # Timestamp for each entry for historical graphing
     date_time = models.DateField('Timestamp')
+
 
 class GlobalMetrics(models.Model):
     network = models.CharField(max_length=200, blank=True, unique=True)

@@ -124,9 +124,9 @@ PIPELINE_JS = {
     # Project JavaScript libraries.
     'js': {
         'source_filenames': (
-            'bower_components/jquery/dist/jquery.js',
             'bower_components/bootstrap/js/bootstrap.js',
             'bower_components/underscore/underscore.js',
+            'js/*.js',
         ),
         # Compress all passed files into `js/js.min.js`.
         'output_filename': 'js/js.min.js',
@@ -244,6 +244,8 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_URL = '/login'
 
 # Cache Backend
 CACHES = {
