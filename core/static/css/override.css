@@ -1,0 +1,9 @@
+.fa-times-circle-o:before {
+    content: "\f05c";
+    color: red !important;
+}
+
+.fa-check-circle-o:before {
+    content: "\f05d";
+    color: green !important;
+}

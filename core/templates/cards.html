@@ -1,15 +1,16 @@
 {% load replace %}
 {% load resolve %}
+{% load stars %}
 
 <div class="page-header" id="banner">
     <div class="row">
-        <h1 class="text-center">Who is {{ answer.name }}? </h1>
+        <h1 class="text-center" style="padding-top: 40px">Who is {{ answer.name }}? </h1>
     </div>
 </div>
 {% with cards|resolve:round as list %}
     {% for user in list %}
         <div id="colleague{{ forloop.counter0 }}" class="flip-container"
-             onclick="flip({{ forloop.counter0 }})">
+             onclick="flip('{{ forloop.counter0 }}', '{{ user.name }}')">
             <div class="flipper">
                 <li class="no-bullets">
                     <div class="front">
@@ -19,24 +20,20 @@
                     </div>
                     {% if answer.name == user.name %}
                         <div class="back panel panel-success">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    <i class="fa fa-check-circle-o"></i>
-                                </h3>
-                            </div>
+                            <div class="panel-heading"><h4></h4></div>
                             <div class="panel-body">
                                 <h3>{{ user.name }}</h3>
+
+                                <h1><i class="fa fa-check-circle-o fa-6"></i></h1>
                             </div>
                         </div>
                     {% else %}
                         <div class="back panel panel-danger">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    <i class="fa fa-times"></i>
-                                </h3>
-                            </div>
+                            <div class="panel-heading"><h4></h4></div>
                             <div class="panel-body">
                                 <h3>{{ user.name }}</h3>
+
+                                <h1><i class="fa fa-times-circle-o fa-6"></i></h1>
                             </div>
                         </div>
                     {% endif %}
@@ -50,27 +47,70 @@
     <button id="nextRound" onclick="nextRound()" class="btn btn-primary invisible">Next
         Round
     </button>
-    <a id="endGame" href="{% url 'core:results' %}" class="btn btn-primary invisible">Next Round</a>
+    <a id="endGame" href="{% url 'core:results' %}?score={{ score }}" class="btn btn-primary invisible">Next Round</a>
 </ul>
 
+<div class="row">
+    <div class="col-md-8">
+        <h2>Score: {% show_stars score %}</h2>
+    </div>
+    <div class="class=col-md-4">
+        <div id="countdown"></div>
+    </div>
+</div>
+
 <script>
+    var maxRound = 4;
+    var trigger = true;
+    var score = {{ score }};
+    var timer;
+    $(document).ready(function () {
+        timer = $("#countdown").countdown360({
+            radius: 40,
+            seconds: 10,
+            strokeWidth: 10,
+            fillStyle: '#FFFFFF',
+            strokeStyle: '#0099FF',
+            fontSize: 30,
+            fontColor: '#000000',
+            autostart: false,
+            onComplete: function () {
+                disableCards(0, true);
+            }
+        });
+        timer.start();
+    });
+
+
     function nextRound() {
         var round = {{ round }};
         var cards = '{{ cards }}';
 
-        $.get('/rounds/', {matrix: cards, round: round}, function (data) {
+        $.get('/rounds/', {matrix: cards, round: round, score: score}, function (data) {
             $('#cards').html(data);
         });
     }
-    function flip(id) {
-        var round = {{ round }};
+
+    function flip(id, choice) {
+        if (choice == '{{ answer.name }}')
+            score += 1;
         $('#colleague' + id).addClass('clickFlip');
-        {# disable onclick on other images, disable them & present next round button#}
-        for (var x = 0; x < 4; x++) {
-            if (x != id) {
-                $('#colleague' + x).removeAttr('onclick');
-                $('#colleague' + x).addClass('greyOut');
-                if (round < 4) {
+        //Interrupt countdown
+        timer.stop(function () {
+        });
+        disableCards(id, false);
+    }
+
+    {# disable onclick on other images, disable them & present next round button#}
+    function disableCards(id, disableALL) {
+        var round = {{ round }};
+
+        for (var index = 0; index < maxRound; index++) {
+            if (index != id || disableALL) {
+                $('#colleague' + index).removeAttr('onclick');
+                $('#colleague' + index).addClass('greyOut');
+
+                if (round < maxRound) {
                     $('#nextRound').removeClass('invisible');
                 }
                 else {
