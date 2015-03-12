@@ -55,3 +55,13 @@
 .back {
     transform: rotateY(180deg);
 }
+
+.brightness img{
+    opacity: 0.4;
+    filter: alpha(opactiy=40);
+}
+
+.brightness img:hover{
+    opacity: 1.0;
+    filter: alpha(opacity=100);
+}
