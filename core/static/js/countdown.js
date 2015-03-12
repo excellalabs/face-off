@@ -22,7 +22,6 @@
             seconds: 10,                     // the number of seconds to count down
             label: ["second", "seconds"],    // the label to use or false if none
             startOverAfterAdding: true,      // Start the timer over after time is added with addSeconds
-            gameRound: 0,                    // Associate Timer with Game Round
             onComplete: function () {
             }
         };
@@ -61,7 +60,7 @@
             }
         },
 
-        start: function (round) {
+        start: function () {
             this.startedAt = new Date();
             this._drawCountdownShape(Math.PI * 3.5, true);
             this._drawCountdownLabel(0);
