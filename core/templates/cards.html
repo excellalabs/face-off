@@ -13,7 +13,9 @@
             <div class="flipper">
                 <li class="no-bullets">
                     <div class="front">
-                        <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
+                        <div class="brightness">
+                            <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
+                        </div>
                     </div>
                     {% if answer.name == user.name %}
                         <div class="back panel panel-success">
