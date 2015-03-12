@@ -18,6 +18,8 @@ class UserMetrics(models.Model):
 
     class Meta:
         ordering = ["user__last_name"]
+        verbose_name = "User Metric"
+        verbose_name_plural = "User Metrics"
 
     def __unicode__(self):
         return self.user.get_full_name() + " - lifetime points: " + str(self.times_won)
@@ -28,7 +30,15 @@ class MostKnown(models.Model):
     # Timestamp for each entry for historical graphing
     date_time = models.DateField('Timestamp')
 
+    class Meta:
+        verbose_name = "Most known Colleague"
+        verbose_name_plural = "Most known Colleagues"
+
 
 class GlobalMetrics(models.Model):
     network = models.CharField(max_length=200, blank=True, unique=True)
     most_known = models.ForeignKey(MostKnown)
+
+    class Meta:
+        verbose_name = "Global Metric"
+        verbose_name_plural = "Global Metrics"
