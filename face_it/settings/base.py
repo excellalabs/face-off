@@ -182,7 +182,6 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -190,6 +189,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
 
     'django.contrib.admin',
+    #'django.contrib.sites',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 
@@ -198,6 +198,7 @@ INSTALLED_APPS = (
     'djangobower',
     'pipeline',
     'face_it',
+    'import_export',
 )
 
 EMAIL_SUBJECT_PREFIX = '[face_it] '
