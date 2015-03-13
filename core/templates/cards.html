@@ -47,16 +47,14 @@
     <button id="nextRound" onclick="nextRound()" class="btn btn-primary invisible">Next
         Round
     </button>
-    <a id="endGame" href="{% url 'core:results' %}?score={{ score }}" class="btn btn-primary invisible">Next Round</a>
+    <div id="endGameLnk"></div>
 </ul>
 
 <div class="row">
     <div class="col-md-8">
         <h2>Score: {% show_stars score %}</h2>
     </div>
-    <div class="class=col-md-4">
-        <div id="countdown"></div>
-    </div>
+    <div id="countdown"></div>
 </div>
 
 <script>
@@ -92,19 +90,33 @@
     }
 
     function flip(id, choice) {
-        if (choice == '{{ answer.name }}')
+        if (choice == '{{ answer.name }}'){
             score += 1;
+            updateStars(score-1);
+         }
         $('#colleague' + id).addClass('clickFlip');
         //Interrupt countdown
-        timer.stop(function () {
-        });
+        timer.stop(function () {});
         disableCards(id, false);
+    }
+
+    function updateStars(starIndex){
+        $('#0star-empty').removeClass('glyphicon-star-empty');
+        $('#0star-empty').addClass('glyphicon-star');
+    }
+
+    function renderNextRoundLInk(score){
+       $('#endGameLnk').append('<a id="endGame" href="{% url 'core:results' %}?score=' +
+        score + '" class="btn btn-primary">Results</a>');
     }
 
     {# disable onclick on other images, disable them & present next round button#}
     function disableCards(id, disableALL) {
         var round = {{ round }};
 
+        if (round == maxRound) {
+           renderNextRoundLInk(score);
+        }
         for (var index = 0; index < maxRound; index++) {
             if (index != id || disableALL) {
                 $('#colleague' + index).removeAttr('onclick');
@@ -112,9 +124,6 @@
 
                 if (round < maxRound) {
                     $('#nextRound').removeClass('invisible');
-                }
-                else {
-                    $('#endGame').removeClass('invisible');
                 }
             }
         }
