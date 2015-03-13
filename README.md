@@ -1,4 +1,4 @@
-Face It
+Face It ![Build Status](https://travis-ci.org/excellaco/face_it.svg?branch=master)
 =======================
 
 A Django app for testing your ability to match coworker names with faces, utilizing the Yammer API.
