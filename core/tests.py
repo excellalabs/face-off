@@ -6,25 +6,22 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from core.models import UserMetrics, UserProfile,User, GlobalMetrics,MostKnown
+from core.models import UserMetrics, UserProfile, GlobalMetrics, MostKnown
 
 
 #The classes defined below are placeholders for future test
 #after business logic has been implemented
 
-class UserMetricsTest(UserMetrics):
+class UserMetricsTest(TestCase):
     pass
 
-class UserProfileTest(UserProfile):
+class UserProfileTest(TestCase):
     pass
 
-class UserTest(User):
+class GlobalMetricsTest(TestCase):
     pass
 
-class GlobalMetricsTest(GlobalMetrics):
-    pass
-
-class MostKnownTest(MostKnown):
+class MostKnownTest(TestCase):
     pass
 
 
