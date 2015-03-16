@@ -8,7 +8,7 @@ install:
 
 # command to run tests
 script:
-  #-"./manage.py test core"
+  -"./manage.py test core"
   -coverage run --source=face_it manage.py test core
 
 after_success:
