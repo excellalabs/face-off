@@ -1,5 +1,6 @@
-Face It ![Build Status](https://travis-ci.org/excellaco/face_it.svg?branch=master)
-<a href='https://coveralls.io/r/excellaco/face_it'><img src='https://coveralls.io/repos/excellaco/face_it/badge.svg' alt='Coverage Status' /></a>
+Face It ![Build Status](https://travis-ci.org/excellaco/face_it.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/excellaco/face_it/badge.svg)](https://coveralls.io/r/excellaco/face_it)
+
+
 =======================
 
 A Django app for testing your ability to match coworker names with faces, utilizing the Yammer API.
