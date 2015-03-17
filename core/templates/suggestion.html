@@ -1,0 +1,18 @@
+{%extends 'base.html' %}
+
+{% block content %}
+    <div class="page-header" id="banner">
+        <div class="row text-center">
+            <h1>Suggestions Welcomed!</h1>
+         </div>
+         <div class="center-block">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h1 title="Enter Suggestion Below"></h1>
+                <form action="/suggestion/" method="post">{% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Submit" />
+                    </form>
+            </div>
+         </div>
+    </div>
+{% endblock content %}
