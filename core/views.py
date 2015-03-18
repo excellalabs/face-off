@@ -5,7 +5,7 @@ from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
 from django_redis import get_redis_connection
 import requests, re, ast, random, HTMLParser
-from core.models import UserMetrics
+from core.models import UserMetrics, ColleagueGraph, MostKnown
 from django.core.exceptions import ObjectDoesNotExist
 
 def custom_login(request):
@@ -43,6 +43,7 @@ def cards(request):
         for user in users:
             if not pattern.match(user['mugshot_url']):
                 redis_con.sadd(user['network_name'] + '_users', {
+                    'id': user['id'],
                     'name': user['full_name'],
                     'mugshot': user['mugshot_url_template'],
                 })
@@ -57,16 +58,23 @@ def cards(request):
 
 @login_required
 def next_round(request):
-    round = int(request.GET['round']) + 1
+    round = int(request.GET['round'])
     score = int(request.GET['score'])
+    card_index = int(request.GET['cardIndex'])
 
     card_matrix = HTMLParser.HTMLParser().unescape(request.GET['matrix'])
     card_matrix = ast.literal_eval(card_matrix)
 
+    # Sets the Winner of the round to the cardMatrix
+    updateResultsList(card_matrix, card_index)
+
+    # Prepares data for next round
+    round += 1
     answer = random.choice(card_matrix[round])
     context = RequestContext(request, {'cards': card_matrix, 'round': round, 'answer': answer, 'score': score})
 
     return render_to_response('cards.html', context_instance=context)
+
 
 @login_required
 def results(request):
@@ -79,8 +87,30 @@ def results(request):
     metric.times_won = request.GET['score']
     metric.save()
 
+    results = ast.literal_eval(HTMLParser.HTMLParser().unescape(request.GET['results']))
+    card_index = int(request.GET['cardIndex'])
+    updateResultsList(results, card_index)
+
+    # TODO Update Database with Final Results
+    print "Winners Circle"
+    print results
     return render(request, 'results.html')
 
+
+# Helper Functions
+def saveMetricResults(results):
+    ColleagueGraph.objects.create(user=request.user)
+
+
+
+
+def updateResultsList(card_matrix, card_index):
+    if card_index > -1:
+        card_matrix[round] = card_matrix[round][card_index]
+    else:
+        card_matrix[round] = {}
+
+    return card_matrix
 
 def four_random_cards(redis_con, network):
     users = []

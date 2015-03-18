@@ -80,9 +80,14 @@
     var score = {{ score }};
     var round = {{ round }};
     var timer;
+    var selectedCardIndex = -1;
+
     $(document).ready(function () {
         if(round == 0){
             $("#startGameModal").modal('show');
+        }
+        else{
+            startGame();
         }
     });
 
@@ -103,10 +108,15 @@
         timer.start();
     }
 
+    function updateStars(starIndex){
+        $('#0star-empty').removeClass('glyphicon-star-empty');
+        $('#0star-empty').addClass('glyphicon-star');
+    }
+
     function nextRound() {
         var cards = '{{ cards }}';
 
-        $.get('/rounds/', {matrix: cards, round: round, score: score}, function (data) {
+        $.get('/rounds/', {matrix: cards, round: round, score: score, cardIndex: selectedCardIndex}, function (data) {
             $('#cards').html(data);
         });
     }
@@ -115,27 +125,23 @@
         if (choice == '{{ answer.name }}'){
             score += 1;
             updateStars(score-1);
-         }
+            selectedCardIndex= id;
+        }
         $('#colleague' + id).addClass('clickFlip');
         //Interrupt countdown
         timer.stop(function () {});
         disableCards(id, false);
     }
 
-    function updateStars(starIndex){
-        $('#0star-empty').removeClass('glyphicon-star-empty');
-        $('#0star-empty').addClass('glyphicon-star');
-    }
-
-    function renderNextRoundLInk(score){
+    function renderResultsLInk(score){
        $('#endGameLnk').append('<a id="endGame" href="{% url 'core:results' %}?score=' +
-        score + '" class="btn btn-primary">Results</a>');
+        score + '&results=' + '{{ cards }}' + '&cardIndex=' + selectedCardIndex + '" class="btn btn-primary">Results</a>');
     }
 
     {# disable onclick on other images, disable them & present next round button#}
     function disableCards(id, disableALL) {
         if (round == maxRound) {
-           renderNextRoundLInk(score);
+           renderResultsLInk(score);
         }
         for (var index = 0; index < maxRound; index++) {
             if (index != id || disableALL) {
