@@ -68,7 +68,7 @@
                  <button id="nextRound" onclick="startGame()" class="btn btn-primary" data-dismiss="modal">Start Game</button>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+                <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
             </div>
         </div>
     </div>
