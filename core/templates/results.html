@@ -13,6 +13,7 @@
         <div class="text-center">
             <h3>Score:  {% show_stars request.GET.score %}
                 <a id="endGame" href="{% url 'core:cards' %}" class="btn btn-primary">Play Again!</a>
+                <a id="userMetrics" href="{% url 'core:metrics' %}" class="btn btn-primary">Metrics</a>
             </h3>
         </div>
     </div>

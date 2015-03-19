@@ -8,6 +8,7 @@ import requests, re, ast, random, HTMLParser
 from core.models import UserMetrics, ColleagueGraph, MostKnown
 from django.core.exceptions import ObjectDoesNotExist
 
+
 def custom_login(request):
     print request.path
     if request.user.is_authenticated():
@@ -66,7 +67,7 @@ def next_round(request):
     card_matrix = ast.literal_eval(card_matrix)
 
     # Sets the Winner of the round to the cardMatrix
-    updateResultsList(card_matrix, card_index)
+    update_results_list(card_matrix, card_index, round)
 
     # Prepares data for next round
     round += 1
@@ -89,22 +90,42 @@ def results(request):
 
     results = ast.literal_eval(HTMLParser.HTMLParser().unescape(request.GET['results']))
     card_index = int(request.GET['cardIndex'])
-    updateResultsList(results, card_index)
+    update_results_list(results, card_index, 4) # 4 representing the last round (zero-based)
+    save_metric_results(results, request.user)
 
-    # TODO Update Database with Final Results
-    print "Winners Circle"
-    print results
     return render(request, 'results.html')
 
 
+@login_required
+def metrics(request):
+    metrics = ColleagueGraph.objects.filter(user=request.user)
+    names = ''
+    known = []
+    imgs = ''
+    for metric in metrics:
+        names += str(metric.name) + ';'
+        known.append(metric.times_correct)
+        imgs += str(metric.img_url) + ';'
+
+    context = RequestContext(request, {'names': names, 'known': known, 'mugs': imgs})
+    return render_to_response('metrics.html', context_instance=context)
+
 # Helper Functions
-def saveMetricResults(results):
-    ColleagueGraph.objects.create(user=request.user)
+def save_metric_results(results, user):
+    for result in results:
+        if result:
+            try:
+                metric = ColleagueGraph.objects.get(user=user, yammer_id=result['id'])
+                metric.times_correct += 1
+            except ObjectDoesNotExist:
+                metric = ColleagueGraph.objects.create(user=user, yammer_id=result['id'],
+                                                       name=result['name'], img_url=result['mugshot'],
+                                                       times_correct=1)
+            finally:
+                metric.save()
 
 
-
-
-def updateResultsList(card_matrix, card_index):
+def update_results_list(card_matrix, card_index, round):
     if card_index > -1:
         card_matrix[round] = card_matrix[round][card_index]
     else:

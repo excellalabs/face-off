@@ -52,7 +52,8 @@
                     {% if request.user.is_authenticated %}
                         <img src='{{ user.yammer_url|replace:"/{width}/70"|replace:"/{height}/70" }}'>
                         <li class="pull-left"><a href="#">{{ request.user.get_full_name }}</a></li>
-                    {% endif %}</li>
+                    {% endif %}
+                </li>
                 <li class="center">
                     <a href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}" text-align:left><font size="5">Excella
                         Face It</font></a>
