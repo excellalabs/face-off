@@ -7,6 +7,7 @@ from django_redis import get_redis_connection
 import requests, re, ast, random, HTMLParser
 from core.models import UserMetrics
 from django.core.exceptions import ObjectDoesNotExist
+from core.forms import SuggestionForm
 
 def custom_login(request):
     print request.path
@@ -89,3 +90,16 @@ def four_random_cards(redis_con, network):
         if tmp not in users:
             users.append(tmp)
     return users
+
+def suggestion(request):
+    if request.method == 'POST':
+        form = SuggestionForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('/login/')
+
+    else:
+        form = SuggestionForm()
+
+    return render(request, 'suggestion.html', {'form': form})
