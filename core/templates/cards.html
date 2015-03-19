@@ -7,6 +7,7 @@
         <h1 class="text-center" style="padding-top: 40px">Who is {{ answer.name }}? </h1>
     </div>
 </div>
+
 {% with cards|resolve:round as list %}
     {% for user in list %}
         <div id="colleague{{ forloop.counter0 }}" class="flip-container"
@@ -57,12 +58,35 @@
     <div id="countdown"></div>
 </div>
 
+<div id="startGameModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Col-League</h4>
+            </div>
+            <div class="modal-body">
+                 <button id="nextRound" onclick="startGame()" class="btn btn-primary" data-dismiss="modal">Start Game</button>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     var maxRound = 4;
     var trigger = true;
     var score = {{ score }};
+    var round = {{ round }};
     var timer;
     $(document).ready(function () {
+        if(round == 0){
+            $("#startGameModal").modal('show');
+        }
+    });
+
+    function startGame(){
         timer = $("#countdown").countdown360({
             radius: 40,
             seconds: 10,
@@ -77,11 +101,9 @@
             }
         });
         timer.start();
-    });
-
+    }
 
     function nextRound() {
-        var round = {{ round }};
         var cards = '{{ cards }}';
 
         $.get('/rounds/', {matrix: cards, round: round, score: score}, function (data) {
@@ -112,8 +134,6 @@
 
     {# disable onclick on other images, disable them & present next round button#}
     function disableCards(id, disableALL) {
-        var round = {{ round }};
-
         if (round == maxRound) {
            renderNextRoundLInk(score);
         }

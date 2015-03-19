@@ -124,7 +124,6 @@ PIPELINE_JS = {
     # Project JavaScript libraries.
     'js': {
         'source_filenames': (
-            'bower_components/bootstrap/js/bootstrap.js',
             'bower_components/underscore/underscore.js',
             'js/*.js',
         ),
