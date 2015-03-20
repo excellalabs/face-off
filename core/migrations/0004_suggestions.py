@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('first_name', models.CharField(max_length=50)),
                 ('last_name', models.CharField(max_length=50)),
+                ('email', models.EmailField(max_length=75)),
                 ('suggestion', models.TextField(max_length=500)),
             ],
             options={
