@@ -46,7 +46,10 @@ class GlobalMetrics(models.Model):
 class Suggestions(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    email = models.EmailField()
     suggestion = models.TextField(max_length=500)
+
+
 
     def __unicode__(self):
         return self.suggestion

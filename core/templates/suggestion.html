@@ -1,4 +1,3 @@
-
 <div id="suggestionform" class="modal fade">
                      <div class="modal-dialog">
                          <div class="modal-content">
@@ -7,9 +6,9 @@
                                     <h4 class="modal-title">Suggestions</h4>
                             </div>
                             <div class="modal-body">
-                                <form action="suggestion" method="post" id="suggestion">{% csrf_token %}
+                                <form action="suggestion" method="post" id="suggestion_form">
                                 {% csrf_token %}
-                               {{form.as_p}}
+                                {{ global_suggestion_form.as_p }}
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -19,3 +18,4 @@
                          </div>
                      </div>
   </div>
+

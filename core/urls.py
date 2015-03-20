@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^rounds/$', 'core.views.next_round', name='rounds'),
     url(r'^results/$', 'core.views.results', name='results'),
     url(r'^suggestion/$', 'core.views.suggestion', name='suggestion'),
+
 )
