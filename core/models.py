@@ -42,3 +42,18 @@ class GlobalMetrics(models.Model):
     class Meta:
         verbose_name = "Global Metric"
         verbose_name_plural = "Global Metrics"
+
+class Suggestions(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
+    suggestion = models.TextField(max_length=500)
+
+
+
+    def __unicode__(self):
+        return self.suggestion
+
+    class Meta:
+        verbose_name = "Suggestion"
+        verbose_name_plural = "Suggestions"

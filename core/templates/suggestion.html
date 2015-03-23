@@ -1,0 +1,43 @@
+<div id="form" class="modal fade">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Suggestions</h4>
+                    </div>
+                    <div class="modal-body">
+                    <form id="suggestion_form" action="/ajax_suggestion/" method="POST">
+                        {% csrf_token %}
+                        {{ global_suggestion_form.as_p }}
+                    </form>
+                    <div class="modal-footer">
+                        <button id="suggestion_close" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="suggestion_submit" type="suggestion_submit" value="suggestion_submit" class="btn btn-default" data-dismiss="modal">Submit</button>
+                    </div>
+                    </div>
+                 </div>
+             </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+            $('#suggestion_submit').click(function(event) { // catch the form's submit event
+                event.preventDefault();
+                var form = $('#suggestion_form');
+                $.ajax({ // create an AJAX call...
+                        type: form.attr('method'),
+                        url: form.attr('action'),
+                        data: form.serialize(), // the file to call
+                    success: function(data) {
+                        alert(data)
+                        form[0].reset();
+                        $('#form').modal('hide');
+
+                    }
+                });
+                 return false;
+            });
+        });
+</script>
