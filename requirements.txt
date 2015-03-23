@@ -21,3 +21,4 @@ requests-oauthlib==0.4.2
 six==1.9.0
 sqlparse==0.1.14
 tablib==0.10.0
+whitenoise==1.0.6
