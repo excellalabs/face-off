@@ -1,14 +1,13 @@
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
 from django_redis import get_redis_connection
 import requests, re, ast, random, HTMLParser
 from core.models import UserMetrics, ColleagueGraph
 from django.core.exceptions import ObjectDoesNotExist
-from core.forms import ResultForm
-
+from core.forms import SuggestionForm, ResultForm
 
 def custom_login(request):
     print request.path
@@ -151,3 +150,17 @@ def four_random_cards(redis_con, network):
         if tmp not in users:
             users.append(tmp)
     return users
+
+
+def ajax_suggestion(request):
+    if request.method == 'POST' and request.is_ajax():
+        form = SuggestionForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponse('Thank you for your suggestion!')
+        else:
+            return HttpResponse('Data is invalid')
+
+    else:
+        return HttpResponse('Service unavailable')
+

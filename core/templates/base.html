@@ -72,7 +72,7 @@
 
 <body>
 <div class="container">
-    {% block content %}{% endblock %}
+    {% block content %} {% endblock %}
 </div>
 
 <footer class="footer">
@@ -84,6 +84,10 @@
             </li>
             <li>
                 <a href="https://github.com/excellaco/face_it/issues">Issues</a>
+            </li>
+            <li>
+                {% include 'suggestion.html' %}
+                <a href="#form" data-toggle="modal">Suggestion</a>
             </li>
         </ul>
     </div>
