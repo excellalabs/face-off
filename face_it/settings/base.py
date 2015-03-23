@@ -20,8 +20,8 @@ DATABASES = {
         'NAME': 'face_it',
         'USER': 'postgres',
         'PASSWORD': '',
-        'HOST': '',  # Set to empty string for localhost.
-        'PORT': '',  # Set to empty string for default.
+        'HOST': 'localhost',  # Set to empty string for localhost.
+        'PORT': '5432',  # Set to empty string for default.
         'CONN_MAX_AGE': 600,  # number of seconds database connections should persist for
     }
 }
