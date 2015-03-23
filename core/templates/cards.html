@@ -11,7 +11,7 @@
 {% with cards|resolve:round as list %}
     {% for user in list %}
         <div id="colleague{{ forloop.counter0 }}" class="flip-container"
-             onclick="flip('{{ forloop.counter0 }}', '{{ user.name }}')">
+             onclick="flip('{{ forloop.counter0 }}', '{{ user.id }}')">
             <div class="flipper">
                 <li class="no-bullets">
                     <div class="front">
@@ -19,7 +19,7 @@
                             <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
                         </div>
                     </div>
-                    {% if answer.name == user.name %}
+                    {% if answer.id == user.id %}
                         <div class="back panel panel-success">
                             <div class="panel-heading"><h4></h4></div>
                             <div class="panel-body">
@@ -48,7 +48,11 @@
     <button id="nextRound" onclick="nextRound()" class="btn btn-primary invisible">Next
         Round
     </button>
-    <div id="endGameLnk"></div>
+    <form id="resultsForm" action="{% url 'core:results' %}" method="post">
+        {% csrf_token %}
+        {{ resultsForm }}
+        <input id="resultsSubmit" type="submit" onclick="setForm()" class="btn btn-primary invisible" value="Results"/>
+    </form>
 </ul>
 
 <div class="row">
@@ -91,6 +95,13 @@
         }
     });
 
+    function setForm(){
+        $('[name=score]').val(score);
+        $('[name=cardIndex]').val(selectedCardIndex);
+        $('[name=results]').val('{{ cards }}');
+        $('#resultsForm').submit();
+    }
+
     function startGame(){
         timer = $("#countdown").countdown360({
             radius: 40,
@@ -115,14 +126,15 @@
 
     function nextRound() {
         var cards = '{{ cards }}';
-
-        $.get('/rounds/', {matrix: cards, round: round, score: score, cardIndex: selectedCardIndex}, function (data) {
+        formlessAjaxPostCSRFSetup();
+        $.post('/rounds/', {matrix: cards, round: round, score: score, cardIndex: selectedCardIndex},
+        function (data) {
             $('#cards').html(data);
         });
     }
 
     function flip(id, choice) {
-        if (choice == '{{ answer.name }}'){
+        if (choice == '{{ answer.id }}'){
             score += 1;
             updateStars(score-1);
             selectedCardIndex= id;
@@ -133,15 +145,14 @@
         disableCards(id, false);
     }
 
-    function renderResultsLInk(score){
-       $('#endGameLnk').append('<a id="endGame" href="{% url 'core:results' %}?score=' +
-        score + '&results=' + '{{ cards }}' + '&cardIndex=' + selectedCardIndex + '" class="btn btn-primary">Results</a>');
+    function renderResultsLnk(){
+        $('#resultsSubmit').removeClass('invisible');
     }
 
     {# disable onclick on other images, disable them & present next round button#}
     function disableCards(id, disableALL) {
         if (round == maxRound) {
-           renderResultsLInk(score);
+           renderResultsLnk();
         }
         for (var index = 0; index < maxRound; index++) {
             if (index != id || disableALL) {

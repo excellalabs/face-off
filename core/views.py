@@ -1,12 +1,13 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
 from django_redis import get_redis_connection
 import requests, re, ast, random, HTMLParser
-from core.models import UserMetrics, ColleagueGraph, MostKnown
+from core.models import UserMetrics, ColleagueGraph
 from django.core.exceptions import ObjectDoesNotExist
+from core.forms import ResultForm
 
 
 def custom_login(request):
@@ -53,17 +54,18 @@ def cards(request):
     user_round_matrix = [four_random_cards(redis_con, network) for x in range(5)]
     answer = random.choice(user_round_matrix[0])
 
-    context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer, 'round': 0, 'score': 0})
+    context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer,
+                                       'round': 0, 'score': 0})
     return render_to_response('game.html', context_instance=context)
 
 
 @login_required
 def next_round(request):
-    round = int(request.GET['round'])
-    score = int(request.GET['score'])
-    card_index = int(request.GET['cardIndex'])
+    round = int(request.POST['round'])
+    score = int(request.POST['score'])
+    card_index = int(request.POST['cardIndex'])
 
-    card_matrix = HTMLParser.HTMLParser().unescape(request.GET['matrix'])
+    card_matrix = HTMLParser.HTMLParser().unescape(request.POST['matrix'])
     card_matrix = ast.literal_eval(card_matrix)
 
     # Sets the Winner of the round to the cardMatrix
@@ -72,7 +74,8 @@ def next_round(request):
     # Prepares data for next round
     round += 1
     answer = random.choice(card_matrix[round])
-    context = RequestContext(request, {'cards': card_matrix, 'round': round, 'answer': answer, 'score': score})
+    context = RequestContext(request, {'cards': card_matrix, 'round': round, 'answer': answer,
+                                       'score': score, 'resultsForm': ResultForm()})
 
     return render_to_response('cards.html', context_instance=context)
 
@@ -85,20 +88,25 @@ def results(request):
         # This is here purely for backwards compatibility TODO remember to delete this line later
         metric = UserMetrics.objects.create(user=request.user).save()
 
-    metric.times_won = request.GET['score']
-    metric.save()
+    if request.method == 'POST':
+        form = ResultForm(request.POST)
+        if form.is_valid():
+            metric.times_won = form.cleaned_data['score']
+            metric.save()
 
-    results = ast.literal_eval(HTMLParser.HTMLParser().unescape(request.GET['results']))
-    card_index = int(request.GET['cardIndex'])
-    update_results_list(results, card_index, 4) # 4 representing the last round (zero-based)
-    save_metric_results(results, request.user)
+            results = ast.literal_eval(HTMLParser.HTMLParser().unescape(form.cleaned_data['results']))
+            card_index = form.cleaned_data['cardIndex']
 
-    return metrics(request)
+            update_results_list(results, card_index, 4)  # 4 representing the last round (zero-based)
+            save_metric_results(results, request.user)
+
+            return metrics(request, form.cleaned_data['score'])
+
 
 # Helper Functions
 
 
-def metrics(request):
+def metrics(request, score):
     metrics = ColleagueGraph.objects.filter(user=request.user)
     names = ''
     known = []
@@ -108,7 +116,8 @@ def metrics(request):
         known.append(metric.times_correct)
         imgs += str(metric.img_url) + ';'
 
-    context = RequestContext(request, {'names': names, 'known': known, 'mugs': imgs})
+    context = RequestContext(request, {'names': names, 'known': known,
+                                       'mugs': imgs, 'score': score})
     return render_to_response('results.html', context_instance=context)
 
 
@@ -133,6 +142,7 @@ def update_results_list(card_matrix, card_index, round):
         card_matrix[round] = {}
 
     return card_matrix
+
 
 def four_random_cards(redis_con, network):
     users = []
