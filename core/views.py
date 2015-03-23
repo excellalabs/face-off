@@ -93,10 +93,11 @@ def results(request):
     update_results_list(results, card_index, 4) # 4 representing the last round (zero-based)
     save_metric_results(results, request.user)
 
-    return render(request, 'results.html')
+    return metrics(request)
+
+# Helper Functions
 
 
-@login_required
 def metrics(request):
     metrics = ColleagueGraph.objects.filter(user=request.user)
     names = ''
@@ -108,9 +109,9 @@ def metrics(request):
         imgs += str(metric.img_url) + ';'
 
     context = RequestContext(request, {'names': names, 'known': known, 'mugs': imgs})
-    return render_to_response('metrics.html', context_instance=context)
+    return render_to_response('results.html', context_instance=context)
 
-# Helper Functions
+
 def save_metric_results(results, user):
     for result in results:
         if result:
