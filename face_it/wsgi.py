@@ -16,12 +16,15 @@ framework.
 import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "face_it.settings")
+os.environ.setdefault("REDISTOGO_URL", "redis://redistogo:282b96c958393475582729ad39f00734@greeneye.redistogo.com:10355/ ")
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
+from whitenoise.django import DjangoWhiteNoise
 from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+
+application = DjangoWhiteNoise(get_wsgi_application())
 
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication

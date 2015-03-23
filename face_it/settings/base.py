@@ -1,7 +1,6 @@
 # Django settings for face_it project.
 
-import os
-import sys
+import os, sys, urlparse
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
 
@@ -249,11 +248,14 @@ LOGGING = {
 
 LOGIN_URL = '/login'
 
+
+redis_url = os.environ.get('REDISTOGO_URL', 'redis://127.0.0.1:6379/1')
+
 # Cache Backend
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "%s" % redis_url,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "IGNORE_EXCEPTIONS": True,  # Redis is only used for cache so we do not want exceptions when Redis is down
