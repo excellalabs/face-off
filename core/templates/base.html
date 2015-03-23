@@ -33,6 +33,7 @@
 
     <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %} "></script>
     <script type="text/javascript" src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %} "></script>
+    <script type="text/javascript" src="{% static "js/util.js" %} "></script>
 </head>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -52,7 +53,8 @@
                     {% if request.user.is_authenticated %}
                         <img src='{{ user.yammer_url|replace:"/{width}/70"|replace:"/{height}/70" }}'>
                         <li class="pull-left"><a href="#">{{ request.user.get_full_name }}</a></li>
-                    {% endif %}</li>
+                    {% endif %}
+                </li>
                 <li class="center">
                     <a href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}" text-align:left><font size="5">Excella
                         Face It</font></a>

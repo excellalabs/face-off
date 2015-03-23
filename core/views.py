@@ -1,12 +1,14 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
 from django_redis import get_redis_connection
 import requests, re, ast, random, HTMLParser
-from core.models import UserMetrics
+from core.models import UserMetrics, ColleagueGraph
 from django.core.exceptions import ObjectDoesNotExist
+from core.forms import ResultForm
+
 
 def custom_login(request):
     print request.path
@@ -43,6 +45,7 @@ def cards(request):
         for user in users:
             if not pattern.match(user['mugshot_url']):
                 redis_con.sadd(user['network_name'] + '_users', {
+                    'id': user['id'],
                     'name': user['full_name'],
                     'mugshot': user['mugshot_url_template'],
                 })
@@ -51,22 +54,31 @@ def cards(request):
     user_round_matrix = [four_random_cards(redis_con, network) for x in range(5)]
     answer = random.choice(user_round_matrix[0])
 
-    context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer, 'round': 0, 'score': 0})
+    context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer,
+                                       'round': 0, 'score': 0})
     return render_to_response('game.html', context_instance=context)
 
 
 @login_required
 def next_round(request):
-    round = int(request.GET['round']) + 1
-    score = int(request.GET['score'])
+    round = int(request.POST['round'])
+    score = int(request.POST['score'])
+    card_index = int(request.POST['cardIndex'])
 
-    card_matrix = HTMLParser.HTMLParser().unescape(request.GET['matrix'])
+    card_matrix = HTMLParser.HTMLParser().unescape(request.POST['matrix'])
     card_matrix = ast.literal_eval(card_matrix)
 
+    # Sets the Winner of the round to the cardMatrix
+    update_results_list(card_matrix, card_index, round)
+
+    # Prepares data for next round
+    round += 1
     answer = random.choice(card_matrix[round])
-    context = RequestContext(request, {'cards': card_matrix, 'round': round, 'answer': answer, 'score': score})
+    context = RequestContext(request, {'cards': card_matrix, 'round': round, 'answer': answer,
+                                       'score': score, 'resultsForm': ResultForm()})
 
     return render_to_response('cards.html', context_instance=context)
+
 
 @login_required
 def results(request):
@@ -76,10 +88,60 @@ def results(request):
         # This is here purely for backwards compatibility TODO remember to delete this line later
         metric = UserMetrics.objects.create(user=request.user).save()
 
-    metric.times_won = request.GET['score']
-    metric.save()
+    if request.method == 'POST':
+        form = ResultForm(request.POST)
+        if form.is_valid():
+            metric.times_won = form.cleaned_data['score']
+            metric.save()
 
-    return render(request, 'results.html')
+            results = ast.literal_eval(HTMLParser.HTMLParser().unescape(form.cleaned_data['results']))
+            card_index = form.cleaned_data['cardIndex']
+
+            update_results_list(results, card_index, 4)  # 4 representing the last round (zero-based)
+            save_metric_results(results, request.user)
+
+            return metrics(request, form.cleaned_data['score'])
+
+
+# Helper Functions
+
+
+def metrics(request, score):
+    metrics = ColleagueGraph.objects.filter(user=request.user)
+    names = ''
+    known = []
+    imgs = ''
+    for metric in metrics:
+        names += str(metric.name) + ';'
+        known.append(metric.times_correct)
+        imgs += str(metric.img_url) + ';'
+
+    context = RequestContext(request, {'names': names, 'known': known,
+                                       'mugs': imgs, 'score': score})
+    return render_to_response('results.html', context_instance=context)
+
+
+def save_metric_results(results, user):
+    for result in results:
+        if result:
+            try:
+                metric = ColleagueGraph.objects.get(user=user, yammer_id=result['id'])
+                metric.times_correct += 1
+            except ObjectDoesNotExist:
+                metric = ColleagueGraph.objects.create(user=user, yammer_id=result['id'],
+                                                       name=result['name'], img_url=result['mugshot'],
+                                                       times_correct=1)
+            finally:
+                metric.save()
+
+
+def update_results_list(card_matrix, card_index, round):
+    if card_index > -1:
+        card_matrix[round] = card_matrix[round][card_index]
+    else:
+        card_matrix[round] = {}
+
+    return card_matrix
 
 
 def four_random_cards(redis_con, network):
