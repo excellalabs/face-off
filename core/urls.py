@@ -6,6 +6,6 @@ urlpatterns = patterns('',
     url(r'^login/$', 'core.views.custom_login', name='login'),
     url(r'^rounds/$', 'core.views.next_round', name='rounds'),
     url(r'^results/$', 'core.views.results', name='results'),
-    url(r'^suggestion/$', 'core.views.suggestion', name='suggestion'),
+    url(r'^ajax_suggestion/$', 'core.views.ajax_suggestion', name='ajax_suggestion'),
 
 )

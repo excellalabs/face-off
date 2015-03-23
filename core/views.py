@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response
 from django.template.context import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
 from django_redis import get_redis_connection
@@ -91,15 +91,16 @@ def four_random_cards(redis_con, network):
             users.append(tmp)
     return users
 
-def suggestion(request):
-    if request.method == 'POST':
-        form = SuggestionForm(request.POST)
 
+def ajax_suggestion(request):
+    if request.method == 'POST' and request.is_ajax():
+        form = SuggestionForm(request.POST)
         if form.is_valid():
             form.save(commit=True)
-            return HttpResponseRedirect('/login/')
+            return HttpResponse('Thank you for your suggestion!')
+        else:
+            return HttpResponse('Data is invalid')
 
     else:
-        form = SuggestionForm()
+        return HttpResponse('Service unavailable')
 
-    return render(request, 'suggestion.html', {'form': form})

@@ -19,7 +19,7 @@ class MostKnownResource(resources.ModelResource):
     class Meta:
         model = MostKnown
 
-class SuggestionsResrouce(resources.ModelResource):
+class SuggestionsResource(resources.ModelResource):
     class Meta:
         model = Suggestions
 
@@ -36,7 +36,7 @@ class MostKnownAdmin(ImportExportActionModelAdmin):
     resource_class = MostKnown
 
 class SuggestionsAdmin(ImportExportActionModelAdmin):
-    resource_class = SuggestionsResrouce
+    resource_class = SuggestionsResource
 
 admin.site.register(UserProfile),
 admin.site.register(GlobalMetrics, GlobalMetricsAdmin)
