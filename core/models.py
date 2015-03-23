@@ -25,6 +25,20 @@ class UserMetrics(models.Model):
         return self.user.get_full_name() + " - lifetime points: " + str(self.times_won)
 
 
+class ColleagueGraph(models.Model):
+    user = models.ForeignKey(UserProfile, related_name='user_colleague_graph')
+
+    yammer_id = models.IntegerField(default=0)
+    name = models.CharField(max_length=200, blank=True)
+    img_url = models.URLField(blank=True)
+    times_correct = models.IntegerField(blank=True, default=0)
+
+    class Meta:
+        ordering = ["user__id"]
+        verbose_name = "Graph of Known Colleagues"
+        verbose_name_plural = "Graphs of Known Colleagues"
+
+
 class MostKnown(models.Model):
     most_known_colleague = models.CharField(max_length=200, blank=True)
     # Timestamp for each entry for historical graphing

@@ -5,19 +5,73 @@
     <div class="page-header" id="banner">
         <div class="row">
             <h1 class="text-center">
-                <img src="https://marasdesbois.files.wordpress.com/2015/02/59454-game-over.jpg"/>
+                <img style="width:30%; height:30%;" src="https://marasdesbois.files.wordpress.com/2015/02/59454-game-over.jpg"/>
             </h1>
         </div>
     </div>
     <div class="row ">
         <div class="text-center">
-            <h3>Score:  {% show_stars request.GET.score %}
+            <h3>Score:  {% show_stars score %}
                 <a id="endGame" href="{% url 'core:cards' %}" class="btn btn-primary">Play Again!</a>
             </h3>
         </div>
     </div>
     <div class="row text-center">
-
+    <div id="metrics" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+           <h3>Who you Know!</h3>
+           <div style="width: 60%; margin-left:20%">
+              <canvas id="graph" height="15%" width="30%" ></canvas>
+           </div>
+           <div class="container">
+            <div class="carousel-caption">
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#metrics" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#metrics" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div><!-- /.carousel -->
     </div>
+
+<script>
+    var labels = '{{ names }}';
+    labels = labels.split(';');
+    var known = {{ known }};
+    var imgs = '{{ mugs }}';
+    imgs = imgs.split(';');
+
+	var barChartData = {
+		labels : labels,
+		datasets : [
+			{
+				fillColor : "rgba(51, 102, 153,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : known
+			}
+		]
+
+	};
+	window.onload = function(){
+		var ctx = document.getElementById("graph").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			responsive : true
+		});
+	};
+
+</script>
 {% endblock %}
 

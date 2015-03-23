@@ -125,7 +125,7 @@ PIPELINE_JS = {
     'js': {
         'source_filenames': (
             'bower_components/underscore/underscore.js',
-            'js/*.js',
+            'js/compress/*.js',
         ),
         # Compress all passed files into `js/js.min.js`.
         'output_filename': 'js/js.min.js',
