@@ -22,6 +22,10 @@
     "url": "https://github.com/excellaco/face_it/issues"
   },
   "homepage": "https://col-league.herokuapp.com/",
+  "engines": {
+    "node": "^0.12.1",
+    "npm": "^2.1.18"
+  },
   "dependencies": {
     "bower": "^1.3.12"
   },
