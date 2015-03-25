@@ -5,7 +5,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-DATABASES = {'default': dj_database_url.config(default='postgres://waxqvtkhzjuakg:6M5hafAUkFzrgEz2KCjBT065Ih@ec2-107-22-253-198.compute-1.amazonaws.com:5432/d93akfi9778vpr')}
+DATABASES = {'default': dj_database_url.config(default=os.environ.get('HEROKU_PSTGRS_URL'))}
 
 try:
 	from .local import *
