@@ -159,7 +159,7 @@ def ajax_suggestion(request):
             form.save(commit=True)
             return HttpResponse('Thank you for your suggestion!')
         else:
-            return HttpResponse('Data is invalid')
+            return HttpResponse("Invalid Data!")
 
     else:
         return HttpResponse('Service unavailable')
