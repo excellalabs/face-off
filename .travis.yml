@@ -1,14 +1,15 @@
 language: python
 python:
-  - "2.7"
-# command to install dependencies
+- '2.7'
 install:
-  - "pip install -r requirements.txt"
-  - "pip install coveralls"
-
-# command to run tests
-script:
-  coverage run --source=face_it manage.py test
-
-after_success:
-  coveralls
+- pip install -r requirements.txt
+- pip install coveralls
+script: coverage run --source=face_it manage.py test
+after_success: coveralls
+deploy:
+  provider: heroku
+  api_key:
+    secure: TUA6f4/ccF4xPDVMXoAoSvdCNoB2AABKeO/rjJTHVAjk+htc5eETg/GZrOEOYZ+ci+T3U16Upwp2+4OmDQ0fhPvzkPU1U/m/JBNfdz6ENH5Ao9b/B2kRc1SSaTddBshsSQFtxv3mk9u2gIgAFY2E/N2Jyw2vRJGgbOpfZCN3XYE=
+  app: col-league
+  on:
+    repo: excellaco/face_it
