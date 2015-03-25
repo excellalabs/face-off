@@ -2,10 +2,13 @@ from django import forms
 
 from core.models import Suggestions
 
+
 class SuggestionForm(forms.ModelForm):
 
     class Meta:
         model = Suggestions
+        fields = '__all__'
+
 
 class ResultForm(forms.Form):
     score = forms.IntegerField(widget=forms.HiddenInput())
