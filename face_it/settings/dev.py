@@ -7,5 +7,3 @@ try:
 except ImportError:
 	pass
 
-SOCIAL_AUTH_YAMMER_KEY = ''
-SOCIAL_AUTH_YAMMER_SECRET = ''
