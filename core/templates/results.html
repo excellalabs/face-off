@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load stars %}
+{% load staticfiles %}
 
 {% block content %}
     <div class="page-header" id="banner">
@@ -70,6 +71,7 @@
 	};
 
 </script>
+<link rel="stylesheet" href="{% static 'css/override.css' %}">
 <script type="text/javascript" src="{% static "js/Chart.js" %} "></script>
 {% endblock %}
 
