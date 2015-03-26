@@ -1,0 +1,304 @@
+[
+{
+    "fields": {
+        "first_name": "Sean",
+        "last_name": "Lewis",
+        "email": "sean.lewis@excella.com",
+        "suggestion": "Test 1\r\n"
+    },
+    "model": "core.suggestions",
+    "pk": 7
+},
+{
+    "fields": {
+        "first_name": "Emmanual",
+        "last_name": "Apua",
+        "email": "emmanual.apau@excella.com",
+        "suggestion": "Test 2\r\n"
+    },
+    "model": "core.suggestions",
+    "pk": 8
+},
+{
+    "fields": {
+        "username": "seanlewis",
+        "first_name": "Sean",
+        "last_name": "Lewis",
+        "is_active": true,
+        "yammer_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/no_photo.png",
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2015-03-26T17:15:07.320Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "!42YmbFMNwm5BMRVnDGEfJS9eau8SHrTyl7bGmUsH",
+        "email": "sean.lewis@excella.com",
+        "date_joined": "2015-03-26T14:55:15.938Z"
+    },
+    "model": "core.userprofile",
+    "pk": 1
+},
+{
+    "fields": {
+        "username": "williamhapp",
+        "first_name": "William",
+        "last_name": "Happ",
+        "is_active": true,
+        "yammer_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/Tn1Ksvz0HPXWj0cGRM5FCFR75mZwLjTb",
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2015-03-26T17:18:25.427Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "!nJvX6wTZN5pkmCYDx9XtTbxI1lr8stGPqBYPXllY",
+        "email": "william.happ@excella.com",
+        "date_joined": "2015-03-26T15:59:06.397Z"
+    },
+    "model": "core.userprofile",
+    "pk": 2
+},
+{
+    "fields": {
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "yammer_url": "",
+        "is_superuser": true,
+        "is_staff": true,
+        "last_login": "2015-03-26T17:14:41.259Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$2IjXYEzYGCtK$l1L1h+0cFsPbXu9fhdxePCtl8Gea7w3KVBv6h1e51ek=",
+        "email": "admin@admin.com",
+        "date_joined": "2015-03-26T16:24:18.190Z"
+    },
+    "model": "core.userprofile",
+    "pk": 3
+},
+{
+    "fields": {
+        "user": 1,
+        "times_won": 3,
+        "times_known": 0
+    },
+    "model": "core.usermetrics",
+    "pk": 1
+},
+{
+    "fields": {
+        "user": 2,
+        "times_won": 5,
+        "times_known": 0
+    },
+    "model": "core.usermetrics",
+    "pk": 2
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 1532603806,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/XlGfbK6KjL53BrT0F21kSZ6mqV-2T65j",
+        "user": 1,
+        "name": "Emmanuel Apau"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 1
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 1515906602,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/FSc4VHZCfspMbvxcXDx2TzHhrsxg3t0s",
+        "user": 1,
+        "name": "Alanna Reed"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 2
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 1490266487,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/QtSHVHbhjf3SC94mdTfr-gzCrRbkTCLk",
+        "user": 1,
+        "name": "Brian Palladino"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 3
+},
+{
+    "fields": {
+        "times_correct": 2,
+        "yammer_id": 9513949,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/2Lgk3McfsQcTqHwLNkXj4PVVsMZ1-h7G",
+        "user": 1,
+        "name": "Aryn Myers"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 4
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 9186463,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/NNTj04vX7q7-TMxwMxFDTXkPQbHCp3Bz",
+        "user": 1,
+        "name": "Erin Grace"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 5
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 1494501293,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/hjdM9Pjt203qmzpT4f5tKJj1f1QP6LNT",
+        "user": 1,
+        "name": "Dev Mehta"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 6
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 1488560887,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/Mdzx3pcH2p8bxGZ8JCsdNXKv0CWllgJn",
+        "user": 1,
+        "name": "Daniel Davis"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 7
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 9513942,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/WvtQTg2V5b11Q2Fhr6vr4VdnR7GrQxGQ",
+        "user": 1,
+        "name": "David Neumann"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 8
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 1502557437,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/cB551lD1k8zXsZlGctQtCkKj5wfdKlJ6",
+        "user": 1,
+        "name": "Allison Smith"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 9
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 1524667962,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/tMQhxxNZkZSZLlhkCBbKJ4QxKwR1Zftz",
+        "user": 1,
+        "name": "Allison Zentmayer"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 10
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 1503111071,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/W4SkVDvxJd9WLLw8w36c0nG16M8pfp78",
+        "user": 1,
+        "name": "Erland Kelley"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 11
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 9269552,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/NSGwnMPSZdSlG998LzVrj7vkHz08PbmF",
+        "user": 1,
+        "name": "Bryan Batty"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 12
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 10353421,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/QrTTH18dF4hDfTLXtwP1RTDzHLNMlkxC",
+        "user": 2,
+        "name": "Aaron Franssell"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 13
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 1489064919,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/qcfG4Zr51ZnKZcD38NZW1JRNDXLFkKzm",
+        "user": 2,
+        "name": "Doguhan Uluca"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 14
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 9513949,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/2Lgk3McfsQcTqHwLNkXj4PVVsMZ1-h7G",
+        "user": 2,
+        "name": "Aryn Myers"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 15
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 1519583090,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/CR8cBgn80cQDLMlW5l7CcSfk6WGkpXVZ",
+        "user": 2,
+        "name": "Brian Sjoberg"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 16
+},
+{
+    "fields": {
+        "times_correct": 1,
+        "yammer_id": 9186463,
+        "img_url": "https://mug0.assets-yammer.com/mugshot/images/{width}x{height}/NNTj04vX7q7-TMxwMxFDTXkPQbHCp3Bz",
+        "user": 2,
+        "name": "Erin Grace"
+    },
+    "model": "core.colleaguegraph",
+    "pk": 17
+},
+{
+    "fields": {
+        "uid": "1519516095",
+        "extra_data": "{\"access_token\": {\"user_id\": 1519516095, \"view_groups\": true, \"modify_messages\": true, \"network_id\": 27254, \"created_at\": \"2015/03/26 14:55:15 +0000\", \"view_members\": true, \"authorized_at\": \"2015/03/26 14:55:15 +0000\", \"view_subscriptions\": true, \"view_messages\": true, \"modify_subscriptions\": true, \"token\": \"B0UnzUqfWr61HjrT5qAqcg\", \"expires_at\": null, \"view_tags\": true, \"network_name\": \"excella.com\", \"network_permalink\": \"excella.com\"}, \"expires\": null, \"mugshot_url\": null, \"id\": null}",
+        "user": 1,
+        "provider": "yammer"
+    },
+    "model": "default.usersocialauth",
+    "pk": 1
+},
+{
+    "fields": {
+        "uid": "1524404288",
+        "extra_data": "{\"access_token\": {\"user_id\": 1524404288, \"view_groups\": true, \"modify_messages\": true, \"network_id\": 27254, \"created_at\": \"2015/03/25 14:05:11 +0000\", \"view_members\": true, \"authorized_at\": \"2015/03/25 14:05:11 +0000\", \"view_subscriptions\": true, \"view_messages\": true, \"modify_subscriptions\": true, \"token\": \"mIq44LocY9GA9Z8MAskV2g\", \"expires_at\": null, \"view_tags\": true, \"network_name\": \"excella.com\", \"network_permalink\": \"excella.com\"}, \"expires\": null, \"mugshot_url\": null, \"id\": null}",
+        "user": 2,
+        "provider": "yammer"
+    },
+    "model": "default.usersocialauth",
+    "pk": 2
+}
+]
