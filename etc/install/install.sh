@@ -44,11 +44,6 @@ if ! command -v psql; then
     /etc/init.d/postgresql reload
 fi
 
-# Memcached
-if ! command -v memcached; then
-    apt-get install -y memcached
-fi
-
 # virtualenv global setup
 if ! command -v pip; then
     easy_install -U pip
