@@ -15,7 +15,7 @@ Setup
 * Install Vagrant and Virtualbox
 * Initialize the vagrant box - `vagrant up`
 * Log into the server - `vagrant ssh`
-* Load fixture data `./manage.py loaddata "core/fixtures/core-test.json` (optional)
+* Load fixture data `./manage.py loaddata "core/fixtures/core-test.json"` (optional)
 * Create a super user using the command `python manage.py createsuperuser`
 * Start Redis Cache server prior in a separate tab - `redis-server` 
 * Launch the app - `./manage.py runserver 0.0.0.0:8000`
