@@ -6,14 +6,12 @@ django-bower==5.0.2
 django-compressor==1.4
 django-debug-toolbar==1.2.2
 django-import-export==0.2.6
-django-pipeline==1.4.6
 django-redis==3.8.3
 futures==2.2.0
 gunicorn==19.1.1
 oauthlib==0.7.2
 psycopg2==2.5.4
 PyJWT==0.4.1
-python-memcached==1.53
 python-openid==2.2.5
 python-social-auth==0.2.2
 redis==2.10.3
