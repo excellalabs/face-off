@@ -4,7 +4,7 @@ python:
 install:
 - pip install -r requirements.txt
 - pip install coveralls
-script: coverage run --source=core manage.py test --exclude __init__.py
+script: coverage run --source=core manage.py test
 after_success: coveralls
 deploy:
   provider: heroku
