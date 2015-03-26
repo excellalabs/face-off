@@ -15,14 +15,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
     <title>{% block title %}Face It{% endblock %}</title>
-    {% load pipeline %}
 
     <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/paper/bootstrap.min.css" rel="stylesheet">
 
     {% compress css %}
         {% comment %} Core CSS includes (for inclusion on all pages) {% endcomment %}
-        {% stylesheet 'css' %}
     {% endcompress %}
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sticky-footer.css' %}">
+     <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.css' %}">
 
     {% compress css %}
         {% comment %}
@@ -33,6 +34,7 @@
 
     <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %} "></script>
     <script type="text/javascript" src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %} "></script>
+    <script type="text/javascript" src="{% static "bower_components/underscore/underscore-min.js" %} "></script>
     <script type="text/javascript" src="{% static "js/util.js" %} "></script>
 </head>
 
@@ -102,9 +104,9 @@
     {% comment %}
         Core JS includes (for inclusion on all pages) to be specified here
     {% endcomment %}
-    <!-- compressed tags is created by Django Pipeline. -->
-    {% javascript 'js' %}
 {% endcompress %}
+
+<script type="text/javascript" src="{% static "js/crsf.cookie.js" %} "></script>
 
 {% compress js %}
     {% comment %}

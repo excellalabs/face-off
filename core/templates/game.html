@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load cards %}
+{% load staticfiles %}
 
 {% block content %}
     <div>
@@ -9,5 +10,8 @@
         </ul>
         </p>
     </div>
+
+    <link rel="stylesheet" href="{% static 'css/colleageCards.css' %}">
+    <script type="text/javascript" src="{% static "js/countdown.js" %} "></script>
 {% endblock %}
 

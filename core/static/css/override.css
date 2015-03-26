@@ -8,6 +8,11 @@
     color: green !important;
 }
 
-.glyphicon-star{
-    color:#fc0 !important;
+.glyphicon-ok-sign{
+    color:green !important;
+    font-size:24px !important;
+}
+
+.fa-circle-o{
+    font-size: 24px !important;
 }

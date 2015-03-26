@@ -9,7 +9,6 @@ sys.path.append(os.path.join(PROJECT_ROOT, "lib"))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-PIPELINE_ENABLED = True
 
 ADMINS = (
 )
@@ -20,8 +19,8 @@ DATABASES = {
         'NAME': 'face_it',
         'USER': 'postgres',
         'PASSWORD': '',
-        'HOST': 'localhost',  # Set to empty string for localhost.
-        'PORT': '5432',  # Set to empty string for default.
+        'HOST': '',  # Set to empty string for localhost.
+        'PORT': '',  # Set to empty string for default.
         'CONN_MAX_AGE': 600,  # number of seconds database connections should persist for
     }
 }
@@ -92,45 +91,10 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
-    'pipeline.finders.PipelineFinder',
 )
 
 #Use Django Pipeline for static file storage
-STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
-
-#No Compressing for now TODO
-PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
-PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
-
-# CSS Files. Eventually remove CDN TODO
-PIPELINE_CSS = {
-    # Project libraries.
-    'css': {
-        'source_filenames': (
-            'bower_components/bootstrap-social/bootstrap-social.css',
-            'bower_components/font-awesome/css/font-awesome.css',
-            'css/*.css',
-        ),
-        # Compress passed libraries and have
-        # the output in`css/css.min.css`.
-        'output_filename': 'css/css.min.css',
-        'variant': 'datauri',
-    }
-    # ...
-}
-# JavaScript files.
-PIPELINE_JS = {
-    # Project JavaScript libraries.
-    'js': {
-        'source_filenames': (
-            'bower_components/underscore/underscore.js',
-            'js/compress/*.js',
-        ),
-        # Compress all passed files into `js/js.min.js`.
-        'output_filename': 'js/js.min.js',
-    }
-    # ...
-}
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '-_9f3*2^6vul3^qz^x+(s^w8ko(4k#v!ftkji8fq+&=@^%xh^8'
@@ -195,7 +159,6 @@ INSTALLED_APPS = (
     'core',
     'social.apps.django_app.default',
     'djangobower',
-    'pipeline',
     'face_it',
     'import_export',
 )
@@ -247,7 +210,6 @@ LOGGING = {
 }
 
 LOGIN_URL = '/login'
-
 
 redis_url = os.environ.get('REDISTOGO_URL', 'redis://127.0.0.1:6379/1')
 
