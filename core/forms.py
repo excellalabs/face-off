@@ -6,6 +6,7 @@ class SuggestionForm(forms.ModelForm):
 
     class Meta:
         model = Suggestions
+        fields = ('first_name', 'last_name', 'email', 'suggestion')
 
 class ResultForm(forms.Form):
     score = forms.IntegerField(widget=forms.HiddenInput())
