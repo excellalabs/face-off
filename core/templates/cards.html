@@ -68,11 +68,22 @@
             <div class="modal-header">
                 <h4 class="modal-title">Col-League</h4>
             </div>
-            <div class="modal-body">
-                 <button id="nextRound" onclick="startGame()" class="btn btn-primary" data-dismiss="modal">Start Game</button>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
+            {%  if '/no_photo.png' in request.user.yammer_url %}
+            <div class="modal=body">
+                <p class="text">Hey, {{ request.user.get_full_name }}! Click <a href="https://www.yammer.com/excella.com/#/Threads/index?type=algo">here</a>
+                to upload an image and become part of the game!
+                </p>
+                </div>
+                <div class="modal-footer">
+                    <button id="nextRound" onclick="startGame()" class="btn btn-primary pull-left" data-dismiss="modal">I don't care   <i class="fa fa-meh-o" ></i></button>
+                    <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
+                </div>
+            {%  elif '/no_photo.png' not in request.user.yammer_url  %}
+                <div class="modal-footer">
+                    <button id="nextRound" onclick="startGame()" class="btn btn-primary pull-left" data-dismiss="modal">Start Game</button>
+                    <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
+                </div>
+            {%  endif %}
             </div>
         </div>
     </div>
