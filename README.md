@@ -14,6 +14,7 @@ Setup
 * Add your keys to `face_it/settings/local.py`
 * Install Vagrant and Virtualbox
 * Initialize the vagrant box - `vagrant up`
+* Load fixture data `./manage.py loaddata "core/fixtures/core-test.json` (optional)
 * Log into the server - `vagrant ssh`
 * Create a super user using the command `python manage.py createsuperuser`
 * Start Redis Cache server prior in a separate tab - `redis-server` 
