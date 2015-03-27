@@ -34,11 +34,17 @@ def cards(request):
         social = request.user.social_auth.get(provider='yammer')
         access_token = social.extra_data['access_token']
 
-        response = requests.get(
-            'https://www.yammer.com/api/v1/users.json?',
-            headers={'Authorization': 'Bearer %s' % access_token['token']}
-        )
-        users.extend(response.json())
+        page = 1
+
+        while True:
+            response = requests.get(
+                'https://www.yammer.com/api/v1/users.json?page=%d' % page,
+                headers = {'Authorization': 'Bearer %s' % access_token['token']}
+            )
+            if response.json() == []:
+                break
+            users.extend(response.json())
+            page += 1
 
         pattern = re.compile('.+no_photo.png$')  # Filters out users with no photo
         for user in users:
