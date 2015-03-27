@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser, User
 class UserProfile(AbstractUser):
     # The additional attributes we wish to include.
     yammer_url = models.URLField(blank=True)
+    upload_image_url = models.URLField(blank=True)
 
     def __unicode__(self):
         return self.username
@@ -37,6 +38,10 @@ class ColleagueGraph(models.Model):
         ordering = ["user__id"]
         verbose_name = "Graph of Known Colleagues"
         verbose_name_plural = "Graphs of Known Colleagues"
+
+    #Renamed for admin page usage
+    def __unicode__(self):
+        return self.name
 
 
 class MostKnown(models.Model):

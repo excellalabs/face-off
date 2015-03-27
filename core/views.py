@@ -53,6 +53,7 @@ def cards(request):
                     'id': user['id'],
                     'name': user['full_name'],
                     'mugshot': user['mugshot_url_template'],
+                    'user_url': user['web_url'],
                 })
         redis_con.expire(network + '_users', 43200)  # Redis cache expiration set to 12hrs(43200s)
 
