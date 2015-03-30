@@ -96,7 +96,7 @@ MEDIA_UPLOAD_ROOT = os.path.join(MEDIA_ROOT, 'uploads')
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = STATIC_URL + 'media/'
 
-#No Compressing for now TODO
+STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
 PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
 
@@ -276,14 +276,3 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details'
 )
-
-# AWS Set Up
-if not DEBUG:
-    AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-   # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    STATICFILES_STORAGE = 'core.storage.S3PipelineManifestStorage'
-    STATIC_URL = 'http://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-    AWS_QUERYSTRING_AUTH = False
-    AWS_S3_FILE_OVERWRITE = True
-else:
-    STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
