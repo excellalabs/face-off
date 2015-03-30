@@ -9,6 +9,7 @@ sys.path.append(os.path.join(PROJECT_ROOT, "lib"))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+PIPELINE_ENABLED = True
 
 ADMINS = (
 )
@@ -82,6 +83,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
+    'pipeline.finders.PipelineFinder',
 )
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
@@ -94,17 +96,39 @@ MEDIA_UPLOAD_ROOT = os.path.join(MEDIA_ROOT, 'uploads')
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = STATIC_URL + 'media/'
 
-# Compressor
-COMPRESS_CSS_FILTERS = [
-    'compressor.filters.css_default.CssAbsoluteFilter',
-    'compressor.filters.cssmin.CSSMinFilter',
-]
+#No Compressing for now TODO
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
 
-COMPRESS_STORAGE = 'myapp.storage.CachedS3BotoStorage'
-
-COMPRESS_URL = STATIC_URL
-
-COMPRESS_OFFLINE = True
+# CSS Files. Eventually remove CDN TODO
+PIPELINE_CSS = {
+    # Project libraries.
+    'css': {
+        'source_filenames': (
+            'bower_components/bootstrap-social/bootstrap-social.css',
+            'bower_components/font-awesome/css/font-awesome.css',
+            'css/*.css',
+        ),
+        # Compress passed libraries and have
+        # the output in`css/css.min.css`.
+        'output_filename': 'css/css.min.css',
+        'variant': 'datauri',
+    }
+    # ...
+}
+# JavaScript files.
+PIPELINE_JS = {
+    # Project JavaScript libraries.
+    'js': {
+        'source_filenames': (
+            'bower_components/underscore/underscore.js',
+            'js/compress/*.js',
+        ),
+        # Compress all passed files into `js/js.min.js`.
+        'output_filename': 'js/js.min.js',
+    }
+    # ...
+}
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '-_9f3*2^6vul3^qz^x+(s^w8ko(4k#v!ftkji8fq+&=@^%xh^8'
@@ -169,6 +193,7 @@ INSTALLED_APPS = (
     'core',
     'social.apps.django_app.default',
     'djangobower',
+    'pipeline',
     'face_it',
     'import_export',
     'storages',
@@ -253,16 +278,12 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 # AWS Set Up
-if DEBUG:
+if not DEBUG:
     AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-   # STATICFILES_STORAGE = 'core.storage.S3PipelineManifestStorage'
-    AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
-         # That will tell boto that when it uploads files to S3, it should set properties
-         # on them so that when S3 serves them, it'll include those HTTP headers in the response.
-         # Those HTTP headers in turn will tell browsers that they can cache these files for a very long time.
-        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-        'Cache-Control': 'max-age=94608000',
-    }
+   # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    STATICFILES_STORAGE = 'core.storage.S3PipelineManifestStorage'
+    STATIC_URL = 'http://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_FILE_OVERWRITE = True
 else:
-    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'

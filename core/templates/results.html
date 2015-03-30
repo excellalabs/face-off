@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load stars %}
-{% load staticfiles %}
 
 {% block content %}
     <div class="page-header" id="banner">
@@ -43,6 +42,9 @@
     </div><!-- /.carousel -->
     </div>
 
+{% endblock %}
+
+{% block extra_js %}
 <script>
     var labels = '{{ names }}';
     labels = labels.split(';');
@@ -71,7 +73,5 @@
 	};
 
 </script>
-<link rel="stylesheet" href="{% static 'css/override.css' %}">
-<script type="text/javascript" src="{% static "js/Chart.js" %} "></script>
 {% endblock %}
 

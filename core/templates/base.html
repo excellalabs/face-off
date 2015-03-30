@@ -2,6 +2,7 @@
 {% load compress %}
 {% load replace %}
 {% load staticfiles %}
+{% load pipeline %}
 
 {% comment %} paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ {% endcomment %}
 <!--[if lt IE 7]> <html class="lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
@@ -18,23 +19,16 @@
 
     <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/paper/bootstrap.min.css" rel="stylesheet">
 
-    {% compress css %}
-        {% comment %} Core CSS includes (for inclusion on all pages) {% endcomment %}
-    {% endcompress %}
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-    <link rel="stylesheet" href="{% static 'css/sticky-footer.css' %}">
-     <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.css' %}">
+    {% comment %} Core CSS includes (for inclusion on all pages) {% endcomment %}
+    {% stylesheet 'css' %}
 
-    {% compress css %}
-        {% comment %}
-            Per-page CSS is compressed separately so that the global stuff doesn't get re-downloaded each time
-        {% endcomment %}
-        {% block extra_css %}{% endblock %}
-    {% endcompress %}
+    {% comment %}
+        Per-page CSS is compressed separately so that the global stuff doesn't get re-downloaded each time
+    {% endcomment %}
+    {% block extra_css %}{% endblock %}
 
     <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %} "></script>
     <script type="text/javascript" src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %} "></script>
-    <script type="text/javascript" src="{% static "bower_components/underscore/underscore-min.js" %} "></script>
     <script type="text/javascript" src="{% static "js/util.js" %} "></script>
 </head>
 
@@ -100,19 +94,17 @@
     http://developer.yahoo.com/performance/rules.html#js_bottom
 {% endcomment %}
 
-{% compress js %}
     {% comment %}
         Core JS includes (for inclusion on all pages) to be specified here
     {% endcomment %}
-{% endcompress %}
+     <!-- compressed tags is created by Django Pipeline. -->
+    {% javascript 'js' %}
 
-<script type="text/javascript" src="{% static "js/crsf.cookie.js" %} "></script>
-
-{% compress js %}
-    {% comment %}
-        Per-page JS is compressed separately so that the global stuff doesn't get re-downloaded each time
-    {% endcomment %}
-    {% block extra_js %}{% endblock %}
-{% endcompress %}
+    {% compress js %}
+        {% comment %}
+            Per-page JS is compressed separately so that the global stuff doesn't get re-downloaded each time
+        {% endcomment %}
+        {% block extra_js %}{% endblock %}
+    {% endcompress %}
 </body>
 </html>
