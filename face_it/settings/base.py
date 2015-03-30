@@ -80,15 +80,9 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
 )
-
-#Use Django Pipeline for static file storage
-# Storages
-if not DEBUG and HOSTNAME in LOCAL_HOSTNAMES:
-    STATICFILES_STORAGE = 'myapp.storage.CachedS3BotoStorage'
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -102,9 +96,9 @@ MEDIA_URL = STATIC_URL + 'media/'
 
 # Compressor
 COMPRESS_CSS_FILTERS = [
-        'compressor.filters.css_default.CssAbsoluteFilter',
-        'compressor.filters.cssmin.CSSMinFilter',
-    ]
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+]
 
 COMPRESS_STORAGE = 'myapp.storage.CachedS3BotoStorage'
 
@@ -168,7 +162,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
 
     'django.contrib.admin',
-    #'django.contrib.sites',
+    # 'django.contrib.sites',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 
@@ -258,7 +252,17 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.user.user_details'
 )
 
-#AWS Set Up
-if not DEBUG:
+# AWS Set Up
+if DEBUG:
     AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+   # STATICFILES_STORAGE = 'core.storage.S3PipelineManifestStorage'
+    AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
+         # That will tell boto that when it uploads files to S3, it should set properties
+         # on them so that when S3 serves them, it'll include those HTTP headers in the response.
+         # Those HTTP headers in turn will tell browsers that they can cache these files for a very long time.
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'Cache-Control': 'max-age=94608000',
+    }
+else:
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
