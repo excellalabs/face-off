@@ -70,7 +70,7 @@
             </div>
             {%  if '/no_photo.png' in request.user.yammer_url %}
             <div class="modal=body">
-                <p class="text">Hey, {{ request.user.get_full_name }}! Click <a href="https://www.yammer.com/excella.com/#/Threads/index?type=algo">here</a>
+                <p class="text">Hey, {{ request.user.get_full_name }}! Click <a href="{{ request.user.upload_image_url }}">here</a>
                 to upload an image and become part of the game!
                 </p>
                 </div>

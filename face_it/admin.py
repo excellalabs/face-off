@@ -1,7 +1,12 @@
 from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
-from core.models import UserMetrics, UserProfile, GlobalMetrics, MostKnown, Suggestions
+from core.models import UserMetrics, UserProfile, GlobalMetrics, MostKnown, Suggestions, ColleagueGraph
+
+
+class ColleagueGraphResource(resources.ModelResource):
+    class Meta:
+        model = ColleagueGraph
 
 
 class UserMetricsResource(resources.ModelResource):
@@ -23,6 +28,8 @@ class SuggestionsResource(resources.ModelResource):
     class Meta:
         model = Suggestions
 
+class ColleagueGraphAdmin(ImportExportActionModelAdmin):
+    resource_class = ColleagueGraphResource
 
 class UserMetricsAdmin(ImportExportActionModelAdmin):
     resource_class = UserMetricsResource
@@ -38,8 +45,13 @@ class MostKnownAdmin(ImportExportActionModelAdmin):
 class SuggestionsAdmin(ImportExportActionModelAdmin):
     resource_class = SuggestionsResource
 
+class UserProfileAdmin(admin.ModelAdmin):
+    fields = []
+
+
 admin.site.register(UserProfile),
 admin.site.register(GlobalMetrics, GlobalMetricsAdmin)
 admin.site.register(MostKnown, MostKnownAdmin)
 admin.site.register(UserMetrics, UserMetricsAdmin)
 admin.site.register(Suggestions, SuggestionsAdmin)
+admin.site.register(ColleagueGraph, ColleagueGraphAdmin)
