@@ -21,15 +21,14 @@
 
     {% comment %} Core CSS includes (for inclusion on all pages) {% endcomment %}
     {% stylesheet 'css' %}
+    <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %} "></script>
+    <script type="text/javascript" src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %} "></script>
+    <script type="text/javascript" src="{% static "js/util.min.js" %} "></script>
 
     {% comment %}
         Per-page CSS is compressed separately so that the global stuff doesn't get re-downloaded each time
     {% endcomment %}
     {% block extra_css %}{% endblock %}
-
-    <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %} "></script>
-    <script type="text/javascript" src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %} "></script>
-    <script type="text/javascript" src="{% static "js/util.js" %} "></script>
 </head>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -94,17 +93,9 @@
     http://developer.yahoo.com/performance/rules.html#js_bottom
 {% endcomment %}
 
-    {% comment %}
-        Core JS includes (for inclusion on all pages) to be specified here
-    {% endcomment %}
-     <!-- compressed tags is created by Django Pipeline. -->
-    {% javascript 'js' %}
+ <!-- compressed tags is created by Django Pipeline. -->
+{% javascript 'js' %}
 
-    {% compress js %}
-        {% comment %}
-            Per-page JS is compressed separately so that the global stuff doesn't get re-downloaded each time
-        {% endcomment %}
-        {% block extra_js %}{% endblock %}
-    {% endcompress %}
+{% block extra_js %}{% endblock %}
 </body>
 </html>
