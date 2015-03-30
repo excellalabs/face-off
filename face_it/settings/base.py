@@ -9,6 +9,7 @@ sys.path.append(os.path.join(PROJECT_ROOT, "lib"))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+PIPELINE_ENABLED = True
 
 ADMINS = (
 )
@@ -55,15 +56,6 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
-
 # Bower Configuration
 BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'core/static')
 
@@ -89,12 +81,54 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
+    'pipeline.finders.PipelineFinder',
 )
 
-#Use Django Pipeline for static file storage
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
+MEDIA_UPLOAD_ROOT = os.path.join(MEDIA_ROOT, 'uploads')
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = STATIC_URL + 'media/'
+
+STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+
+# CSS Files. Eventually remove CDN TODO
+PIPELINE_CSS = {
+    # Project libraries.
+    'css': {
+        'source_filenames': (
+            'bower_components/bootstrap-social/bootstrap-social.css',
+            'bower_components/font-awesome/css/font-awesome.css',
+            'css/*.css',
+        ),
+        # Compress passed libraries and have
+        # the output in`css/css.min.css`.
+        'output_filename': 'css/css.min.css',
+        'variant': 'datauri',
+    }
+    # ...
+}
+# JavaScript files.
+PIPELINE_JS = {
+    # Project JavaScript libraries.
+    'js': {
+        'source_filenames': (
+            'bower_components/underscore/underscore.js',
+            'js/compress/*.js',
+        ),
+        # Compress all passed files into `js/js.min.js`.
+        'output_filename': 'js/js.min.js',
+    }
+    # ...
+}
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '-_9f3*2^6vul3^qz^x+(s^w8ko(4k#v!ftkji8fq+&=@^%xh^8'
@@ -152,15 +186,17 @@ INSTALLED_APPS = (
     'debug_toolbar',
 
     'django.contrib.admin',
-    #'django.contrib.sites',
+    # 'django.contrib.sites',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 
     'core',
     'social.apps.django_app.default',
     'djangobower',
+    'pipeline',
     'face_it',
     'import_export',
+    'storages',
 )
 
 EMAIL_SUBJECT_PREFIX = '[face_it] '
