@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+set -eo pipefail
+
+# The post_compile hook is run by heroku-buildpack-python
+
+echo "-----> I'm post-compile hook"
+
+# Work around Heroku bug whereby pylibmc isn't available during
+# compile phase. See: https://github.com/heroku/heroku-buildpack-python/issues/57
 
 if [ -f bin/install_nodejs ]; then
     echo "-----> Running install_nodejs"
@@ -13,4 +21,3 @@ if [ -f bin/install_nodejs ]; then
     fi
 
 fi
-
