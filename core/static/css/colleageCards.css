@@ -62,12 +62,13 @@
     transform: rotateY(180deg);
 }
 
-.brightness img{
-    opacity: 0.4;
-    filter: alpha(opactiy=40);
-}
-
-.brightness img:hover{
-    opacity: 1.0;
-    filter: alpha(opacity=100);
+.thumbnail {
+border: 3px solid #ddd;
+-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.055);
+-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.055);
+box-shadow: 0 1px 3px rgba(0,0,0,0.055);
+-webkit-transition: all .2s ease-in-out;
+-moz-transition: all .2s ease-in-out;
+-o-transition: all .2s ease-in-out;
+transition: all .2s ease-in-out;
 }

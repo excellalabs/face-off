@@ -16,6 +16,9 @@ Setup
 * Initialize the vagrant box - `vagrant up`
 * Log into the server - `vagrant ssh`
 * Load fixture data `./manage.py loaddata "core/fixtures/core-test.json"` (optional)
+*   -Applying fixtures pushes pre-populated data into your application. This is
+*       generally used for testing purposes.
+*
 * Create a super user using the command `python manage.py createsuperuser`
 * Start Redis Cache server prior in a separate tab - `redis-server` 
 * Launch the app - `./manage.py runserver 0.0.0.0:8000`

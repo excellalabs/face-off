@@ -6,6 +6,7 @@ class UserProfile(AbstractUser):
     # The additional attributes we wish to include.
     yammer_url = models.URLField(blank=True)
     upload_image_url = models.URLField(blank=True)
+    network = models.CharField(max_length=50)
 
     def __unicode__(self):
         return self.username
