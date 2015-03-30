@@ -54,11 +54,13 @@ def cards(request):
                     'name': user['full_name'],
                     'mugshot': user['mugshot_url_template'],
                     'user_url': user['web_url'],
+                    'network': user['network_name'],
                 })
         redis_con.expire(network + '_users', 43200)  # Redis cache expiration set to 12hrs(43200s)
 
     user_round_matrix = [four_random_cards(redis_con, network) for x in range(5)]
     answer = random.choice(user_round_matrix[0])
+
 
     context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer,
                                        'round': 0, 'score': 0})
@@ -164,7 +166,7 @@ def ajax_suggestion(request):
         form = SuggestionForm(request.POST)
         if form.is_valid():
             form.save(commit=True)
-            return HttpResponse('Thank you for your suggestion!')
+            return HttpResponse("Thank you for your suggestion!")
         else:
             return HttpResponse("Invalid Data!")
 

@@ -32,38 +32,29 @@
 </head>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-
-        <div class="collapse navbar-collapse" id="navbar-main">
-            <ul class="nav navbar-nav">
-                <li class="pull-left">
-                    {% if request.user.is_authenticated %}
-                        <img src='{{ user.yammer_url|replace:"/{width}/70"|replace:"/{height}/70" }}'>
-                        <li class="pull-left"><a href="#">{{ request.user.get_full_name }}</a></li>
-                    {% endif %}
-                </li>
-                <li class="center">
-                    <a href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}" text-align:left><font size="5">Excella
-                        Face It</font></a>
-                </li>
-                <li class="pull-right">
-                    {% if request.user.is_authenticated %}
-                        <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
-                    {% endif %}
-                </li>
-            </ul>
-        </div>
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <a class="navbar-brand" href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}">{{ request.user.network|capfirst|replace:"/.com/" }} Col-league</a>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-left">
+            {% if request.user.is_authenticated %}
+            <li><img src='{{ user.yammer_url|replace:"/{width}/70"|replace:"/{height}/70" }}'></li>
+            <li><a>{{ request.user.get_full_name }}</a></li>
+            {% endif %}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a></li>
+            <li><a></a></li>
+            {%  endif %}
+        </ul>
     </div>
 </nav>
-
 
 <body>
 <div class="container">

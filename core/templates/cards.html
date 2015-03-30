@@ -15,19 +15,20 @@
             <div class="flipper">
                 <li class="no-bullets">
                     <div class="front">
-                        <div class="brightness">
-                            <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256" }}'>
+                        <div>
+                            <a href="#" class="thumbnail">
+                            <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
+                            </a>
                         </div>
                     </div>
                     {% if answer.id == user.id %}
-                        <div class="back panel panel-success">
-                            <div class="panel-heading"><h4></h4></div>
-                            <div class="panel-body">
-                                <h3>{{ user.name }}</h3>
-
-                                <h1><i class="fa fa-check-circle-o fa-6"></i></h1>
+                            <div class="back panel panel-success">
+                                <div class="panel-heading"><h4></h4></div>
+                                <div class="panel-body">
+                                    <h3>{{ user.name }}</h3>
+                                    <h1><i class="fa fa-check-circle-o fa-6"></i></h1>
+                                </div>
                             </div>
-                        </div>
                     {% else %}
                         <div class="back panel panel-danger">
                             <div class="panel-heading"><h4></h4></div>
@@ -69,16 +70,20 @@
                 <h4 class="modal-title">Col-League</h4>
             </div>
             {%  if '/no_photo.png' in request.user.yammer_url %}
-            <div class="modal=body">
-                <p class="text">Hey, {{ request.user.get_full_name }}! Click <a href="{{ request.user.upload_image_url }}">here</a>
-                to upload an image and become part of the game!
-                </p>
+                <div class="modal=body">
+                    <p class="text">Hey, {{ request.user.get_full_name }}! Click <a href="{{ request.user.upload_image_url }}">here</a>
+                    to upload an image and become part of the game!
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button id="nextRound" onclick="startGame()" class="btn btn-primary pull-left" data-dismiss="modal">I don't care   <i class="fa fa-meh-o" ></i></button>
                     <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
                 </div>
             {%  elif '/no_photo.png' not in request.user.yammer_url  %}
+                 <div class="modal=body">
+                    <p class="text"> Get ready to play! The clock starts when
+                    you start the game!</p>
+                </div>
                 <div class="modal-footer">
                     <button id="nextRound" onclick="startGame()" class="btn btn-primary pull-left" data-dismiss="modal">Start Game</button>
                     <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
