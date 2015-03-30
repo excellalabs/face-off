@@ -25,3 +25,5 @@ AWS_S3_FILE_OVERWRITE = True
 
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
 PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.yuglify.YuglifyCompressor'
+
+PIPELINE_YUGLIFY_BINARY = '/app/node_modules/.bin/yuglify'
