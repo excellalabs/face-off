@@ -55,15 +55,6 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
-
 # Bower Configuration
 BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'core/static')
 
@@ -94,7 +85,32 @@ STATICFILES_FINDERS = (
 )
 
 #Use Django Pipeline for static file storage
+# Storages
+if not DEBUG and HOSTNAME in LOCAL_HOSTNAMES:
+    STATICFILES_STORAGE = 'myapp.storage.CachedS3BotoStorage'
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
+MEDIA_UPLOAD_ROOT = os.path.join(MEDIA_ROOT, 'uploads')
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = STATIC_URL + 'media/'
+
+# Compressor
+COMPRESS_CSS_FILTERS = [
+        'compressor.filters.css_default.CssAbsoluteFilter',
+        'compressor.filters.cssmin.CSSMinFilter',
+    ]
+
+COMPRESS_STORAGE = 'myapp.storage.CachedS3BotoStorage'
+
+COMPRESS_URL = STATIC_URL
+
+COMPRESS_OFFLINE = True
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '-_9f3*2^6vul3^qz^x+(s^w8ko(4k#v!ftkji8fq+&=@^%xh^8'
@@ -161,6 +177,7 @@ INSTALLED_APPS = (
     'djangobower',
     'face_it',
     'import_export',
+    'storages',
 )
 
 EMAIL_SUBJECT_PREFIX = '[face_it] '
@@ -240,3 +257,8 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details'
 )
+
+#AWS Set Up
+if not DEBUG:
+    AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
