@@ -13,3 +13,4 @@ deploy:
   app: col-league
   on:
     repo: excellaco/face_it
+  run: "python manage.py migrate"
