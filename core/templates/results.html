@@ -103,9 +103,6 @@
         });
 
         $(".carousel").on('slid.bs.carousel', function (evt) {
-            $('#graph').css('height','400px');
-            $('#globalTenGraph').css('height','400px');
-
             allActive();
             loadCharts();
             showGraph()
