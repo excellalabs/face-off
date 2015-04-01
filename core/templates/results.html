@@ -44,10 +44,20 @@
         <div id="metrics" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
           <div class="carousel-inner" role="listbox">
-            <div class="item active">
+            <div id="whoYouKnow" class="item active">
                <h3>Who you Know!</h3>
                <div style="width: 60%; margin-left:20%">
                   <canvas id="graph" height="15%" width="30%" ></canvas>
+               </div>
+               <div class="container">
+                <div class="carousel-caption">
+                </div>
+              </div>
+            </div>
+            <div id="globalTen" class="item active">
+               <h3>Top 10 Globally Known Colleagues!</h3>
+               <div style="width: 60%; margin-left:20%">
+                  <canvas id="globalTenGraph" height="15%" width="30%" style="width: 828px; height: 414px;"></canvas>
                </div>
                <div class="container">
                 <div class="carousel-caption">
@@ -70,33 +80,97 @@
 
 {% block extra_js %}
 <script>
-    var labels = $.parseHTML('{{ names }}');
-    labels = labels[0].textContent;
-    labels = labels.split(';');
-    var known = {{ known }};
-    var imgs = '{{ mugs }}';
-    imgs = imgs.split(';');
+    var graphId = ['#whoYouKnow', '#globalTen'];
+    var graphIdx = 0;
 
-	var barChartData = {
-		labels : labels,
-		datasets : [
-			{
-				fillColor : "rgba(51, 102, 153,0.5)",
-				strokeColor : "rgba(220,220,220,0.8)",
-				highlightFill: "rgba(220,220,220,0.75)",
-				highlightStroke: "rgba(220,220,220,1)",
-				data : known
-			}
-		]
+    function allActive(){
+        for(var x = 0; x < graphId.length; x++){
+            $(graphId[x]).addClass('active');
+        }
+    }
 
-	};
-	window.onload = function(){
-		var ctx = document.getElementById("graph").getContext("2d");
-		window.myBar = new Chart(ctx).Bar(barChartData, {
+    function showGraph(){
+        $(graphId[graphIdx]).removeClass('active');
+        if(graphIdx != (graphId.length -1))
+            graphIdx++;
+        else
+            graphIdx = 0;
+    }
+
+    $(document).ready(function () {
+        $('.carousel').carousel({
+            interval: false
+        });
+
+        $(".carousel").on('slid.bs.carousel', function (evt) {
+            allActive();
+            loadCharts();
+            showGraph()
+        });
+
+        loadCharts();
+        $('#globalTen').removeClass('active');
+    });
+
+    function whoYouKnowGraph(){
+        var labels = $.parseHTML('{{ names }}');
+        labels = labels[0].textContent;
+        labels = labels.split(';');
+        var known = {{ known }};
+        var imgs = '{{ mugs }}';
+        imgs = imgs.split(';');
+
+        var barChartData = {
+            labels : labels,
+            datasets : [
+                {
+                    fillColor : "rgba(51, 102, 153,0.5)",
+                    strokeColor : "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data : known
+                }
+            ]
+
+        };
+
+        return barChartData
+    }
+
+    function globalTopTenGraph(){
+        var labels = $.parseHTML('{{ gNames }}');
+        labels = labels[0].textContent;
+        labels = labels.split(';');
+        var known = {{ gKnown }};
+        var imgs = '{{ gMugs }}';
+        imgs = imgs.split(';');
+
+        var barChartData = {
+            labels : labels,
+            datasets : [
+                {
+                    fillColor : "rgba(51, 102, 153,0.5)",
+                    strokeColor : "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data : known
+                }
+            ]
+
+        };
+
+        return barChartData
+    }
+
+    function loadCharts(){
+		new Chart(document.getElementById("graph").getContext("2d")).Bar(whoYouKnowGraph(), {
 			responsive : true
 		});
-	};
 
+		new Chart(document.getElementById("globalTenGraph").getContext("2d")).Bar(globalTopTenGraph(), {
+			responsive : true
+		});
+    }
 </script>
 {% endblock %}
 
