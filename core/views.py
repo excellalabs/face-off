@@ -10,7 +10,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from core.forms import SuggestionForm, ResultForm
 
 def custom_login(request):
-    print request.path
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
     else:
@@ -108,13 +107,13 @@ def results(request):
             update_results_list(results, card_index, 4)  # 4 representing the last round (zero-based)
             save_metric_results(results, request.user)
 
-            return metrics(request, form.cleaned_data['score'])
+            return metrics(request, form.cleaned_data['score'], results)
 
 
 # Helper Functions
 
 
-def metrics(request, score):
+def metrics(request, score, matrix):
     metrics = ColleagueGraph.objects.filter(user=request.user)
     names = ''
     known = []
@@ -125,7 +124,7 @@ def metrics(request, score):
         imgs += str(metric.img_url) + ';'
 
     context = RequestContext(request, {'names': names, 'known': known,
-                                       'mugs': imgs, 'score': score})
+                                       'mugs': imgs, 'score': score, 'cards': matrix})
     return render_to_response('results.html', context_instance=context)
 
 
@@ -147,7 +146,8 @@ def update_results_list(card_matrix, card_index, round):
     if card_index > -1:
         card_matrix[round] = card_matrix[round][card_index]
     else:
-        card_matrix[round] = {}
+        card_matrix[round][card_index]['wrong'] = True
+        card_matrix[round] = card_matrix[round][card_index]
 
     return card_matrix
 
