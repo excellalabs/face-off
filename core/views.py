@@ -10,7 +10,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from core.forms import SuggestionForm, ResultForm
 
 def custom_login(request):
-    print request.path
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
     else:
@@ -124,7 +123,6 @@ def metrics(request, score, matrix):
         known.append(metric.times_correct)
         imgs += str(metric.img_url) + ';'
 
-    print names
     context = RequestContext(request, {'names': names, 'known': known,
                                        'mugs': imgs, 'score': score, 'cards': matrix})
     return render_to_response('results.html', context_instance=context)
