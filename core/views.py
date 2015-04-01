@@ -123,8 +123,19 @@ def metrics(request, score, matrix):
         known.append(metric.times_correct)
         imgs += str(metric.img_url) + ';'
 
-    context = RequestContext(request, {'names': names, 'known': known,
-                                       'mugs': imgs, 'score': score, 'cards': matrix})
+
+    gMetrics = globallyKnownColleagues()
+    gNames = ''
+    gKnown = []
+    gImgs = ''
+    for metric in gMetrics:
+        gNames += str(metric.name) + ';'
+        gKnown.append(metric.times_correct)
+        gImgs += str(metric.img_url) + ';'
+
+    context = RequestContext(request, {'names': names, 'known': known,'mugs': imgs, 'score': score, 'cards': matrix,
+                                       'gNames': gNames, 'gKnown': gKnown,'mugs': gImgs
+                                       })
     return render_to_response('results.html', context_instance=context)
 
 
@@ -159,6 +170,13 @@ def four_random_cards(redis_con, network):
         if tmp not in users:
             users.append(tmp)
     return users
+
+
+def globallyKnownColleagues():
+    top_scores = (ColleagueGraph.objects.order_by('-times_correct').values_list('times_correct', flat=True).distinct())
+    top_10_known_colleagues = (ColleagueGraph.objects.order_by('-times_correct').filter(times_correct__in=top_scores[:10]))[:10]
+
+    return top_10_known_colleagues
 
 
 def ajax_suggestion(request):
