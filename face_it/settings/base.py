@@ -142,7 +142,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -183,7 +183,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'compressor',
-    'debug_toolbar',
+    #'debug_toolbar',
 
     'django.contrib.admin',
     # 'django.contrib.sites',
