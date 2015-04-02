@@ -75,27 +75,28 @@
                     to upload an image and become part of the game!
                     </p>
                 </div>
-                <div class="modal-footer">
-                    <button id="nextRound" onclick="startGame()" class="btn btn-primary pull-left" data-dismiss="modal">I don't care   <i class="fa fa-meh-o" ></i></button>
-                    <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
-                </div>
             {%  elif '/no_photo.png' not in request.user.yammer_url  %}
-                 <div class="modal=body">
+                <div class="modal=body">
                     <p class="text"> Get ready to play! The clock starts when
                     you select your mode!</p>
                 </div>
+            {%  endif %}
                 <div class="modal-footer">
-                    <div class="col-sm-2"></div>
-                        <button id="easyGame" onclick="startEasyGame()" class="col-md-4 btn btn-primary" data-dismiss="modal">Educational</button>
-                        <button id="hardGame" onclick="startHardGame()" class="col-md-4 btn btn-primary" data-dismiss="modal">Competitive</button>
-
-
-                    <div class=".col-md-offset-10 col-md-8">
+                    <div id="noPicMenu" class="">
+                        <button id="noPicButton" onclick="showGameMenu()" class="btn btn-primary pull-left">I don't care   <i class="fa fa-meh-o" ></i></button>
                         <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
                     </div>
 
+                    <div id="gameMenu" class="invisible">
+                        <div class="col-sm-2"></div>
+                        <button id="easyGame" onclick="startEasyGame()" class="col-md-4 btn btn-primary" data-dismiss="modal">Educational</button>
+                        <button id="hardGame" onclick="startHardGame()" class="col-md-4 btn btn-primary" data-dismiss="modal">Competitive</button>
+
+                        <div class=".col-md-offset-10 col-md-8">
+                            <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
+                        </div>
+                    </div>
                 </div>
-            {%  endif %}
             </div>
         </div>
     </div>
@@ -123,6 +124,11 @@
 
         }
     });
+
+    function showGameMenu(){
+        $('#gameMenu').removeClass('invisible');
+        $('#noPicMenu').addClass('invisible');
+    }
 
     function setForm(){
         $('[name=score]').val(score);
