@@ -82,11 +82,18 @@
             {%  elif '/no_photo.png' not in request.user.yammer_url  %}
                  <div class="modal=body">
                     <p class="text"> Get ready to play! The clock starts when
-                    you start the game!</p>
+                    you select your mode!</p>
                 </div>
                 <div class="modal-footer">
-                    <button id="nextRound" onclick="startGame()" class="btn btn-primary pull-left" data-dismiss="modal">Start Game</button>
-                    <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
+                    <div class="col-sm-2"></div>
+                        <button id="easyGame" onclick="startEasyGame()" class="col-md-4 btn btn-primary" data-dismiss="modal">Educational</button>
+                        <button id="hardGame" onclick="startHardGame()" class="col-md-4 btn btn-primary" data-dismiss="modal">Competitive</button>
+
+
+                    <div class=".col-md-offset-10 col-md-8">
+                        <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
+                    </div>
+
                 </div>
             {%  endif %}
             </div>
@@ -101,13 +108,19 @@
     var round = {{ round }};
     var timer;
     var selectedCardIndex = -1;
+    var easyGame = 'easy';
+    var gameMode;
 
     $(document).ready(function () {
         if(round == 0){
             $("#startGameModal").modal('show');
         }
         else{
-            startGame();
+            if(gameMode != easyGame)
+                startHardGame();
+            else
+                startEasyGame();
+
         }
     });
 
@@ -118,7 +131,16 @@
         $('#resultsForm').submit();
     }
 
-    function startGame(){
+    function startEasyGame(){
+        startTimer();
+        gameMode = easyGame;
+    }
+
+    function startHardGame(){
+        startTimer();
+    }
+
+    function startTimer(){
         timer = $("#countdown").countdown360({
             radius: 40,
             seconds: 10,
@@ -155,10 +177,20 @@
             updateStars(score-1);
             selectedCardIndex= id;
         }
+
         $('#colleague' + id).addClass('clickFlip');
+
         //Interrupt countdown
         timer.stop(function () {});
         disableCards(id, false);
+    }
+
+    function flipNoScore(id) {
+        var card = $('#colleague' + id);
+        if(card.hasClass('clickFlip'))
+            card.removeClass('clickFlip');
+        else
+            card.addClass('clickFlip');
     }
 
     function renderResultsLnk(){
@@ -171,14 +203,24 @@
            renderResultsLnk();
         }
         for (var index = 0; index < maxRound; index++) {
-            if (index != id || disableALL) {
-                $('#colleague' + index).removeAttr('onclick');
-                $('#colleague' + index).addClass('greyOut');
-
-                if (round < maxRound) {
-                    $('#nextRound').removeClass('invisible');
+            var card = $('#colleague' + index);
+            if(gameMode != easyGame){
+                 if (index != id || disableALL) {
+                    card.removeAttr('onclick');
+                    card.addClass('greyOut');
                 }
             }
+            else{
+                if (index != id) {
+                    card.addClass('clickFlip');
+                }
+                card.removeAttr('onclick');
+                card.attr('onclick', 'flipNoScore(' + index + ')');
+
+            }
+        }
+        if (round < maxRound) {
+            $('#nextRound').removeClass('invisible');
         }
     }
 </script>
