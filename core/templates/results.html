@@ -41,9 +41,31 @@
     </div>
 
     <div class="row text-center">
-        <div id="metrics" class="carousel slide" data-ride="carousel">
+        <div id="metrics" class="carousel slide" data-ride="carousel" data-type="multi">
           <!-- Indicators -->
           <div class="carousel-inner" role="listbox">
+           <div id="getToKnow" class="item active">
+            <h3> People you should get to know!</h3>
+            <div style="width: 60%; margin-left:19%">
+                <div class="row-center">
+                    <ul id="cards" class="text-center">
+                        {% for item in leastknown %}
+                        <div id="colleague{{ forloop.counter0 }}" class="flip-container" style="width: 150px">
+                                <li class="no-bullets">
+                                    <div>
+                                        <div>
+                                            <h5>{{ item.name }}</h5>
+                                            <a href="{{ item.yammer_url }}" class="thumbnail">
+                                                <img src='{{ item.img_url|replace:"/{width}/100"|replace:"/{height}/100"}}'>
+                                            </a>
+                                         </div>
+                                    </div>
+                        </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+          </div>
             <div id="whoYouKnow" class="item active">
                <h3>Who you Know!</h3>
                <div style="width: 60%; margin-left:20%">
@@ -80,7 +102,7 @@
 
 {% block extra_js %}
 <script>
-    var graphId = ['#whoYouKnow', '#globalTen'];
+    var graphId = ['#whoYouKnow', '#globalTen','#getToKnow'];
     var graphIdx = 0;
 
     function allActive(){
@@ -90,11 +112,24 @@
     }
 
     function showGraph(){
-        $(graphId[graphIdx]).removeClass('active');
-        if(graphIdx != (graphId.length -1))
+        if(graphIdx == 0){
+            $(graphId[graphIdx+1]).removeClass('active');
+            $(graphId[graphIdx+2]).removeClass('active');
             graphIdx++;
+        }
+        else if(graphIdx == 1){
+            $(graphId[graphIdx-1]).removeClass('active');
+            $(graphId[graphIdx+1]).removeClass('active');
+            graphIdx++;
+        }
+        else if(graphIdx==2){
+            $(graphId[graphIdx-1]).removeClass('active');
+            $(graphId[graphIdx-2]).removeClass('active');
+            graphIdx=0;
+        }
         else
-            graphIdx = 0;
+            return
+
     }
 
     $(document).ready(function () {
@@ -109,7 +144,9 @@
         });
 
         loadCharts();
+        $('#whoYouKnow').removeClass('active');
         $('#globalTen').removeClass('active');
+
     });
 
     function whoYouKnowGraph(){
