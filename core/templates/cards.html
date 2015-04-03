@@ -75,32 +75,38 @@
                     to upload an image and become part of the game!
                     </p>
                 </div>
-            {%  elif '/no_photo.png' not in request.user.yammer_url  %}
-                <div class="modal-body">
-                    <p class="text"> Get ready to play! The clock starts when
-                    you select your mode!</p>
-                </div>
-            {%  endif %}
                 <div class="modal-footer">
                     <div id="noPicMenu" class="">
                         <button id="noPicButton" onclick="showGameMenu()" class="btn btn-primary pull-left">I don't care   <i class="fa fa-meh-o" ></i></button>
                         <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
                     </div>
-
                     <div id="gameMenu" class="invisible">
-                        <div class="col-sm-2"></div>
-                        <button id="easyGame" onclick="startEasyGame()" class="col-md-4 btn btn-primary" data-dismiss="modal">Educational</button>
-                        <button id="hardGame" onclick="startHardGame()" class="col-md-4 btn btn-primary" data-dismiss="modal">Competitive</button>
-
-                        <div class=".col-md-offset-10 col-md-8">
+                        <div class="col-sm-3"></div>
+                        <button id="easyGame" onclick="startEasyGame()" class="btn btn-primary pull-right" data-dismiss="modal">Educational</button>
+                        <button id="hardGame" onclick="startHardGame()" class="btn btn-primary pull-left" data-dismiss="modal">Competitive</button>
+                        <div>
+                            <a class="btn btn-default center-block" href="{% url 'auth:logout' %}?next=/">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            {%  elif '/no_photo.png' not in request.user.yammer_url  %}
+                <div class="modal-body">
+                    <p class="text"> Get ready to play! The clock starts when
+                    you select your mode!</p>
+                </div>
+                <div class="modal-footer">
+                    <div id="gameMenu">
+                        <div class="btn-group-vertical">
+                            <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary" data-dismiss="modal">Educational</button>
+                            <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary" data-dismiss="modal">Competitive</button>
                             <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
                         </div>
                     </div>
                 </div>
+            {%  endif %}
             </div>
         </div>
     </div>
-</div>
 
 <script>
     var maxRound = 4;

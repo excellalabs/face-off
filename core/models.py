@@ -33,6 +33,7 @@ class ColleagueGraph(models.Model):
     yammer_id = models.IntegerField(default=0)
     name = models.CharField(max_length=200, blank=True)
     img_url = models.URLField(blank=True)
+    yammer_url = models.URLField(blank=True)
     times_correct = models.IntegerField(blank=True, default=0)
 
     class Meta:

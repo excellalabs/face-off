@@ -114,6 +114,11 @@ def results(request):
 
 
 def metrics(request, score, matrix):
+
+    leastKnown = ColleagueGraph.objects.order_by('times_correct').filter(user=request.user)[:5]
+    for item in leastKnown:
+        print item.img_url
+
     metrics = ColleagueGraph.objects.filter(user=request.user)
     names = ''
     known = []
@@ -133,8 +138,8 @@ def metrics(request, score, matrix):
         gKnown.append(metric.times_correct)
         gImgs += str(metric.img_url) + ';'
 
-    context = RequestContext(request, {'names': names, 'known': known,'mugs': imgs, 'score': score, 'cards': matrix,
-                                       'gNames': gNames, 'gKnown': gKnown,'mugs': gImgs
+    context = RequestContext(request, {'names': names, 'known': known, 'mugs': imgs, 'score': score, 'cards': matrix,
+                                       'gNames': gNames, 'gKnown': gKnown, 'mugs': gImgs, 'leastknown': leastKnown
                                        })
     return render_to_response('results.html', context_instance=context)
 
@@ -148,6 +153,7 @@ def save_metric_results(results, user):
             except ObjectDoesNotExist:
                 metric = ColleagueGraph.objects.create(user=user, yammer_id=result['id'],
                                                        name=result['name'], img_url=result['mugshot'],
+                                                       yammer_url=result['user_url'],
                                                        times_correct=1)
             finally:
                 metric.save()
