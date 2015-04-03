@@ -1,5 +1,4 @@
 /.vagrant
-/static
 *.pyc
 /face_it/settings/local.py
 *.idea
