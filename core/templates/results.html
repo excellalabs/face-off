@@ -51,15 +51,10 @@
                     <ul id="cards" class="text-center">
                         {% for item in leastknown %}
                         <div id="colleague{{ forloop.counter0 }}" class="flip-container" style="width: 150px">
-                                <li class="no-bullets">
-                                    <div>
-                                        <div>
-                                            <h5>{{ item.name }}</h5>
-                                            <a href="{{ item.yammer_url }}" class="thumbnail">
-                                                <img src='{{ item.img_url|replace:"/{width}/100"|replace:"/{height}/100"}}'>
-                                            </a>
-                                         </div>
-                                    </div>
+                            <h5>{{ item.name }}</h5>
+                            <a href="{{ item.yammer_url }}" class="thumbnail">
+                                <img src='{{ item.img_url|replace:"/{width}/100"|replace:"/{height}/100"}}'>
+                            </a>
                         </div>
                         {% endfor %}
                     </ul>
