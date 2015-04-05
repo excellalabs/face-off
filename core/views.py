@@ -151,12 +151,7 @@ def update_results_list(card_matrix, card_index, round):
 
 
 def four_random_cards(redis_con, network):
-    users = []
-    while len(users) < 4:
-        tmp = ast.literal_eval(redis_con.srandmember(network + '_users'))
-        if tmp not in users:
-            users.append(tmp)
-    return users
+    return [ast.literal_eval(person) for person in redis_con.srandmember(network + '_users', 4)]
 
 
 def ajax_suggestion(request):
