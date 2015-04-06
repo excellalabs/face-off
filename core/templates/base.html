@@ -18,8 +18,8 @@
     {% comment %} Core CSS includes (for inclusion on all pages) {% endcomment %}
     {% stylesheet 'css' %}
     {% javascript 'global_js' %}
-    <script type="text/javascript" data-app-id="{{ app_id }}" src="{% static "js/util.js" %}"></script>
-    <script type="text/javascript" data-app-id="{{ app_id }}" src="{% static "js/yammer_sdk.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/util.min.js" %}"></script>
+    <script type="text/javascript" data-app-id="{{ app_id }}" src="{% static "js/yammer_sdk.min.js" %}"></script>
     <script>
         function yammerLogout(){
             yam.logout(function (response) {
