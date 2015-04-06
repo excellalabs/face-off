@@ -45,22 +45,25 @@
     {% endfor %}
 {% endwith %}
 
-<ul class="text-center">
-    <button id="nextRound" onclick="nextRound()" class="btn btn-primary invisible">Next
-        Round
-    </button>
-    <form id="resultsForm" action="{% url 'core:results' %}" method="post">
-        {% csrf_token %}
-        {{ resultsForm }}
-        <input id="resultsSubmit" type="submit" onclick="setForm()" class="btn btn-primary invisible" value="Results"/>
-    </form>
-</ul>
-
 <div class="row">
     <div class="col-md-8">
         <h2>Score: {% show_stars score %}</h2>
     </div>
     <div id="countdown"></div>
+</div>
+
+<ul class="text-center">
+    <form id="resultsForm" action="{% url 'core:results' %}" method="post">
+        {% csrf_token %}
+        {{ resultsForm }}
+        <input id="resultsSubmit" type="submit" onclick="setForm()" class="btn btn-primary invisible" value="Results" style="width: 160px; height: 60px"/>
+    </form>
+</ul>
+
+<div class="row">
+    <button id="nextRound" onclick="nextRound()" class="btn btn-primary invisible" style="width: 160px; height: 60px">Next
+        Round
+    </button>
 </div>
 
 <div id="startGameModal" class="modal fade"  data-backdrop="static" data-keyboard="false">
@@ -77,16 +80,13 @@
                 </div>
                 <div class="modal-footer">
                     <div id="noPicMenu" class="">
-                        <button id="noPicButton" onclick="showGameMenu()" class="btn btn-primary pull-left">I don't care   <i class="fa fa-meh-o" ></i></button>
-                        <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
+                        <button id="noPicButton" onclick="showGameMenu()" class="btn btn-primary btn-block">I don't care   <i class="fa fa-meh-o" ></i></button>
+                        <a class="btn btn-default btn-block" href="{% url 'auth:logout' %}?next=/">Logout</a>
                     </div>
                     <div id="gameMenu" class="invisible">
-                        <div class="col-sm-3"></div>
-                        <button id="easyGame" onclick="startEasyGame()" class="btn btn-primary pull-right" data-dismiss="modal">Educational</button>
-                        <button id="hardGame" onclick="startHardGame()" class="btn btn-primary pull-left" data-dismiss="modal">Competitive</button>
-                        <div>
-                            <a class="btn btn-default center-block" href="{% url 'auth:logout' %}?next=/">Logout</a>
-                        </div>
+                             <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block" data-dismiss="modal">Educational</button>
+                            <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block" data-dismiss="modal">Competitive</button>
+                            <a class="btn btn-default btn-block" href="{% url 'auth:logout' %}?next=/">Logout</a>
                     </div>
                 </div>
             {%  elif '/no_photo.png' not in request.user.yammer_url  %}
@@ -96,17 +96,15 @@
                 </div>
                 <div class="modal-footer">
                     <div id="gameMenu">
-                        <div class="btn-group-vertical">
-                            <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary" data-dismiss="modal">Educational</button>
-                            <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary" data-dismiss="modal">Competitive</button>
-                            <a class="btn btn-default" href="{% url 'auth:logout' %}?next=/">Logout</a>
-                        </div>
+                            <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block" data-dismiss="modal">Educational</button>
+                            <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block" data-dismiss="modal">Competitive</button>
+                            <a class="btn btn-default btn-block" href="{% url 'auth:logout' %}?next=/">Logout</a>
                     </div>
                 </div>
             {%  endif %}
-            </div>
         </div>
     </div>
+</div>
 
 <script>
     var maxRound = 4;

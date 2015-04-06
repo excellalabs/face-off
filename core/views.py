@@ -9,6 +9,7 @@ from core.models import UserMetrics, ColleagueGraph
 from django.core.exceptions import ObjectDoesNotExist
 from core.forms import SuggestionForm, ResultForm
 
+
 def custom_login(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
@@ -116,8 +117,6 @@ def results(request):
 def metrics(request, score, matrix):
 
     leastKnown = ColleagueGraph.objects.order_by('times_correct').filter(user=request.user)[:5]
-    for item in leastKnown:
-        print item.img_url
 
     metrics = ColleagueGraph.objects.filter(user=request.user)
     names = ''
@@ -170,12 +169,7 @@ def update_results_list(card_matrix, card_index, round):
 
 
 def four_random_cards(redis_con, network):
-    users = []
-    while len(users) < 4:
-        tmp = ast.literal_eval(redis_con.srandmember(network + '_users'))
-        if tmp not in users:
-            users.append(tmp)
-    return users
+    return [ast.literal_eval(person) for person in redis_con.srandmember(network + '_users', 4)]
 
 
 def globallyKnownColleagues():

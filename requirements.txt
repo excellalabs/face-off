@@ -22,3 +22,4 @@ requests-oauthlib==0.4.2
 six==1.9.0
 sqlparse==0.1.14
 tablib==0.10.0
+selenium==2.45.0
