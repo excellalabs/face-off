@@ -1,4 +1,4 @@
-Face It ![Build Status](https://travis-ci.org/excellaco/face_it.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/excellaco/face_it/badge.svg)](https://coveralls.io/r/excellaco/face_it)
+Col-league ![Build Status](https://travis-ci.org/excellaco/face_it.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/excellaco/face_it/badge.svg)](https://coveralls.io/r/excellaco/face_it)
 
 
 =======================

@@ -41,51 +41,38 @@
     </div>
 
     <div class="row text-center">
-        <div id="metrics" class="carousel slide" data-ride="carousel">
+        <div id="metrics" class="carousel slide" data-ride="carousel" data-type="multi">
           <!-- Indicators -->
           <div class="carousel-inner" role="listbox">
-           <div id="getToKnow" class="item active">
-            <h3> People you should get to know!</h3>
-            <div style="width: 60%; margin-left:19%">
-                <div class="row-center">
-                    <ul id="cards" class="text-center">
-                        {% for item in leastknown %}
-                        <div id="colleague{{ forloop.counter0 }}" class="flip-container" style="width: 150px">
-                                <li class="no-bullets">
-                                    <div>
-                                        <div>
-                                            <h5>{{ item.name }}</h5>
-                                            <a href="{{ item.yammer_url }}" class="thumbnail">
-                                                <img src='{{ item.img_url|replace:"/{width}/100"|replace:"/{height}/100"}}'>
-                                            </a>
-                                         </div>
+                <div id="whoYouKnow" class="item active">
+                   <h3>Who you Know!</h3>
+                   <div style="width: 60%; margin-left:20%">
+                      <canvas id="whoYouKnowGraph" height="15%" width="30%" ></canvas>
+                   </div>
+                </div>
+                <div id="globalTen" class="item">
+                   <h3>Top 10 Globally Known Colleagues!</h3>
+                   <div style="width: 60%; margin-left:20%">
+                      <canvas id="globalTenGraph" height="15%" width="30%" style="width: 828px; height: 414px;"></canvas>
+                   </div>
+                </div>
+                <div id="getToKnow" class="item">
+                    <h3> People you should get to know!</h3>
+                    <div style="width: 60%; margin-left:19%">
+                        <div class="row-center">
+                            <ul class="text-center">
+                                {% for item in leastknown %}
+                                    <div class="flip-container" style="width: 15%">
+                                        <h5>{{ item.name }}</h5>
+                                        <a href="{{ item.yammer_url }}" class="thumbnail">
+                                            <img src='{{ item.img_url|replace:"/{width}/100"|replace:"/{height}/100"}}'>
+                                        </a>
                                     </div>
+                                {% endfor %}
+                            </ul>
                         </div>
-                        {% endfor %}
-                    </ul>
+                    </div>
                 </div>
-            </div>
-          </div>
-            <div id="whoYouKnow" class="item active">
-               <h3>Who you Know!</h3>
-               <div style="width: 60%; margin-left:20%">
-                  <canvas id="graph" height="15%" width="30%" ></canvas>
-               </div>
-               <div class="container">
-                <div class="carousel-caption">
-                </div>
-              </div>
-            </div>
-            <div id="globalTen" class="item active">
-               <h3>Top 10 Globally Known Colleagues!</h3>
-               <div style="width: 60%; margin-left:20%">
-                  <canvas id="globalTenGraph" height="15%" width="30%" style="width: 828px; height: 414px;"></canvas>
-               </div>
-               <div class="container">
-                <div class="carousel-caption">
-                </div>
-              </div>
-            </div>
           </div>
           <a class="left carousel-control" href="#metrics" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -102,32 +89,9 @@
 
 {% block extra_js %}
 <script>
-    var graphId = ['#whoYouKnow', '#globalTen','#getToKnow'];
-    var graphIdx = 0;
-
     function allActive(){
-        for(var x = 0; x < graphId.length; x++){
-            $(graphId[x]).addClass('active');
-        }
-    }
-
-    function showGraph(){
-        if(graphIdx == 0){
-            $(graphId[graphIdx+1]).removeClass('active');
-            $(graphId[graphIdx+2]).removeClass('active');
-            graphIdx++;
-        }
-        else if(graphIdx == 1){
-            $(graphId[graphIdx-1]).removeClass('active');
-            $(graphId[graphIdx+1]).removeClass('active');
-            graphIdx++;
-        }
-        else{
-            $(graphId[graphIdx-1]).removeClass('active');
-            $(graphId[graphIdx-2]).removeClass('active');
-            graphIdx=0;
-        }
-
+        $('#whoYouKnow').addClass('active');
+        $('#globalTen').addClass('active');
     }
 
     $(document).ready(function () {
@@ -136,16 +100,33 @@
         });
 
         $(".carousel").on('slid.bs.carousel', function (evt) {
+            var id = evt.relatedTarget.id;
             allActive();
-            loadCharts();
-            showGraph()
+            if('whoYouKnow' === id){
+                new Chart(document.getElementById("whoYouKnowGraph").getContext("2d")).Bar(whoYouKnowGraph(), {
+                    responsive : true
+                });
+                $('#globalTen').removeClass('active');
+            }
+            else if('globalTen' === id){
+                new Chart(document.getElementById("globalTenGraph").getContext("2d")).Bar(globalTopTenGraph(), {
+                    responsive : true
+                });
+                $('#whoYouKnow').removeClass('active');
+            }
+            else{
+                $('#globalTen').removeClass('active');
+                $('#whoYouKnow').removeClass('active');
+            }
         });
-
-        loadCharts();
-        $('#whoYouKnow').removeClass('active');
-        $('#globalTen').removeClass('active');
-
+        loadFirstChart();
     });
+
+    function loadFirstChart(){
+		new Chart(document.getElementById("whoYouKnowGraph").getContext("2d")).Bar(whoYouKnowGraph(), {
+			responsive : true
+		});
+    }
 
     function whoYouKnowGraph(){
         var labels = $.parseHTML('{{ names }}');
@@ -195,16 +176,6 @@
         };
 
         return barChartData
-    }
-
-    function loadCharts(){
-		new Chart(document.getElementById("graph").getContext("2d")).Bar(whoYouKnowGraph(), {
-			responsive : true
-		});
-
-		new Chart(document.getElementById("globalTenGraph").getContext("2d")).Bar(globalTopTenGraph(), {
-			responsive : true
-		});
     }
 </script>
 {% endblock %}
