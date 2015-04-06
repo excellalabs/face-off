@@ -20,8 +20,19 @@
     {% stylesheet 'css' %}
     <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %} "></script>
     <script type="text/javascript" src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %} "></script>
+    {% if debug %}
+        <script type="text/javascript" data-app-id="" src="{% static "js/yammer_sdk_dev.min.js" %}"></script>
+    {% else %}
+        <script type="text/javascript" data-app-id="" src="{% static "js/yammer_sdk_prod.min.js" %}"></script>
+    {% endif %}
     <script type="text/javascript" src="{% static "js/util.min.js" %} "></script>
-
+    <script>
+        function yammerLogout(){
+            yam.logout(function (response) {
+                window.location.href = "{% url 'auth:logout' %}?next={{ request.path }}";
+            })
+        }
+    </script>
     {% comment %}
         Per-page CSS is compressed separately so that the global stuff doesn't get re-downloaded each time
     {% endcomment %}
@@ -46,7 +57,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_authenticated %}
-            <li><a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a></li>
+            <li><a class="btn" onclick="yammerLogout()" >Logout</a></li>
             <li><a></a></li>
             {%  endif %}
         </ul>
