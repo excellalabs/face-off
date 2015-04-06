@@ -45,22 +45,25 @@
     {% endfor %}
 {% endwith %}
 
-<ul class="text-center">
-    <button id="nextRound" onclick="nextRound()" class="btn btn-primary invisible">Next
-        Round
-    </button>
-    <form id="resultsForm" action="{% url 'core:results' %}" method="post">
-        {% csrf_token %}
-        {{ resultsForm }}
-        <input id="resultsSubmit" type="submit" onclick="setForm()" class="btn btn-primary invisible" value="Results"/>
-    </form>
-</ul>
-
 <div class="row">
     <div class="col-md-8">
         <h2>Score: {% show_stars score %}</h2>
     </div>
     <div id="countdown"></div>
+</div>
+
+<ul class="text-center">
+    <form id="resultsForm" action="{% url 'core:results' %}" method="post">
+        {% csrf_token %}
+        {{ resultsForm }}
+        <input id="resultsSubmit" type="submit" onclick="setForm()" class="btn btn-primary invisible" value="Results" style="width: 160px; height: 60px"/>
+    </form>
+</ul>
+
+<div class="row">
+    <button id="nextRound" onclick="nextRound()" class="btn btn-primary invisible" style="width: 160px; height: 60px">Next
+        Round
+    </button>
 </div>
 
 <div id="startGameModal" class="modal fade"  data-backdrop="static" data-keyboard="false">
