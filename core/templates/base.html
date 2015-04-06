@@ -15,17 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
     <title>{% block title %}Face It{% endblock %}</title>
-
     {% comment %} Core CSS includes (for inclusion on all pages) {% endcomment %}
     {% stylesheet 'css' %}
-    <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %} "></script>
-    <script type="text/javascript" src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %} "></script>
-    {% if debug %}
-        <script type="text/javascript" data-app-id="" src="{% static "js/yammer_sdk_dev.min.js" %}"></script>
-    {% else %}
-        <script type="text/javascript" data-app-id="" src="{% static "js/yammer_sdk_prod.min.js" %}"></script>
-    {% endif %}
-    <script type="text/javascript" src="{% static "js/util.min.js" %} "></script>
+    {% javascript 'global_js' %}
+    <script type="text/javascript" data-app-id="{{ app_id }}" src="{% static "js/util.js" %}"></script>
+    <script type="text/javascript" data-app-id="{{ app_id }}" src="{% static "js/yammer_sdk.js" %}"></script>
     <script>
         function yammerLogout(){
             yam.logout(function (response) {
