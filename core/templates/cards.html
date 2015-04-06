@@ -98,7 +98,7 @@
                     <div id="gameMenu">
                             <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block" data-dismiss="modal">Educational</button>
                             <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block" data-dismiss="modal">Competitive</button>
-                            <a class="btn btn-default btn-block" href="{% url 'auth:logout' %}?next=/">Logout</a>
+                           <a class="btn btn-default btn-block" onclick="yammerLogout()">Logout</a>
                     </div>
                 </div>
             {%  endif %}
