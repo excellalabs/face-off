@@ -9,6 +9,7 @@ from core.models import UserMetrics, ColleagueGraph
 from django.core.exceptions import ObjectDoesNotExist
 from core.forms import SuggestionForm, ResultForm
 
+
 def custom_login(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
@@ -116,8 +117,6 @@ def results(request):
 def metrics(request, score, matrix):
 
     leastKnown = ColleagueGraph.objects.order_by('times_correct').filter(user=request.user)[:5]
-    for item in leastKnown:
-        print item.img_url
 
     metrics = ColleagueGraph.objects.filter(user=request.user)
     names = ''
