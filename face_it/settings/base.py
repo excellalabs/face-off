@@ -184,7 +184,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     #'debug_toolbar',
-
+    'suit',
     'django.contrib.admin',
     # 'django.contrib.sites',
     # Uncomment the next line to enable admin documentation:
@@ -270,3 +270,13 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details'
 )
+
+# Django Suit configuration
+SUIT_CONFIG = {
+    # header
+    'ADMIN_NAME': 'Col-league Administration',
+
+    'MENU_EXCLUDE': ('auth.group', 'auth'),
+    'SHOW_REQUIRED_ASTERISK': True,
+    'CONFIRM_UNSAVED_CHANGES': True,
+}
