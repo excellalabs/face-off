@@ -130,8 +130,8 @@ PIPELINE_JS = {
 
     'global_js': {
         'source_filenames': (
-            'bower_components/jquery/dist/jquery.js',
-            'bower_components/bootstrap/dist/js/bootstrap.js',
+            'bower_components/jquery/dist/jquery.min.js',
+            'bower_components/bootstrap/dist/js/bootstrap.min.js',
         ),
         # Compress all passed files into `js/global_js.min.js`.
         'output_filename': 'js/global_js.min.js',
