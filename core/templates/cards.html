@@ -50,6 +50,7 @@
         <h2>Score: {% show_stars score %}</h2>
     </div>
     <div id="countdown"></div>
+    <div id="nextRoundCountdown"></div>
 </div>
 
 <ul class="text-center">
@@ -209,9 +210,6 @@
 
     {# disable onclick on other images, disable them & present next round button#}
     function disableCards(id, disableALL) {
-        if (round == maxRound) {
-           renderResultsLnk();
-        }
         for (var index = 0; index < maxRound; index++) {
             var card = $('#colleague' + index);
             if(gameMode != easyGame){
@@ -224,11 +222,38 @@
                 card.addClass('clickFlip');
                 card.removeAttr('onclick');
                 card.attr('onclick', 'flipNoScore(' + index + ')');
-
             }
         }
-        if (round < maxRound) {
+        if (gameMode != easyGame) {
+            $("#countdown").hide();
+            var nextRoundTimmer = $("#nextRoundCountdown").countdown360({
+                radius: 40,
+                seconds: 3,
+                strokeWidth: 10,
+                fillStyle: '#FFFFFF',
+                strokeStyle: '#ff001a',
+                fontSize: 30,
+                fontColor: '#000000',
+                autostart: false,
+                onComplete: function () {
+                    if(round < maxRound){
+                        nextRound();
+                    }
+                    else{
+                        setForm();
+                    }
+
+                }
+            });
+            nextRoundTimmer.start();
+        }
+        else if (round == maxRound) {
+           renderResultsLnk();
+        }
+        else if(round < maxRound){
             $('#nextRound').removeClass('invisible');
         }
+
+
     }
 </script>
