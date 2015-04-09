@@ -13,6 +13,18 @@
     filter: alpha(opacity=40); /* msie */
 }
 
+.resultCards{
+    width:15%;
+    display: inline-block;
+    perspective: 1000px;
+}
+
+.carouselItems{
+    width:auto;
+    height: 400px;
+    max-height: 400px
+}
+
 /* entire container, keeps perspective */
 .flip-container {
     -webkit-perspective: 1000;

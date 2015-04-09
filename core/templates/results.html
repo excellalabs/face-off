@@ -11,27 +11,25 @@
     <div class="row">
         <ul id="cards" class="text-center">
         {% for card in cards %}
-        <div id="colleague{{ forloop.counter0 }}" class="flip-container">
-            <div class="flipper">
-                <li class="no-bullets">
-                    <div class="panel">
-                        <div class="panel-body">
-                            <a href="{{ card.user_url }}" class="thumbnail">
-                                <img src='{{ card.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
-                            </a>
-                        </div>
-                        {% if not card.wrong %}
-                            <div class="panel-footer">
-                                <h4>{{ card.name }} <i class="fa fa-check-circle-o fa-6"></i></h4>
-                            </div>
-                        {% else %}
-                            <div class="panel-footer">
-                                <h4>{{ card.name }} <i class="fa fa-times-circle-o fa-6"></i></h4>
-                            </div>
-                        {% endif %}
+        <div id="colleague{{ forloop.counter0 }}" class="resultCards">
+            <li class="no-bullets">
+                <div class="panel">
+                    <div class="panel-body">
+                        <a href="{{ card.user_url }}" class="thumbnail">
+                            <img src='{{ card.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
+                        </a>
                     </div>
-                </li>
-            </div>
+                    {% if not card.wrong %}
+                        <div class="panel-footer">
+                            <h4>{{ card.name }} <i class="fa fa-check-circle-o fa-6"></i></h4>
+                        </div>
+                    {% else %}
+                        <div class="panel-footer">
+                            <h4>{{ card.name }} <i class="fa fa-times-circle-o fa-6"></i></h4>
+                        </div>
+                    {% endif %}
+                </div>
+            </li>
         </div>
         {% endfor %}
         </ul>
@@ -44,34 +42,30 @@
         <div id="metrics" class="carousel slide" data-ride="carousel" data-type="multi">
           <!-- Indicators -->
           <div class="carousel-inner" role="listbox">
-                <div id="whoYouKnow" class="item active">
+                <div id="whoYouKnow" class="item active carouselItems">
                    <h3>Who you Know!</h3>
                    <div style="width: 60%; margin-left:20%">
                       <canvas id="whoYouKnowGraph" height="15%" width="30%" ></canvas>
                    </div>
                 </div>
-                <div id="globalTen" class="item">
+                <div id="globalTen" class="item carouselItems">
                    <h3>Top 10 Globally Known Colleagues!</h3>
                    <div style="width: 60%; margin-left:20%">
-                      <canvas id="globalTenGraph" height="15%" width="30%" style="width: 828px; height: 414px;"></canvas>
+                      <canvas id="globalTenGraph" height="15%" width="30%"></canvas>
                    </div>
                 </div>
-                <div id="getToKnow" class="item">
+                <div id="getToKnow" class="item carouselItems">
                     <h3> People you should get to know!</h3>
-                    <div style="width: 60%; margin-left:19%">
-                        <div class="row-center">
-                            <ul class="text-center">
-                                {% for item in leastknown %}
-                                    <div class="flip-container" style="width: 15%">
-                                        <h5>{{ item.name }}</h5>
-                                        <a href="{{ item.yammer_url }}" class="thumbnail">
-                                            <img src='{{ item.img_url|replace:"/{width}/100"|replace:"/{height}/100"}}'>
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
+                    <ul class="text-center">
+                        {% for item in leastknown %}
+                            <div class="resultCards">
+                                <h5>{{ item.name }}</h5>
+                                <a href="{{ item.yammer_url }}" class="thumbnail">
+                                    <img src='{{ item.img_url|replace:"/{width}/100"|replace:"/{height}/100"}}'>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </ul>
                 </div>
           </div>
           <a class="left carousel-control" href="#metrics" role="button" data-slide="prev">
@@ -103,13 +97,13 @@
             var id = evt.relatedTarget.id;
             allActive();
             if('whoYouKnow' === id){
-                new Chart(document.getElementById("whoYouKnowGraph").getContext("2d")).Bar(whoYouKnowGraph(), {
+                window.a = new Chart(document.getElementById("whoYouKnowGraph").getContext("2d")).Bar(whoYouKnowGraph(), {
                     responsive : true
                 });
                 $('#globalTen').removeClass('active');
             }
             else if('globalTen' === id){
-                new Chart(document.getElementById("globalTenGraph").getContext("2d")).Bar(globalTopTenGraph(), {
+                window.b = new Chart(document.getElementById("globalTenGraph").getContext("2d")).Bar(globalTopTenGraph(), {
                     responsive : true
                 });
                 $('#whoYouKnow').removeClass('active');
@@ -119,6 +113,7 @@
                 $('#whoYouKnow').removeClass('active');
             }
         });
+
         loadFirstChart();
     });
 
