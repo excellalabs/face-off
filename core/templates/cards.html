@@ -221,9 +221,7 @@
                 }
             }
             else{
-                if (index != id) {
-                    card.addClass('clickFlip');
-                }
+                card.addClass('clickFlip');
                 card.removeAttr('onclick');
                 card.attr('onclick', 'flipNoScore(' + index + ')');
 
