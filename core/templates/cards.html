@@ -4,7 +4,7 @@
 
 <div class="page-header" id="banner">
     <div class="row">
-        <h1 class="text-center" style="padding-top: 40px">Who is {{ answer.name }}? </h1>
+        <h1 id="answer" class="text-center" style="padding-top: 40px">Who is {{ answer.name }}? </h1>
     </div>
 </div>
 
@@ -16,7 +16,7 @@
                 <li class="no-bullets">
                     <div class="front">
                         <div>
-                            <a href="#" class="thumbnail">
+                            <a href="#" class="thumbnail" id="{{ user.name }}">
                             <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
                             </a>
                         </div>

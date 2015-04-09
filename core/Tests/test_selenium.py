@@ -1,11 +1,11 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
 driver = webdriver.Firefox()
+
+
 driver.get("http://localhost:8111")
 
 print driver.title
@@ -24,4 +24,17 @@ print driver.title
 
 assert 'Face It' in driver.title
 
-driver.close()
+driver.find_element_by_id('noPicButton').click()
+driver.find_element_by_id('hardGame').click()
+
+driver.find_element_by_class_name('thumbnail').click()
+driver.find_element_by_id('nextRound').click()
+driver.find_element_by_class_name('thumbnail').click()
+driver.find_element_by_id('nextRound').click()
+driver.find_element_by_class_name('thumbnail').click()
+driver.find_element_by_id('nextRound').click()
+driver.find_element_by_class_name('thumbnail').click()
+driver.find_element_by_id('nextRound').click()
+driver.find_element_by_class_name('thumbnail').click()
+driver.find_element_by_id('resultsSubmit').click()
+
