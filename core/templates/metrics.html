@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load replace %}
+
+{% block content %}
+    <div class="page-header" id="banner">
+        <div class="row">
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center"><h3>People You've Encountered!<h3></div>
+        <div class="panel-body center-block">
+            <div id="whoYouKnow">
+                  <canvas id="whoYouKnowGraph" class="center-block"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+         <div class="panel-heading text-center"><h3>Top 10 Globally Known Colleagues!<h3></div>
+         <div class="panel-body center-block">
+            <div id="globalTen" style="width: 60%; margin-left:20%">
+                  <canvas id="globalTenGraph"></canvas>
+            </div>
+         </div>
+    </div>
+
+    <div class="panel panel-warning">
+         <div class="panel-heading text-center"><h3>People you should get to know!<h3></div>
+         <div class="panel-body center-block">
+            <div id="getToKnow">
+                <ul class="text-center">
+                    {% for item in leastknown %}
+                        <div class="resultCards">
+                            <h5>{{ item.name }}</h5>
+                            <a href="{{ item.yammer_url }}" class="thumbnail">
+                                <img src='{{ item.img_url|replace:"/{width}/100"|replace:"/{height}/100"}}'>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </ul>
+            </div>
+         </div>
+    </div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function () {
+         new Chart(document.getElementById("whoYouKnowGraph").getContext("2d")).Bar(whoYouKnowGraph(), {
+                    responsive : true
+            });
+         new Chart(document.getElementById("globalTenGraph").getContext("2d")).Bar(globalTopTenGraph(), {
+			responsive : true
+		    });
+    });
+
+    function whoYouKnowGraph(){
+        var labels = $.parseHTML('{{ names }}');
+        labels = labels[0].textContent;
+        labels = labels.split(';');
+        var known = {{ known }};
+        var imgs = '{{ mugs }}';
+        imgs = imgs.split(';');
+
+        var barChartData = {
+            labels : labels,
+            datasets : [
+                {
+                    fillColor : "rgba(51, 102, 153,0.5)",
+                    strokeColor : "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data : known
+                }
+            ]
+
+        };
+
+        return barChartData
+    }
+
+    function globalTopTenGraph(){
+        var labels = $.parseHTML('{{ gNames }}');
+        labels = labels[0].textContent;
+        labels = labels.split(';');
+        var known = {{ gKnown }};
+        var imgs = '{{ gMugs }}';
+        imgs = imgs.split(';');
+
+        var barChartData = {
+            labels : labels,
+            datasets : [
+                {
+                    fillColor : "rgba(51, 102, 153,0.5)",
+                    strokeColor : "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data : known
+                }
+            ]
+
+        };
+
+        return barChartData
+    }
+</script>
+{% endblock %}
+
