@@ -48,7 +48,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        <h2>Score: {% show_stars score %}</h2>
+        <h2>Round: {% show_stars score %}</h2>
     </div>
     <div id="countdown"></div>
     <div id="nextRoundCountdown"></div>
@@ -72,7 +72,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Col-League</h4>
+                <h4 class="modal-title">Face Off</h4>
             </div>
             {%  if '/no_photo.png' in request.user.yammer_url %}
                 <div class="modal-body">
