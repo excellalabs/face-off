@@ -52,7 +52,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_authenticated %}
-            <li><a class="btn" onclick="yammerLogout()" >Logout</a></li>
+            <li><a class="btn" id="logout" onclick="yammerLogout()" >Logout</a></li>
             <li><a></a></li>
             {%  endif %}
         </ul>
