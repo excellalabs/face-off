@@ -76,9 +76,15 @@
             </div>
             {%  if '/no_photo.png' in request.user.yammer_url %}
                 <div class="modal-body">
-                    <p class="text">Hey, {{ request.user.get_full_name }}! Click <a href="{{ request.user.upload_image_url }}">here</a>
-                    to upload an image and become part of the game!
-                    </p>
+                    <div id="noPicText" class="">
+                        <p class="text">Hey, {{ request.user.get_full_name }}! Click <a href="{{ request.user.upload_image_url }}">here</a>
+                        to upload an image and become part of the game!
+                        </p>
+                    </div>
+                    <div id="addGameText" class="invisible">
+                        <p class="text"> Get ready to play! The clock starts when
+                        you select your mode!</p>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div id="noPicMenu" class="">
@@ -134,6 +140,8 @@
     function showGameMenu(){
         $('#gameMenu').removeClass('invisible');
         $('#noPicMenu').addClass('invisible');
+        $('#noPicText').addClass('invisible');
+        $('#addGameText').removeClass('invisible');
     }
 
     function setForm(){
