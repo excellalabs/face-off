@@ -82,6 +82,15 @@ def next_round(request):
     # Prepares data for next round
     round += 1
     answer = random.choice(card_matrix[round])
+    unique_answer = False
+
+    # Checks for previously used answer
+    while not unique_answer:
+        for i in range(0, round):
+            if card_matrix[i]['id'] == answer['id']:
+                answer = random.choice(card_matrix[round])
+        unique_answer = True
+
     context = RequestContext(request, {'cards': card_matrix, 'round': round, 'answer': answer,
                                        'score': score, 'resultsForm': ResultForm()})
 
