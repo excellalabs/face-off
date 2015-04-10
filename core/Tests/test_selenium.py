@@ -37,4 +37,12 @@ driver.find_element_by_class_name('thumbnail').click()
 driver.find_element_by_id('nextRound').click()
 driver.find_element_by_class_name('thumbnail').click()
 driver.find_element_by_id('resultsSubmit').click()
+driver.find_element_by_id('scrollRight').click()
+driver.find_element_by_id('scrollRight').click()
+driver.find_element_by_id('scrollRight').click()
+driver.find_element_by_id('scrollLeft').click()
+driver.find_element_by_id('scrollLeft').click()
+driver.find_element_by_id('scrollLeft').click()
+driver.find_element_by_id('logout').click()
+
 
