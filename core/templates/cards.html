@@ -3,9 +3,10 @@
 {% load stars %}
 
 <div class="page-header" id="banner">
-    <div class="row">
+    <div class="row">g
         <h4 class="pull-right" style="margin-top: 3%; margin-right: 3%;">Round {{ round|add:"1" }}/5</h4>
-        <h1 class="text-center" style="padding-top: 40px">Who is {{ answer.name }}? </h1>
+        <h1 class="text-center" id="answer" style="padding-top: 40px">Who is {{ answer.name }}? </h1>
+
     </div>
 </div>
 
@@ -17,7 +18,7 @@
                 <li class="no-bullets">
                     <div class="front">
                         <div>
-                            <a href="#" class="thumbnail">
+                            <a href="#" class="thumbnail" id="{{ user.name }}">
                             <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
                             </a>
                         </div>
