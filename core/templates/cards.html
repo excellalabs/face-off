@@ -3,9 +3,8 @@
 {% load stars %}
 
 <div class="page-header" id="banner">
-    <div class="row">
-        <h4 class="pull-right" style="margin-top: 3%; margin-right: 3%;">Round {{ round|add:"1" }}/5</h4>
-        <h1 class="text-center" style="padding-top: 40px">Who is {{ answer.name }}? </h1>
+    <div class="row" id="gameHeader">
+        <h3 class="pull-right" style="margin-top: 3%; margin-right: 3%;">Round {{ round|add:"1" }}/5</h3>
     </div>
 </div>
 
@@ -45,12 +44,13 @@
         </div>
     {% endfor %}
 {% endwith %}
+<br>
+<br>
 
 <div class="row">
-    <div class="col-md-8">
-        <h2>Round: {% show_stars score %}</h2>
-    </div>
-    <div id="countdown"></div>
+    <h2 style="float: left; width: 30%;">Round: {% show_stars score %}</h2>
+    <h2 style="float: left; width: 40%;">Who is {{ answer.name }}? </h2>
+    <div style="float: right; width: 30%;" id="countdown"></div>
     <div id="nextRoundCountdown"></div>
 </div>
 
@@ -131,11 +131,13 @@
         else{
             if(gameMode != easyGame)
                 startHardGame();
+
             else
                 startEasyGame();
 
         }
     });
+
 
     function showGameMenu(){
         $('#gameMenu').removeClass('invisible');
