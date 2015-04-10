@@ -33,144 +33,19 @@
         </div>
         {% endfor %}
         </ul>
-        <div class="text-center" style="margin-top: 3%">
+        <div class="text-center inline-block" style="margin-top: 3%">
             <a id="endGame" href="{% url 'core:cards' %}" class="btn btn-primary">Play Again!</a>
+            <a id="metrics" href="{% url 'core:metrics' %}" class="btn btn-primary">Check Your Metrics!</a>
         </div>
     </div>
-
-    <div class="row text-center">
-        <div id="metrics" class="carousel slide" data-ride="carousel" data-type="multi">
-          <!-- Indicators -->
-          <div class="carousel-inner" role="listbox">
-                <div id="whoYouKnow" class="item active carouselItems">
-                   <h3>Who you Know!</h3>
-                   <div style="width: 60%; margin-left:20%">
-                      <canvas id="whoYouKnowGraph" height="15%" width="30%" ></canvas>
-                   </div>
-                </div>
-                <div id="globalTen" class="item carouselItems">
-                   <h3>Top 10 Globally Known Colleagues!</h3>
-                   <div style="width: 60%; margin-left:20%">
-                      <canvas id="globalTenGraph" height="15%" width="30%"></canvas>
-                   </div>
-                </div>
-                <div id="getToKnow" class="item carouselItems">
-                    <h3> People you should get to know!</h3>
-                    <ul class="text-center">
-                        {% for item in leastknown %}
-                            <div class="resultCards">
-                                <h5>{{ item.name }}</h5>
-                                <a href="{{ item.yammer_url }}" class="thumbnail">
-                                    <img src='{{ item.img_url|replace:"/{width}/100"|replace:"/{height}/100"}}'>
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </ul>
-                </div>
-          </div>
-          <a class="left carousel-control" href="#metrics" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#metrics" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div><!-- /.carousel -->
-    </div>
-
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    function allActive(){
-        $('#whoYouKnow').addClass('active');
-        $('#globalTen').addClass('active');
-    }
-
-    $(document).ready(function () {
-        $('.carousel').carousel({
-            interval: false
-        });
-
-        $(".carousel").on('slid.bs.carousel', function (evt) {
-            var id = evt.relatedTarget.id;
-            allActive();
-            if('whoYouKnow' === id){
-                window.a = new Chart(document.getElementById("whoYouKnowGraph").getContext("2d")).Bar(whoYouKnowGraph(), {
-                    responsive : true
-                });
-                $('#globalTen').removeClass('active');
-            }
-            else if('globalTen' === id){
-                window.b = new Chart(document.getElementById("globalTenGraph").getContext("2d")).Bar(globalTopTenGraph(), {
-                    responsive : true
-                });
-                $('#whoYouKnow').removeClass('active');
-            }
-            else{
-                $('#globalTen').removeClass('active');
-                $('#whoYouKnow').removeClass('active');
-            }
-        });
-
-        loadFirstChart();
-    });
-
-    function loadFirstChart(){
-		new Chart(document.getElementById("whoYouKnowGraph").getContext("2d")).Bar(whoYouKnowGraph(), {
-			responsive : true
-		});
-    }
-
-    function whoYouKnowGraph(){
-        var labels = $.parseHTML('{{ names }}');
-        labels = labels[0].textContent;
-        labels = labels.split(';');
-        var known = {{ known }};
-        var imgs = '{{ mugs }}';
-        imgs = imgs.split(';');
-
-        var barChartData = {
-            labels : labels,
-            datasets : [
-                {
-                    fillColor : "rgba(51, 102, 153,0.5)",
-                    strokeColor : "rgba(220,220,220,0.8)",
-                    highlightFill: "rgba(220,220,220,0.75)",
-                    highlightStroke: "rgba(220,220,220,1)",
-                    data : known
-                }
-            ]
-
-        };
-
-        return barChartData
-    }
-
-    function globalTopTenGraph(){
-        var labels = $.parseHTML('{{ gNames }}');
-        labels = labels[0].textContent;
-        labels = labels.split(';');
-        var known = {{ gKnown }};
-        var imgs = '{{ gMugs }}';
-        imgs = imgs.split(';');
-
-        var barChartData = {
-            labels : labels,
-            datasets : [
-                {
-                    fillColor : "rgba(51, 102, 153,0.5)",
-                    strokeColor : "rgba(220,220,220,0.8)",
-                    highlightFill: "rgba(220,220,220,0.75)",
-                    highlightStroke: "rgba(220,220,220,1)",
-                    data : known
-                }
-            ]
-
-        };
-
-        return barChartData
+    function setForm(){
+        $('[name=score]').val('{{ score }}');
+        $('[name=results]').val('{{ matrix }}');
+        $('#resultsForm').submit();
     }
 </script>
 {% endblock %}
