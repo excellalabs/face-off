@@ -39,7 +39,7 @@ def cards(request):
         while True:
             response = requests.get(
                 'https://www.yammer.com/api/v1/users.json?page=%d' % page,
-                headers = {'Authorization': 'Bearer %s' % access_token['token']}
+                headers={'Authorization': 'Bearer %s' % access_token['token']}
             )
             if response.json() == []:
                 break
@@ -61,7 +61,6 @@ def cards(request):
     user_round_matrix = [four_random_cards(redis_con, network) for x in range(5)]
     answer = random.choice(user_round_matrix[0])
 
-
     context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer,
                                        'round': 0, 'score': 0})
     return render_to_response('game.html', context_instance=context)
@@ -82,6 +81,20 @@ def next_round(request):
     # Prepares data for next round
     round += 1
     answer = random.choice(card_matrix[round])
+    unique_answer = False
+
+    # Checks for previously used answer
+    while not unique_answer:
+        check_again = False
+        for i in range(0, round):
+            if card_matrix[i]['id'] == answer['id']:
+                answer = random.choice(card_matrix[round])
+                check_again = True
+                break
+
+        if not check_again:
+            unique_answer = True
+
     context = RequestContext(request, {'cards': card_matrix, 'round': round, 'answer': answer,
                                        'score': score, 'resultsForm': ResultForm()})
 
@@ -108,14 +121,12 @@ def results(request):
             update_results_list(results, card_index, 4)  # 4 representing the last round (zero-based)
             save_metric_results(results, request.user)
 
-            return metrics(request, form.cleaned_data['score'], results)
+            context = RequestContext(request, {'score': form.cleaned_data['score'], 'cards': results})
+            return render_to_response('results.html', context_instance=context)
 
 
-# Helper Functions
-
-
-def metrics(request, score, matrix):
-
+@login_required
+def metrics(request):
     leastKnown = ColleagueGraph.objects.order_by('times_correct').filter(user=request.user)[:5]
 
     metrics = ColleagueGraph.objects.filter(user=request.user)
@@ -127,7 +138,6 @@ def metrics(request, score, matrix):
         known.append(metric.times_correct)
         imgs += str(metric.img_url) + ';'
 
-
     gMetrics = globallyKnownColleagues()
     gNames = ''
     gKnown = []
@@ -137,12 +147,14 @@ def metrics(request, score, matrix):
         gKnown.append(metric.times_correct)
         gImgs += str(metric.img_url) + ';'
 
-    context = RequestContext(request, {'names': names, 'known': known, 'mugs': imgs, 'score': score, 'cards': matrix,
-                                       'gNames': gNames, 'gKnown': gKnown, 'mugs': gImgs, 'leastknown': leastKnown
+    context = RequestContext(request, {'names': names, 'known': known, 'mugs': imgs,
+                                       'gNames': gNames, 'gKnown': gKnown, 'mugs': gImgs,
+                                       'leastknown': leastKnown
                                        })
-    return render_to_response('results.html', context_instance=context)
+    return render_to_response('metrics.html', context_instance=context)
 
 
+# Helper Functions
 def save_metric_results(results, user):
     for result in results:
         if result:
@@ -174,7 +186,8 @@ def four_random_cards(redis_con, network):
 
 def globallyKnownColleagues():
     top_scores = (ColleagueGraph.objects.order_by('-times_correct').values_list('times_correct', flat=True).distinct())
-    top_10_known_colleagues = (ColleagueGraph.objects.order_by('-times_correct').filter(times_correct__in=top_scores[:10]))[:10]
+    top_10_known_colleagues = (ColleagueGraph.objects.order_by('-times_correct').filter(
+        times_correct__in=top_scores[:10]))[:10]
 
     return top_10_known_colleagues
 
