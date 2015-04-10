@@ -3,9 +3,8 @@
 {% load stars %}
 
 <div class="page-header" id="banner">
-    <div class="row">
-        <h4 class="pull-right" style="margin-top: 3%; margin-right: 3%;">Round {{ round|add:"1" }}/5</h4>
-        <h1 class="text-center" style="padding-top: 40px">Who is {{ answer.name }}? </h1>
+    <div class="row" id="gameHeader">
+        <h3 class="pull-right" style="margin-top: 3%; margin-right: 3%;">Round {{ round|add:"1" }}/5</h3>
     </div>
 </div>
 
@@ -45,12 +44,13 @@
         </div>
     {% endfor %}
 {% endwith %}
+<br>
+<br>
 
 <div class="row">
-    <div class="col-md-8">
-        <h2>Round: {% show_stars score %}</h2>
-    </div>
-    <div id="countdown"></div>
+    <h2 style="float: left; width: 30%;">Round: {% show_stars score %}</h2>
+    <h2 style="float: left; width: 40%;">Who is {{ answer.name }}? </h2>
+    <div style="float: right; width: 30%;" id="countdown"></div>
     <div id="nextRoundCountdown"></div>
 </div>
 
@@ -76,9 +76,15 @@
             </div>
             {%  if '/no_photo.png' in request.user.yammer_url %}
                 <div class="modal-body">
-                    <p class="text">Hey, {{ request.user.get_full_name }}! Click <a href="{{ request.user.upload_image_url }}">here</a>
-                    to upload an image and become part of the game!
-                    </p>
+                    <div id="noPicText" class="">
+                        <p class="text">Hey, {{ request.user.get_full_name }}! Click <a href="{{ request.user.upload_image_url }}">here</a>
+                        to upload an image and become part of the game!
+                        </p>
+                    </div>
+                    <div id="addGameText" class="invisible">
+                        <p class="text"> Get ready to play! The clock starts when
+                        you select your mode!</p>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div id="noPicMenu" class="">
@@ -86,8 +92,8 @@
                         <a class="btn btn-default btn-block" onclick="yammerLogout()">Logout</a>
                     </div>
                     <div id="gameMenu" class="invisible">
-                             <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block" data-dismiss="modal">Educational</button>
-                            <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block" data-dismiss="modal">Competitive</button>
+                             <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block" data-dismiss="modal">Practice Mode</button>
+                            <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block" data-dismiss="modal">Race against the Clock!</button>
                             <a class="btn btn-default btn-block" onclick="yammerLogout()">Logout</a>
                     </div>
                 </div>
@@ -98,8 +104,8 @@
                 </div>
                 <div class="modal-footer">
                     <div id="gameMenu">
-                            <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block" data-dismiss="modal">Educational</button>
-                            <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block" data-dismiss="modal">Competitive</button>
+                            <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block" data-dismiss="modal">Practice Mode</button>
+                            <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block" data-dismiss="modal">Race against the Clock!</button>
                            <a class="btn btn-default btn-block" onclick="yammerLogout()">Logout</a>
                     </div>
                 </div>
@@ -125,15 +131,19 @@
         else{
             if(gameMode != easyGame)
                 startHardGame();
+
             else
                 startEasyGame();
 
         }
     });
 
+
     function showGameMenu(){
         $('#gameMenu').removeClass('invisible');
         $('#noPicMenu').addClass('invisible');
+        $('#noPicText').addClass('invisible');
+        $('#addGameText').removeClass('invisible');
     }
 
     function setForm(){

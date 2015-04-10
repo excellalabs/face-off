@@ -10,7 +10,7 @@
     </div>
     <div class="col-sm-8 col-sm-offset-2">
         <div style="margin-top:10%">
-            <a class="btn btn-block btn-social"  href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}" style="height: 50px">
+            <a class="btn btn-block btn-social" name="signIn"  href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}" style="height: 50px">
                 <img src="{{ STATIC_URL }}images/yammer.png" style="width:50px;height:50px"><font size="3"> Login Using Yammer</font></img>
             </a>
         </div>
