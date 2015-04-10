@@ -23,19 +23,20 @@
                         </div>
                     </div>
                     {% if answer.id == user.id %}
-                            <div class="back panel panel-success">
+                            <div class="back panel panel-success thumbnail">
                                 <div class="panel-heading"><h4></h4></div>
                                 <div class="panel-body">
+                                    <i class="fa fa-refresh fa-spin"></i>
                                     <h3>{{ user.name }}</h3>
                                     <h1><i class="fa fa-check-circle-o fa-6"></i></h1>
                                 </div>
                             </div>
                     {% else %}
-                        <div class="back panel panel-danger">
+                        <div class="back panel panel-danger thumbnail">
                             <div class="panel-heading"><h4></h4></div>
                             <div class="panel-body">
+                                <i class="fa fa-refresh fa-spin"></i>
                                 <h3>{{ user.name }}</h3>
-
                                 <h1><i class="fa fa-times-circle-o fa-6"></i></h1>
                             </div>
                         </div>
@@ -127,7 +128,6 @@
                 startHardGame();
             else
                 startEasyGame();
-
         }
     });
 
@@ -150,6 +150,7 @@
 
     function startHardGame(){
         startTimer();
+        $('.fa-spin').hide()
     }
 
     function startTimer(){
