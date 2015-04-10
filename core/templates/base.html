@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>{% block title %}Face It{% endblock %}</title>
+    <title>{% block title %}Face Off{% endblock %}</title>
     {% comment %} Core CSS includes (for inclusion on all pages) {% endcomment %}
     {% stylesheet 'css' %}
     <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
@@ -42,7 +42,7 @@
             <span class="icon-bar"></span>
         </button>
     </div>
-    <a class="navbar-brand" href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}">{{ request.user.network|capfirst|replace:"/.com/" }} Col-league</a>
+    <a class="navbar-brand" href="{% url 'core:cards'%}">{{ request.user.network|capfirst|replace:"/.com/" }} Face Off</a>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-left">
             {% if request.user.is_authenticated %}
