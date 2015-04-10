@@ -42,7 +42,7 @@
             <span class="icon-bar"></span>
         </button>
     </div>
-    <a class="navbar-brand" href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}">{{ request.user.network|capfirst|replace:"/.com/" }} Col-league</a>
+    <a class="navbar-brand" href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}">{{ request.user.network|capfirst|replace:"/.com/" }} Face Off</a>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-left">
             {% if request.user.is_authenticated %}
