@@ -40,13 +40,5 @@
     </div>
 {% endblock %}
 
-{% block extra_js %}
-<script>
-    function setForm(){
-        $('[name=score]').val('{{ score }}');
-        $('[name=results]').val('{{ matrix }}');
-        $('#resultsForm').submit();
-    }
-</script>
-{% endblock %}
+{% block extra_js %}{% endblock %}
 
