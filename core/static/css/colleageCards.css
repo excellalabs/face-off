@@ -4,6 +4,12 @@
     margin-left: 30%;
 }
 
+.disclaimer {
+    color: #CCCCCC;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .resizableText{
     white-space: nowrap;
 }
