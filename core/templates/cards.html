@@ -235,7 +235,7 @@
                 card.attr('onclick', 'flipNoScore(' + index + ')');
             }
         }
-        if (gameMode != easyGame) {
+        if (gameMode != easyGame && round != 4) {
             $("#countdown").hide();
             var nextRoundTimmer = $("#nextRoundCountdown").countdown360({
                 radius: 40,

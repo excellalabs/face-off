@@ -1,9 +1,9 @@
 from behave import given, when, then
-
+from helper import *
 
 @given('the user is at the Face Off application')
 def step(context):
-    context.browser.get('http://localhost:8000')
+    context.browser.get('http://localhost:8111')
 
 
 @given('the user has logged into the Face Off application')
@@ -36,19 +36,3 @@ def step(context):
 def step(context):
     for i in range(0, 4):
         assert "clickFlip" in get_card(context.browser, i).get_attribute("class")
-
-
-# Helper Methods
-def login(context, username, password):
-    context.browser.find_element_by_name('signIn').click()
-    context.browser.find_element_by_name('login').send_keys(username)
-    context.browser.find_element_by_name('password').send_keys(password)
-    context.browser.find_element_by_class_name('yj-btn').click()
-
-
-def click_card(driver, index):
-    driver.find_element_by_id('colleague' + str(index)).click()
-
-
-def get_card(driver, index):
-    return driver.find_element_by_id('colleague' + str(index))
