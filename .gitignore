@@ -7,3 +7,6 @@ bower_components
 static/*
 MYENV
 node_modules
+*.sublime-workspace
+*.sublime-project
+dump.rdb
