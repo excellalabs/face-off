@@ -139,10 +139,10 @@
     var score = {{ score }};
     var round = {{ round }};
     var timer;
-    var selectedCardIndex = -1;
     var easyGame = 'easy';
     var resized = false;
     var gameMode;
+    var correct = 'False';
 
     $(document).ready(function () {
         if (round == 0) {
@@ -155,6 +155,9 @@
 
         //Add transition listeners
         cardTransitionListeners();
+
+        //resets game round, selected value
+        correct = 'False';
     });
 
 
@@ -167,8 +170,9 @@
 
     function setForm() {
         $('[name=score]').val(score);
-        $('[name=cardIndex]').val(selectedCardIndex);
+        $('[name=answer_id]').val('{{ answer.id }}');
         $('[name=results]').val('{{ cards }}');
+        $('[name=correct]').val(correct);
         $('#resultsForm').submit();
     }
 
@@ -206,7 +210,7 @@
     function nextRound() {
         var cards = '{{ cards }}';
         formlessAjaxPostCSRFSetup();
-        $.post('/rounds/', {matrix: cards, round: round, score: score, cardIndex: selectedCardIndex},
+        $.post('/rounds/', {matrix: cards, round: round, score: score, answer_id: '{{ answer.id }}', correct:correct},
                 function (data) {
                     $('#cards').html(data);
                 });
@@ -216,7 +220,7 @@
         if (choice == '{{ answer.id }}') {
             score += 1;
             updateStars(score - 1);
-            selectedCardIndex = id;
+            correct = 'True';
         }
 
         $('#colleague' + id).addClass('clickFlip');
@@ -256,7 +260,7 @@
                 card.attr('onclick', 'flipNoScore(' + index + ')');
             }
         }
-        if (gameMode != easyGame && round != 4) {
+        if (gameMode != easyGame) {
             $("#countdown").hide();
             var nextRoundTimmer = $("#nextRoundCountdown").countdown360({
                 radius: 40,
