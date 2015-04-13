@@ -134,9 +134,8 @@
             $("#startGameModal").modal('show');
         }
         else{
-            if(gameMode != easyGame){
+            if(gameMode != easyGame)
                 startHardGame();
-            }
 
             else
                 startEasyGame();
@@ -161,13 +160,11 @@
 
     function startEasyGame(){
         gameMode = easyGame;
-        $('#hardHeader').hide()
         $('#easyHeader').show()
     }
 
     function startHardGame(){
         startTimer();
-        $('#easyHeader').hide()
         $('#hardHeader').show()
     }
 
