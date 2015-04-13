@@ -148,8 +148,6 @@
     }
     function startEasyGame(){
         gameMode = easyGame;
-        startTimer();
-        $("#countdown").addClass("invisible");
     }
 
     function startHardGame(){
@@ -171,6 +169,7 @@
         });
         timer.start();
     }
+
     function updateStars(starIndex){
         $('#0star-empty').removeClass('fa fa-circle-o');
         $('#0star-empty').addClass('glyphicon glyphicon-ok-sign');
@@ -191,7 +190,9 @@
         }
         $('#colleague' + id).addClass('clickFlip');
         //Interrupt countdown
-        timer.stop(function () {});
+        if (gameMode != easyGame) {
+            timer.stop(function () {});
+         }
         disableCards(id, false);
     }
     function flipNoScore(id) {
@@ -242,11 +243,13 @@
             });
             nextRoundTimmer.start();
         }
+
         else if (round == maxRound) {
            renderResultsLnk();
         }
-        else if(round < maxRound){
+        else if (round < maxRound){
             $('#nextRound').removeClass('invisible');
         }
+      
     }
 </script>
