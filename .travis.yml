@@ -8,8 +8,9 @@ script: coverage run --source=core manage.py test
 after_success: coveralls
 deploy:
   provider: heroku
-  api_key: baf4a384-0a09-45b6-ae78-b0e836c3b530
+  api_key:
+   secure: "MCOnZy0l2idbcSEmaAZdU36F56leMfWI34s6Kg53zte6pN6rlTEw2G25gh4gdS4cPiUKsmcB9ykwB/J/X8ckWE1WeoSlYBkaOx8mnzd2tFoeU1NBZWNgoayUVKwR8FbRp/7P+LEn1h7JdXvw2edp9aKSuoi9ol4vvPK0eYDxvYg="
   app: col-league-staging
   on:
-    repo: madridsoccer5/face_it
+    repo: excellaco/face_it
   run: "python manage.py migrate"
