@@ -17,25 +17,31 @@
                     <div class="front">
                         <div>
                             <a href="#" class="thumbnail">
-                            <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
+                                <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
                             </a>
                         </div>
                     </div>
                     {% if answer.id == user.id %}
-                            <div class="back panel panel-success thumbnail">
-                                <div class="panel-heading"><h4></h4></div>
-                                <div class="panel-body">
-                                    <i class="fa fa-refresh fa-spin"></i>
-                                    <h3>{{ user.name }}</h3>
-                                    <h1><i class="fa fa-check-circle-o fa-6"></i></h1>
+                        <div class="back panel panel-success thumbnail">
+                            <div class="panel-heading"><h4></h4></div>
+                            <div class="panel-body">
+                                <i class="fa fa-refresh fa-spin"></i>
+
+                                <div class="resizableText">
+                                    <span>{{ user.name }}</span>
                                 </div>
+                                <h1><i class="fa fa-check-circle-o fa-6"></i></h1>
                             </div>
+                        </div>
                     {% else %}
                         <div class="back panel panel-danger thumbnail">
                             <div class="panel-heading"><h4></h4></div>
                             <div class="panel-body">
                                 <i class="fa fa-refresh fa-spin"></i>
-                                <h3>{{ user.name }}</h3>
+
+                                <div class="resizableText">
+                                    <span>{{ user.name }}</span>
+                                </div>
                                 <h1><i class="fa fa-times-circle-o fa-6"></i></h1>
                             </div>
                         </div>
@@ -50,7 +56,9 @@
 
 <div class="row">
     <h2 style="float: left; width: 30%;">Round: {% show_stars score %}</h2>
+
     <h2 style="float: left; width: 40%;">Who is {{ answer.name }}? </h2>
+
     <div style="float: right; width: 30%;" id="countdown"></div>
     <div id="nextRoundCountdown"></div>
 </div>
@@ -59,58 +67,70 @@
     <form id="resultsForm" action="{% url 'core:results' %}" method="post">
         {% csrf_token %}
         {{ resultsForm }}
-        <input id="resultsSubmit" type="submit" onclick="setForm()" class="btn btn-primary invisible" value="Results" style="width: 160px; height: 60px"/>
+        <input id="resultsSubmit" type="submit" onclick="setForm()" class="btn btn-primary invisible" value="Results"
+               style="width: 160px; height: 60px"/>
     </form>
 </ul>
 
 <div class="row">
-    <button id="nextRound" onclick="nextRound()" class="btn btn-primary invisible" style="width: 160px; height: 60px">Next
+    <button id="nextRound" onclick="nextRound()" class="btn btn-primary invisible" style="width: 160px; height: 60px">
+        Next
         Round
     </button>
 </div>
 
-<div id="startGameModal" class="modal fade"  data-backdrop="static" data-keyboard="false">
+<div id="startGameModal" class="modal fade" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Face Off</h4>
             </div>
-            {%  if '/no_photo.png' in request.user.yammer_url %}
+            {% if '/no_photo.png' in request.user.yammer_url %}
                 <div class="modal-body">
                     <div id="noPicText" class="">
-                        <p class="text">Hey, {{ request.user.get_full_name }}! Click <a href="{{ request.user.upload_image_url }}">here</a>
-                        to upload an image and become part of the game!
+                        <p class="text">Hey, {{ request.user.get_full_name }}! Click <a
+                                href="{{ request.user.upload_image_url }}">here</a>
+                            to upload an image and become part of the game!
                         </p>
                     </div>
                     <div id="addGameText" class="invisible">
                         <p class="text"> Get ready to play! The clock starts when
-                        you select your mode!</p>
+                            you select your mode!</p>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div id="noPicMenu" class="">
-                        <button id="noPicButton" onclick="showGameMenu()" class="btn btn-primary btn-block">I don't care   <i class="fa fa-meh-o" ></i></button>
+                        <button id="noPicButton" onclick="showGameMenu()" class="btn btn-primary btn-block">I don't care
+                            <i class="fa fa-meh-o"></i></button>
                         <a class="btn btn-default btn-block" onclick="yammerLogout()">Logout</a>
                     </div>
                     <div id="gameMenu" class="invisible">
-                             <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block" data-dismiss="modal">Practice Mode</button>
-                            <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block" data-dismiss="modal">Race against the Clock!</button>
-                            <a class="btn btn-default btn-block" onclick="yammerLogout()">Logout</a>
+                        <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block"
+                                data-dismiss="modal">Practice Mode
+                        </button>
+                        <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block"
+                                data-dismiss="modal">Race against the Clock!
+                        </button>
+                        <a class="btn btn-default btn-block" onclick="yammerLogout()">Logout</a>
                     </div>
                 </div>
-            {%  elif '/no_photo.png' not in request.user.yammer_url  %}
+            {% elif '/no_photo.png' not in request.user.yammer_url %}
                 <div class="modal-body">
                     <p class="text"> Get ready to play! The clock starts when
-                    you select your mode!</p>
+                        you select your mode!</p>
                 </div>
                 <div class="modal-footer">
                     <div id="gameMenu">
-                            <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block" data-dismiss="modal">Practice Mode</button>
-                            <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block" data-dismiss="modal">Race against the Clock!</button>
-                           <a class="btn btn-default btn-block" onclick="yammerLogout()">Logout</a>
+                        <button type="button" id="easyGame" onclick="startEasyGame()" class="btn btn-primary btn-block"
+                                data-dismiss="modal">Practice Mode
+                        </button>
+                        <button type="button" id="hardGame" onclick="startHardGame()" class="btn btn-primary btn-block"
+                                data-dismiss="modal">Race against the Clock!
+                        </button>
+                        <a class="btn btn-default btn-block" onclick="yammerLogout()">Logout</a>
                     </div>
                 </div>
-            {%  endif %}
+            {% endif %}
         </div>
     </div>
 </div>
@@ -126,44 +146,65 @@
     var gameMode;
 
     $(document).ready(function () {
-        if(round == 0){
+        if (round == 0) {
             $("#startGameModal").modal('show');
         }
-        else{
-            if(gameMode != easyGame)
-                startHardGame();
+        else if (gameMode != easyGame)
+            startHardGame();
+        else
+            startEasyGame();
 
-            else
-                startEasyGame();
-        }
+        //Add transition listeners
+        transitionListeners();
     });
 
+    function transitionListeners() {
+        for (var x = 0; x < 5; x++) {
+            var card = $('#colleague' + x);
+            card.on("webkitTransitionEnd", function () {
+                //Resize Card Text
+                $('.resizableText').textfill({
+                    minFontPixels: 8,
+                    maxFontPixels: 50
+                });
+                console.log("asdasd");
+            });
 
-    function showGameMenu(){
+{#            var card2 = document.getElementById('colleague' + x);#}
+{#            card2.addEventListener('webkitTransitionEnd',#}
+{#                    function (event) {#}
+{#                        alert("Finished transition!");#}
+{#                    }, false);#}
+        }
+
+
+    }
+
+    function showGameMenu() {
         $('#gameMenu').removeClass('invisible');
         $('#noPicMenu').addClass('invisible');
         $('#noPicText').addClass('invisible');
         $('#addGameText').removeClass('invisible');
     }
 
-    function setForm(){
+    function setForm() {
         $('[name=score]').val(score);
         $('[name=cardIndex]').val(selectedCardIndex);
         $('[name=results]').val('{{ cards }}');
         $('#resultsForm').submit();
     }
 
-    function startEasyGame(){
+    function startEasyGame() {
         startTimer();
         gameMode = easyGame;
     }
 
-    function startHardGame(){
+    function startHardGame() {
         startTimer();
         $('.fa-spin').hide()
     }
 
-    function startTimer(){
+    function startTimer() {
         timer = $("#countdown").countdown360({
             radius: 40,
             seconds: 10,
@@ -180,7 +221,7 @@
         timer.start();
     }
 
-    function updateStars(starIndex){
+    function updateStars(starIndex) {
         $('#0star-empty').removeClass('fa fa-circle-o');
         $('#0star-empty').addClass('glyphicon glyphicon-ok-sign');
     }
@@ -189,34 +230,35 @@
         var cards = '{{ cards }}';
         formlessAjaxPostCSRFSetup();
         $.post('/rounds/', {matrix: cards, round: round, score: score, cardIndex: selectedCardIndex},
-        function (data) {
-            $('#cards').html(data);
-        });
+                function (data) {
+                    $('#cards').html(data);
+                });
     }
 
     function flip(id, choice) {
-        if (choice == '{{ answer.id }}'){
+        if (choice == '{{ answer.id }}') {
             score += 1;
-            updateStars(score-1);
-            selectedCardIndex= id;
+            updateStars(score - 1);
+            selectedCardIndex = id;
         }
 
         $('#colleague' + id).addClass('clickFlip');
 
         //Interrupt countdown
-        timer.stop(function () {});
+        timer.stop(function () {
+        });
         disableCards(id, false);
     }
 
     function flipNoScore(id) {
         var card = $('#colleague' + id);
-        if(card.hasClass('clickFlip'))
+        if (card.hasClass('clickFlip'))
             card.removeClass('clickFlip');
         else
             card.addClass('clickFlip');
     }
 
-    function renderResultsLnk(){
+    function renderResultsLnk() {
         $('#resultsSubmit').removeClass('invisible');
     }
 
@@ -224,13 +266,13 @@
     function disableCards(id, disableALL) {
         for (var index = 0; index < maxRound; index++) {
             var card = $('#colleague' + index);
-            if(gameMode != easyGame){
-                 if (index != id || disableALL) {
+            if (gameMode != easyGame) {
+                if (index != id || disableALL) {
                     card.removeAttr('onclick');
                     card.addClass('greyOut');
                 }
             }
-            else{
+            else {
                 card.addClass('clickFlip');
                 card.removeAttr('onclick');
                 card.attr('onclick', 'flipNoScore(' + index + ')');
@@ -248,10 +290,10 @@
                 fontColor: '#000000',
                 autostart: false,
                 onComplete: function () {
-                    if(round < maxRound){
+                    if (round < maxRound) {
                         nextRound();
                     }
-                    else{
+                    else {
                         setForm();
                     }
 
@@ -260,9 +302,9 @@
             nextRoundTimmer.start();
         }
         else if (round == maxRound) {
-           renderResultsLnk();
+            renderResultsLnk();
         }
-        else if(round < maxRound){
+        else if (round < maxRound) {
             $('#nextRound').removeClass('invisible');
         }
 
