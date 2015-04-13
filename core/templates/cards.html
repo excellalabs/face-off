@@ -143,6 +143,7 @@
     var timer;
     var selectedCardIndex = -1;
     var easyGame = 'easy';
+    var resized = false;
     var gameMode;
 
     $(document).ready(function () {
@@ -155,30 +156,9 @@
             startEasyGame();
 
         //Add transition listeners
-        transitionListeners();
+        cardTransitionListeners();
     });
 
-    function transitionListeners() {
-        for (var x = 0; x < 5; x++) {
-            var card = $('#colleague' + x);
-            card.on("webkitTransitionEnd", function () {
-                //Resize Card Text
-                $('.resizableText').textfill({
-                    minFontPixels: 8,
-                    maxFontPixels: 50
-                });
-                console.log("asdasd");
-            });
-
-{#            var card2 = document.getElementById('colleague' + x);#}
-{#            card2.addEventListener('webkitTransitionEnd',#}
-{#                    function (event) {#}
-{#                        alert("Finished transition!");#}
-{#                    }, false);#}
-        }
-
-
-    }
 
     function showGameMenu() {
         $('#gameMenu').removeClass('invisible');
@@ -244,9 +224,10 @@
         $('#colleague' + id).addClass('clickFlip');
 
         //Interrupt countdown
-        if(gameMode != easyGame)
+        if (gameMode != easyGame)
             timer.stop(function () {});
         disableCards(id, false);
+        resized = false;
     }
 
     function flipNoScore(id) {
@@ -261,7 +242,7 @@
         $('#resultsSubmit').removeClass('invisible');
     }
 
-    {# disable onclick on other images, disable them & present next round button#}
+    // disable onclick on other images, disable them & present next round button
     function disableCards(id, disableALL) {
         for (var index = 0; index < maxRound; index++) {
             var card = $('#colleague' + index);
@@ -306,7 +287,28 @@
         else if (round < maxRound) {
             $('#nextRound').removeClass('invisible');
         }
-
-
     }
+
+    //--------  Text Resizing Methods -------
+    function cardTransitionListeners() {
+        var cards = $('.flip-container');
+        for (var x = 0; x < 4; x++) {
+            cards[x].addEventListener('transitionend',
+                    function (event) {
+                        resizeText();
+                    }, false);
+        }
+    }
+
+    function resizeText() {
+        //Resize Card Text
+        if(!resized) {
+            $('.resizableText').textfill({
+                minFontPixels: 12,
+                maxFontPixels: 30
+            });
+            resized = true
+        }
+    }
+    //-----------------X-------------
 </script>
