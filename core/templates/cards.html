@@ -195,7 +195,6 @@
     }
 
     function startEasyGame() {
-        startTimer();
         gameMode = easyGame;
     }
 
@@ -245,8 +244,8 @@
         $('#colleague' + id).addClass('clickFlip');
 
         //Interrupt countdown
-        timer.stop(function () {
-        });
+        if(gameMode != easyGame)
+            timer.stop(function () {});
         disableCards(id, false);
     }
 
@@ -278,7 +277,7 @@
                 card.attr('onclick', 'flipNoScore(' + index + ')');
             }
         }
-        if (gameMode != easyGame) {
+        if (gameMode != easyGame && round != 4) {
             $("#countdown").hide();
             var nextRoundTimmer = $("#nextRoundCountdown").countdown360({
                 radius: 40,
