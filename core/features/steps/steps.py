@@ -24,7 +24,7 @@ def step(context):
 
 @when('they sign into the application through yammer')
 def step(context):
-    login(context, 'emmanuel.apau@excella.com', 'ForWork12')
+    login(context, '@excella.com', '')
 
 
 @then('they should arrive at the begin game screen')
