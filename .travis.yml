@@ -8,8 +8,7 @@ script: coverage run --source=core manage.py test
 after_success: coveralls
 deploy:
   provider: heroku
-  api_key:
-    secure: baf4a384-0a09-45b6-ae78-b0e836c3b530
+  api_key: baf4a384-0a09-45b6-ae78-b0e836c3b530
   app: col-league-staging
   on:
     repo: madridsoccer5/face_it
