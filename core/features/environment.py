@@ -18,7 +18,6 @@ def before_all(context):
     # desired_capabilities['version'] = '12'
     # desired_capabilities['platform'] = 'WINDOWS'
     # desired_capabilities['name'] = 'Testing Col-League App'
-
     # desired_capabilities['client_key'] = '44fa53ac66807797ca8ec3f1e9f9a9d9'
     # desired_capabilities['client_secret'] = '5cc0cce8a93b22b347ffd72204d007bb'
     #
