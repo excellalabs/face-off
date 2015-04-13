@@ -9,8 +9,8 @@ after_success: coveralls
 deploy:
   provider: heroku
   api_key:
-    secure: TUA6f4/ccF4xPDVMXoAoSvdCNoB2AABKeO/rjJTHVAjk+htc5eETg/GZrOEOYZ+ci+T3U16Upwp2+4OmDQ0fhPvzkPU1U/m/JBNfdz6ENH5Ao9b/B2kRc1SSaTddBshsSQFtxv3mk9u2gIgAFY2E/N2Jyw2vRJGgbOpfZCN3XYE=
-  app: col-league
+    secure: baf4a384-0a09-45b6-ae78-b0e836c3b530
+  app: col-league-staging
   on:
-    repo: excellaco/face_it
+    repo: madridsoccer5/face_it
   run: "python manage.py migrate"

@@ -6,7 +6,7 @@ def step(context):
 
 @when('they sign into the application through yammer')
 def step(context):
-    # Helper method
+    # Helper method Login
     login(context, 'sean.lewis@excella.com', 'Excella2014')
 
 
