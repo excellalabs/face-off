@@ -4,6 +4,8 @@
 
 <div class="page-header" id="banner">
     <div class="row" id="gameHeader">
+        <h3 id="easyHeader" class="pull-left" style="margin-top: 3%; margin-left: 0%;"> Practice Mode</h3>
+        <h3 id="hardHeader" class="pull-left" style="margin-top: 3%; margin-left: 0%;"> Competitive Mode</h3>
         <h3 class="pull-right" style="margin-top: 3%; margin-right: 3%;">Round {{ round|add:"1" }}/5</h3>
     </div>
 </div>
@@ -144,7 +146,11 @@
     var resized = false;
     var gameMode;
 
+
     $(document).ready(function () {
+        $('#easyHeader').hide();
+        $('#hardHeader').hide();
+
         if (round == 0) {
             $("#startGameModal").modal('show');
         }
@@ -174,10 +180,12 @@
 
     function startEasyGame() {
         gameMode = easyGame;
+        $('#easyHeader').show()
     }
 
     function startHardGame() {
         startTimer();
+        $('#hardHeader').show();
         $('.fa-spin').hide()
     }
 

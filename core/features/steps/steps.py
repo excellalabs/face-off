@@ -27,6 +27,7 @@ def step(context):
     login(context, '@excella.com', '')
 
 
+
 @then('they should arrive at the begin game screen')
 def step(context):
     assert 'Face Off' in context.browser.title
