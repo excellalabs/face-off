@@ -202,7 +202,8 @@
         $('#colleague' + id).addClass('clickFlip');
 
         //Interrupt countdown
-        timer.stop(function () {});
+        if(gameMode != easyGame)
+            timer.stop(function () {});
         disableCards(id, false);
     }
 
