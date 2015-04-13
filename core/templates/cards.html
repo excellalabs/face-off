@@ -15,11 +15,9 @@
             <div class="flipper">
                 <li class="no-bullets">
                     <div class="front">
-                        <div>
                             <a href="#" class="thumbnail">
                                 <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
                             </a>
-                        </div>
                     </div>
                     {% if answer.id == user.id %}
                         <div class="back panel panel-success thumbnail">
