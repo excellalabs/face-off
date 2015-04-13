@@ -123,7 +123,6 @@
     var selectedCardIndex = -1;
     var easyGame = 'easy';
     var gameMode;
-
     $(document).ready(function () {
         if(round == 0){
             $("#startGameModal").modal('show');
@@ -131,36 +130,31 @@
         else{
             if(gameMode != easyGame)
                 startHardGame();
-
             else
                 startEasyGame();
-
         }
     });
-
-
     function showGameMenu(){
         $('#gameMenu').removeClass('invisible');
         $('#noPicMenu').addClass('invisible');
         $('#noPicText').addClass('invisible');
         $('#addGameText').removeClass('invisible');
     }
-
     function setForm(){
         $('[name=score]').val(score);
         $('[name=cardIndex]').val(selectedCardIndex);
         $('[name=results]').val('{{ cards }}');
         $('#resultsForm').submit();
     }
-
     function startEasyGame(){
         gameMode = easyGame;
+        startTimer();
+        $("#countdown").addClass("invisible");
     }
 
     function startHardGame(){
         startTimer();
     }
-
     function startTimer(){
         timer = $("#countdown").countdown360({
             radius: 40,
@@ -177,12 +171,10 @@
         });
         timer.start();
     }
-
     function updateStars(starIndex){
         $('#0star-empty').removeClass('fa fa-circle-o');
         $('#0star-empty').addClass('glyphicon glyphicon-ok-sign');
     }
-
     function nextRound() {
         var cards = '{{ cards }}';
         formlessAjaxPostCSRFSetup();
@@ -191,21 +183,17 @@
             $('#cards').html(data);
         });
     }
-
     function flip(id, choice) {
         if (choice == '{{ answer.id }}'){
             score += 1;
             updateStars(score-1);
             selectedCardIndex= id;
         }
-
         $('#colleague' + id).addClass('clickFlip');
-
         //Interrupt countdown
         timer.stop(function () {});
         disableCards(id, false);
     }
-
     function flipNoScore(id) {
         var card = $('#colleague' + id);
         if(card.hasClass('clickFlip'))
@@ -213,11 +201,9 @@
         else
             card.addClass('clickFlip');
     }
-
     function renderResultsLnk(){
         $('#resultsSubmit').removeClass('invisible');
     }
-
     {# disable onclick on other images, disable them & present next round button#}
     function disableCards(id, disableALL) {
         for (var index = 0; index < maxRound; index++) {
@@ -252,7 +238,6 @@
                     else{
                         setForm();
                     }
-
                 }
             });
             nextRoundTimmer.start();
@@ -263,7 +248,5 @@
         else if(round < maxRound){
             $('#nextRound').removeClass('invisible');
         }
-
-
     }
 </script>
