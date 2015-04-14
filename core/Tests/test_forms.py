@@ -59,22 +59,23 @@ class FormTests(TestCase):
     def test_all_results_fields(self):
         form = ResultForm({
             'score': 1,
-            'cardIndex': 3,
+            'answer_id': 3,
             'results': 'hello',
+            'correct': 'True',
         })
 
         self.assertEqual(form.is_valid(), True)
 
-    #Test score is required
+    #Test score & correct param is required
     def test_results_score_required(self):
         form = ResultForm({
-            'cardIndex': 3,
+            'answer_id': 3,
             'results': 'hello',
         })
 
         self.assertEqual(form.is_valid(), False)
 
-    #Test cardIndex is required
+    #Test answer_id & correct params is required
     def test_results_cardIndex_required(self):
         form = ResultForm({
             'score': 1,
@@ -83,11 +84,11 @@ class FormTests(TestCase):
 
         self.assertEqual(form.is_valid(), False)
 
-    #Test results are required
+    #Test results & corrects params are required
     def test_results_results_required(self):
         form = ResultForm({
             'score': 1,
-            'cardIndex': 3,
+            'answer_id': 3,
         })
 
         self.assertEqual(form.is_valid(), False)

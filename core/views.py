@@ -70,13 +70,14 @@ def cards(request):
 def next_round(request):
     round = int(request.POST['round'])
     score = int(request.POST['score'])
-    card_index = int(request.POST['cardIndex'])
+    answer_id = int(request.POST['answer_id'])
+    correct = ast.literal_eval(str(request.POST['correct']))
 
     card_matrix = HTMLParser.HTMLParser().unescape(request.POST['matrix'])
     card_matrix = ast.literal_eval(card_matrix)
 
     # Sets the Winner of the round to the cardMatrix
-    update_results_list(card_matrix, card_index, round)
+    update_results_list(card_matrix, answer_id, round, correct)
 
     # Prepares data for next round
     round += 1
@@ -116,9 +117,10 @@ def results(request):
             metric.save()
 
             results = ast.literal_eval(HTMLParser.HTMLParser().unescape(form.cleaned_data['results']))
-            card_index = form.cleaned_data['cardIndex']
+            answer_id = form.cleaned_data['answer_id']
+            correct = ast.literal_eval(str(form.cleaned_data['correct']))
 
-            update_results_list(results, card_index, 4)  # 4 representing the last round (zero-based)
+            update_results_list(results, answer_id, 4, correct)  # 4 representing the last round (zero-based)
             save_metric_results(results, request.user)
 
             context = RequestContext(request, {'score': form.cleaned_data['score'], 'cards': results})
@@ -170,14 +172,19 @@ def save_metric_results(results, user):
                 metric.save()
 
 
-def update_results_list(card_matrix, card_index, round):
-    if card_index > -1:
-        card_matrix[round] = card_matrix[round][card_index]
-    else:
-        card_matrix[round][card_index]['wrong'] = True
-        card_matrix[round] = card_matrix[round][card_index]
+def update_results_list(card_matrix, answer_id, round, correct):
+    for i in range(0,4):
+        if card_matrix[round][i]['id'] == answer_id:
+            if not correct:
+                card_matrix[round][i]['wrong'] = True
+                card_matrix[round] = card_matrix[round][i]
+            else:
+                card_matrix[round] = card_matrix[round][i]
 
-    return card_matrix
+            return card_matrix
+
+
+
 
 
 def four_random_cards(redis_con, network):
