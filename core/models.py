@@ -35,13 +35,14 @@ class ColleagueGraph(models.Model):
     img_url = models.URLField(blank=True)
     yammer_url = models.URLField(blank=True)
     times_correct = models.IntegerField(blank=True, default=0)
+    times_incorrect = models.IntegerField(blank=True, default=0)
 
     class Meta:
         ordering = ["user__id"]
         verbose_name = "Graph of Known Colleagues"
         verbose_name_plural = "Graphs of Known Colleagues"
 
-    #Renamed for admin page usage
+    # Renamed for admin page usage
     def __unicode__(self):
         return self.name
 
@@ -64,13 +65,12 @@ class GlobalMetrics(models.Model):
         verbose_name = "Global Metric"
         verbose_name_plural = "Global Metrics"
 
+
 class Suggestions(models.Model):
     first_name = models.CharField(max_length=50, blank=False)
     last_name = models.CharField(max_length=50, blank=False)
     email = models.EmailField(blank=False)
     suggestion = models.TextField(max_length=500, blank=False)
-
-
 
     def __unicode__(self):
         return self.suggestion
