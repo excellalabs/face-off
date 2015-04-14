@@ -27,7 +27,10 @@ Setup
 
 Running Behave
 --------------
-*To run selenium with behave:
-* 1) Setup a free account on [testingbot](http://testingbot.com/)
-* 2) Add client secret and key in face_it/core/environment.py
-* 3) Go to the core folder on the command line and run "behave"
+To run selenium with behave:
+
+* 1) Run `pip install behave`
+* 2) Run `pip install selenium`
+* 3) Change directory to "application"/core
+* 4) Run behave
+
