@@ -129,7 +129,7 @@ def results(request):
 
 @login_required
 def metrics(request):
-    leastKnown = ColleagueGraph.objects.order_by('times_correct').filter(user=request.user)[:5]
+    leastKnown = ColleagueGraph.objects.order_by('-times_incorrect').filter(user=request.user)[:5]
 
     metrics = ColleagueGraph.objects.filter(user=request.user)
     names = ''
@@ -162,18 +162,20 @@ def save_metric_results(results, user):
         if result:
             try:
                 metric = ColleagueGraph.objects.get(user=user, yammer_id=result['id'])
-                metric.times_correct += 1
             except ObjectDoesNotExist:
                 metric = ColleagueGraph.objects.create(user=user, yammer_id=result['id'],
                                                        name=result['name'], img_url=result['mugshot'],
-                                                       yammer_url=result['user_url'],
-                                                       times_correct=1)
+                                                       yammer_url=result['user_url'])
             finally:
+                if 'wrong' in result:
+                    metric.times_incorrect += 1
+                else:
+                    metric.times_correct += 1
                 metric.save()
 
 
 def update_results_list(card_matrix, answer_id, round, correct):
-    for i in range(0,4):
+    for i in range(0, 4):
         if card_matrix[round][i]['id'] == answer_id:
             if not correct:
                 card_matrix[round][i]['wrong'] = True
@@ -182,9 +184,6 @@ def update_results_list(card_matrix, answer_id, round, correct):
                 card_matrix[round] = card_matrix[round][i]
 
             return card_matrix
-
-
-
 
 
 def four_random_cards(redis_con, network):
