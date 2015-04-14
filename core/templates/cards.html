@@ -9,24 +9,24 @@
 </div>
 
 {% with cards|resolve:round as list %}
-    {% for user in list %}
+    {% for card in list %}
         <div id="colleague{{ forloop.counter0 }}" class="flip-container"
-             onclick="flip('{{ forloop.counter0 }}', '{{ user.id }}')">
+             onclick="flip('{{ forloop.counter0 }}', '{{ card.id }}')">
             <div class="flipper">
                 <li class="no-bullets">
                     <div class="front">
                             <a href="#" class="thumbnail">
-                                <img src='{{ user.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
+                                <img src='{{ card.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
                             </a>
                     </div>
-                    {% if answer.id == user.id %}
+                    {% if answer.id == card.id %}
                         <div class="back panel panel-success thumbnail">
                             <div class="panel-heading"><h4></h4></div>
                             <div class="panel-body">
                                 <i class="fa fa-refresh fa-spin"></i>
 
                                 <div class="resizableText">
-                                    <span>{{ user.name }}</span>
+                                    <span>{{ card.name }}</span>
                                 </div>
                                 <h1><i class="fa fa-check-circle-o fa-6"></i></h1>
                             </div>
@@ -38,7 +38,7 @@
                                 <i class="fa fa-refresh fa-spin"></i>
 
                                 <div class="resizableText">
-                                    <span>{{ user.name }}</span>
+                                    <span>{{ card.name }}</span>
                                 </div>
                                 <h1><i class="fa fa-times-circle-o fa-6"></i></h1>
                             </div>
