@@ -10,28 +10,32 @@
     <br>
 
     <div class="row">
-        <ul id="cards" class="text-center">
+        <ul id="cards" class="text-center clearfix" style="white-space: normal;">
         {% for card in cards %}
-        <div id="colleague{{ forloop.counter0 }}" class="resultCards">
-            <li class="no-bullets">
-                <div class="panel">
-                    <div class="panel-body">
-                        <a href="{{ card.user_url }}" class="thumbnail">
-                            <img src='{{ card.mugshot|replace:"/{width}/256"|replace:"/{height}/256"}}'>
-                        </a>
+            <div id="colleague{{ forloop.counter0 }}" class="resultCards">
+                <li class="no-bullets" style="overflow: hidden;">
+                 <a href="{{ card.user_url }}">
+                    <div class="panel" >
+                        <div class="panel-body">
+                            <img src='{{ card.mugshot|replace:"/{width}/200"|replace:"/{height}/200"}}' >
+                        </div>
+                        {% if not card.wrong %}
+                            <div class="panel-footer">
+                                <div class="resizableText">
+                                    <span>{{ card.name }}<i class="fa fa-check-circle-o fa-6"></i></span>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="panel-footer">
+                                <div class="resizableText">
+                                    <span>{{ card.name }}<i class="fa fa-times-circle-o fa-6"></i></span>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
-                    {% if not card.wrong %}
-                        <div class="panel-footer">
-                            <h4>{{ card.name }} <i class="fa fa-check-circle-o fa-6"></i></h4>
-                        </div>
-                    {% else %}
-                        <div class="panel-footer">
-                            <h4>{{ card.name }} <i class="fa fa-times-circle-o fa-6"></i></h4>
-                        </div>
-                    {% endif %}
-                </div>
-            </li>
-        </div>
+                  </a>
+                </li>
+            </div>
         {% endfor %}
         </ul>
         <div class="text-center inline-block" style="margin-top: 3%">
@@ -42,5 +46,15 @@
 
 {% endblock %}
 
-{% block extra_js %}{% endblock %}
+{% block extra_js %}
+    <script>
+    $(document).ready(function () {
+        //Resize Card Text
+        $('.resizableText').textfill({
+            minFontPixels: 20,
+            maxFontPixels: 45
+        });
+    });
+    </script>
+{% endblock %}
 
