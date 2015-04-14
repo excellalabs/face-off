@@ -1,3 +1,4 @@
+from selenium.webdriver.support.wait import WebDriverWait
 # Helper methods to consolidate steps.py
 def login(context, username, password):
     context.browser.find_element_by_name('signIn').click()
@@ -12,3 +13,11 @@ def click_card(driver, index):
 
 def get_card(driver, index):
     return driver.find_element_by_id('colleague' + str(index))
+
+
+def get_user(driver):
+    return driver.find_element_by_id('userName')
+
+
+def driver_wait_four_seconds(driver):
+    driver = WebDriverWait(4)
