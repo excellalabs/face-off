@@ -258,13 +258,10 @@
             var card = $('#colleague' + index);
             if (gameMode != easyGame) {
                 if (index != id || disableALL) {
-                    card.removeAttr('onclick');
                     card.addClass('greyOut');
                 }
-                //Disables the onclick event for the card that is selected
-                else{
+
                     card.removeAttr('onclick');
-                }
             }
             else {
                 card.addClass('clickFlip');
