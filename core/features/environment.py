@@ -1,5 +1,7 @@
 from selenium import webdriver
 
+
+
 BEHAVE_DEBUG_ON_ERROR = True
 
 
@@ -11,7 +13,6 @@ def setup_debug_on_error(userdata):
 def before_all(context):
 
     setup_debug_on_error(context.config.userdata)
-    context.browser = webdriver.Firefox()
 
     # Use for remote headless testing when pushing
     # desired_capabilities = webdriver.DesiredCapabilities.FIREFOX
@@ -32,5 +33,9 @@ def after_step(context, step):
         pdb.post_mortem(step.exc_traceback)
 
 
-def after_all(context):
+def before_scenario(context, scenario):
+    context.browser = webdriver.Firefox()
+
+
+def after_scenario(context, scenario):
     context.browser.quit()
