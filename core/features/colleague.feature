@@ -32,7 +32,7 @@ Scenario: check competitive mode
   When they are in competitive mode
   And the user clicks the first card
   Then all the cards should not flip
-  
+
 #Not implemented fully
 #Scenario: Full competitive game play
 #  Given the user has logged into the Face Off application
