@@ -16,3 +16,13 @@
 .fa-circle-o{
     font-size: 24px !important;
 }
+
+.negative {
+    fill:#d67777 !important;
+    stroke:#d67777 !important;
+}
+
+.positive {
+    fill:#4f99b4 !important;
+    stroke:#4f99b4 !important;
+}
