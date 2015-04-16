@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
 from django_redis import get_redis_connection
-import requests, re, ast, random, HTMLParser
+import requests, re, ast, random, HTMLParser, json
 from core.models import UserMetrics, ColleagueGraph
 from django.core.exceptions import ObjectDoesNotExist
 from core.forms import SuggestionForm, ResultForm
@@ -26,10 +26,7 @@ def cards(request):
     else:
         network = 'default'
 
-    if redis_con.exists(network + '_users'):
-        print "Cache Retrieved"
-    else:
-        print "Cache Loaded"
+    if not redis_con.exists(network + '_users'):
         users = []
         social = request.user.social_auth.get(provider='yammer')
         access_token = social.extra_data['access_token']
@@ -132,26 +129,29 @@ def metrics(request):
     leastKnown = ColleagueGraph.objects.order_by('-times_incorrect').filter(user=request.user)[:5]
 
     metrics = ColleagueGraph.objects.filter(user=request.user)
-    names = ''
-    known = []
-    imgs = ''
+    correct_arr = []
+    incorrect_arr = []
     for metric in metrics:
-        names += str(metric.name) + ';'
-        known.append(metric.times_correct)
-        imgs += str(metric.img_url) + ';'
+        correct_arr.append({"label": str(metric.name), "value": metric.times_correct})
+        incorrect_arr.append({"label": str(metric.name), "value": (metric.times_incorrect * -1)})
 
     gMetrics = globallyKnownColleagues()
-    gNames = ''
+    gNames = []
     gKnown = []
-    gImgs = ''
-    for metric in gMetrics:
-        gNames += str(metric.name) + ';'
-        gKnown.append(metric.times_correct)
-        gImgs += str(metric.img_url) + ';'
+    gImgs = []
 
-    context = RequestContext(request, {'names': names, 'known': known, 'mugs': imgs,
-                                       'gNames': gNames, 'gKnown': gKnown, 'mugs': gImgs,
-                                       'leastknown': leastKnown
+    for metric in gMetrics:
+        gNames.append(str(metric.name))
+        gKnown.append(metric.times_correct)
+        gImgs.append(str(metric.img_url))
+
+    # Colleagues Encountered Data
+    times_known = {"key": "Guessed Correctly", "color": 'red', "values": correct_arr}
+    times_not_known = {"key": "Guessed Incorrectly", "color": "blue", "values": incorrect_arr}
+    jsondata = [times_known, times_not_known]
+
+    context = RequestContext(request, {'gNames': gNames, 'gKnown': gKnown, 'gMugs': gImgs,
+                                       'leastknown': leastKnown, 'json': json.dumps(jsondata)
                                        })
     return render_to_response('metrics.html', context_instance=context)
 
