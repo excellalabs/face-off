@@ -91,7 +91,7 @@
                         });
 
                         d3.select('#colleaguesEncountered svg')
-                                .datum({{ json|safe }})
+                                .datum({{ data|safe }})
                                 .transition().duration(500)
                                 .call(chart);
 
@@ -105,9 +105,8 @@
 
 
         function globalTopTenGraph() {
-            var labels = {{ gNames|safe }};
-            var known = {{ gKnown }};
-            var imgs = {{ gMugs|safe }};
+            var labels = {{ names|safe }};
+            var times_correct = {{ times_correct }};
 
             var barChartData = {
                 labels: labels,
@@ -117,7 +116,7 @@
                         strokeColor: "rgba(220,220,220,0.8)",
                         highlightFill: "rgba(220,220,220,0.75)",
                         highlightStroke: "rgba(220,220,220,1)",
-                        data: known
+                        data: times_correct
                     }
                 ]
 
