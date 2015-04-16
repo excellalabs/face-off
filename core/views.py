@@ -1,10 +1,10 @@
+import requests, re, ast, random, HTMLParser, json
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
 from django_redis import get_redis_connection
-import requests, re, ast, random, HTMLParser, json
 from core.models import UserMetrics, ColleagueGraph
 from django.core.exceptions import ObjectDoesNotExist
 from core.forms import SuggestionForm, ResultForm
@@ -30,7 +30,7 @@ def cards(request):
         users = yammer_user_restcall(request)
         load_users_to_cache(redis_con, users, network)
 
-    user_round_matrix = [four_random_cards(redis_con, network) for x in range(5)]
+    user_round_matrix = [four_random_cards(redis_con, network, request.user) for x in range(5)]
     answer = random.choice(user_round_matrix[0])
 
     context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer, 'round': 0, 'score': 0})
@@ -127,7 +127,7 @@ def yammer_user_restcall(request):
             'https://www.yammer.com/api/v1/users.json?page=%d' % page,
             headers={'Authorization': 'Bearer %s' % access_token['token']}
         )
-        if response.json() == []:
+        if not response.json():
             break
         users.extend(response.json())
         page += 1
@@ -166,6 +166,7 @@ def filter_previously_used_answer(card_matrix, round):
 
     return answer
 
+
 def save_metric_results(results, user):
     for result in results:
         if result:
@@ -195,14 +196,24 @@ def update_results_list(card_matrix, answer_id, round, correct):
             return card_matrix
 
 
-def four_random_cards(redis_con, network):
-    return [ast.literal_eval(person) for person in redis_con.srandmember(network + '_users', 4)]
+def four_random_cards(redis_con, network, current_user):
+    users = []
+
+    while len(users) < 4:
+        val = ast.literal_eval(redis_con.srandmember(network + '_users'))
+        if current_user.get_full_name() != val['name'] and val not in users:
+            users.append(val)
+
+    return users
 
 
 def globally_known_colleagues():
-    top_scores = (ColleagueGraph.objects.order_by('-times_correct').values_list('times_correct', flat=True).distinct())[:10]
-    filtered_by_name = (ColleagueGraph.objects.order_by('name','-times_correct').filter(times_correct__in=top_scores)).distinct('name')
-    top_10_known_colleagues = sorted(filtered_by_name, key=lambda ColleagueGraph:ColleagueGraph.times_correct, reverse=True)[:10]
+    top_scores = (ColleagueGraph.objects.order_by('-times_correct').values_list('times_correct', flat=True).distinct())[
+                 :10]
+    filtered_by_name = (
+    ColleagueGraph.objects.order_by('name', '-times_correct').filter(times_correct__in=top_scores)).distinct('name')
+    top_10_known_colleagues = sorted(filtered_by_name, key=lambda ColleagueGraph: ColleagueGraph.times_correct,
+                                     reverse=True)[:10]
     return top_10_known_colleagues
 
 
