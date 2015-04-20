@@ -9,4 +9,4 @@ MYENV
 node_modules
 *.sublime-workspace
 *.sublime-project
-dump.rdb
+dump.rdb/face-off/settings/local.py
