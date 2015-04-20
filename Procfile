@@ -1,1 +1,1 @@
-web: gunicorn face_it.wsgi
+web: gunicorn face-off.wsgi
