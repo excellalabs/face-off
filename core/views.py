@@ -16,24 +16,25 @@ def custom_login(request):
     else:
         return login(request)
 
-
 @login_required()
 def cards(request):
     redis_con = get_redis_connection("default")
+
     # Unique Set per Network
     if request.user.email:
-        network = request.user.email.split('@')[1]
+        network = str(request.user.email.split('@')[1]) + '_users'
     else:
-        network = 'default'
+        network = 'default_users'
 
-    if not redis_con.exists(network + '_users'):
+    if not redis_con.exists(network):
         users = yammer_user_restcall(request)
         load_users_to_cache(redis_con, users, network)
 
     user_round_matrix = [four_random_cards(redis_con, network, request.user) for x in range(5)]
     answer = random.choice(user_round_matrix[0])
 
-    context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer, 'round': 0, 'score': 0})
+    context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer,
+                                       'round': 0, 'score': 0})
     return render_to_response('game.html', context_instance=context)
 
 
@@ -108,8 +109,8 @@ def metrics(request):
     jsondata = [times_known, times_not_known]
 
     context = RequestContext(request, {'names': names, 'times_correct': times_correct,
-                                       'leastknown': most_incorrect_colleagues, 'data': json.dumps(jsondata)
-                                       })
+                                       'leastknown': most_incorrect_colleagues,
+                                       'data': json.dumps(jsondata)})
 
     return render_to_response('metrics.html', context_instance=context)
 
@@ -119,7 +120,6 @@ def yammer_user_restcall(request):
     users = []
     social = request.user.social_auth.get(provider='yammer')
     access_token = social.extra_data['access_token']
-
     page = 1
 
     while True:
@@ -139,14 +139,14 @@ def load_users_to_cache(redis_con, users, network):
     pattern = re.compile('.+no_photo.png$')  # Filters out users with no photo
     for user in users:
         if not pattern.match(user['mugshot_url']):
-            redis_con.sadd(user['network_name'] + '_users', {
+            redis_con.sadd(network, {
                 'id': user['id'],
                 'name': user['full_name'],
                 'mugshot': user['mugshot_url_template'],
                 'user_url': user['web_url'],
                 'network': user['network_name'],
             })
-    redis_con.expire(network + '_users', 43200)  # Redis cache expiration set to 12hrs(43200s)
+    redis_con.expire(network, 43200)  # Redis cache expiration set to 12hrs(43200s)
 
 
 def filter_previously_used_answer(card_matrix, round):
@@ -200,7 +200,7 @@ def four_random_cards(redis_con, network, current_user):
     users = []
 
     while len(users) < 4:
-        val = ast.literal_eval(redis_con.srandmember(network + '_users'))
+        val = ast.literal_eval(redis_con.srandmember(network))
         if current_user.get_full_name() != val['name'] and val not in users:
             users.append(val)
 
@@ -208,11 +208,16 @@ def four_random_cards(redis_con, network, current_user):
 
 
 def globally_known_colleagues():
-    top_scores = (ColleagueGraph.objects.order_by('-times_correct').values_list('times_correct', flat=True).distinct())[
-                 :10]
-    filtered_by_name = (
-    ColleagueGraph.objects.order_by('name', '-times_correct').filter(times_correct__in=top_scores)).distinct('name')
-    top_10_known_colleagues = sorted(filtered_by_name, key=lambda ColleagueGraph: ColleagueGraph.times_correct,
+    top_scores = (ColleagueGraph.objects.order_by('-times_correct')
+                  .values_list('times_correct', flat=True)
+                  .distinct())[:10]
+
+    filtered_by_name = (ColleagueGraph.objects.order_by('name', '-times_correct')
+                .filter(times_correct__in=top_scores))\
+                .distinct('name')
+
+    top_10_known_colleagues = sorted(filtered_by_name,
+                                     key=lambda ColleagueGraph: ColleagueGraph.times_correct,
                                      reverse=True)[:10]
     return top_10_known_colleagues
 
