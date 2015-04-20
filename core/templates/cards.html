@@ -51,16 +51,18 @@
         </div>
     {% endfor %}
 {% endwith %}
-<br>
-<br>
-
+<div class="row" align="center">
+    <h2 style="width: 50%;">Who is {{ answer.name }}? </h2>
+    <div class="row">
+</div>
 <div class="row">
     <h2 style="float: left; width: 30%;">Round: {% show_stars score %}</h2>
-
-    <h2 style="float: left; width: 40%;">Who is {{ answer.name }}? </h2>
-
     <div style="float: right; width: 30%;" id="countdown"></div>
-    <div id="nextRoundCountdown"></div>
+    <div style="float: right; width:30%;" id="nextRoundCountdown"></div>
+    <button  id="nextRound" onclick="nextRound()" class="btn btn-primary invisible" style="width: 160px; height: 60px; margin-right: 30%">
+        Next
+        Round
+    </button>
 </div>
 
 <ul class="text-center">
@@ -72,12 +74,6 @@
     </form>
 </ul>
 
-<div class="row">
-    <button id="nextRound" onclick="nextRound()" class="btn btn-primary invisible" style="width: 160px; height: 60px">
-        Next
-        Round
-    </button>
-</div>
 
 <div id="startGameModal" class="modal fade" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
