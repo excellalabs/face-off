@@ -1,6 +1,5 @@
 /.vagrant
 *.pyc
-/face-off/settings/local.py
 *.idea
 bower_components
 .DS_Store
