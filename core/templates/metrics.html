@@ -57,6 +57,7 @@
 {% block extra_js %}
     <script>
         $(document).ready(function () {
+            document.title = 'Metrics';
             loadGlobalTopTenGraph();
             loadColleaguesEncounteredGraph();
             $(window).trigger('resize');

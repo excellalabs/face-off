@@ -21,3 +21,19 @@ def get_user(driver):
 
 def driver_wait_four_seconds(driver):
     driver = WebDriverWait(4)
+
+def click_next_round(driver):
+    driver.find_element_by_id('nextRound').click()
+
+def play_through_education_mode(driver):
+    driver.find_element_by_id('easyGame').click()
+    click_card(driver, 0)
+    click_next_round(driver)
+    click_card(driver, 2)
+    click_next_round(driver)
+    click_card(driver, 3)
+    click_next_round(driver)
+    click_card(driver, 1)
+    click_next_round(driver)
+    click_card(driver, 0)
+    driver.find_element_by_id('resultsSubmit').click()
