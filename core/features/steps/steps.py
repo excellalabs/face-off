@@ -49,10 +49,6 @@ def step(context):
     play_through_education_mode(context.browser)
 
 
-
-
-
-
 # Then statements
 # ----------------
 @then('they should arrive at the results page')
