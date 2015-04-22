@@ -10,11 +10,8 @@ def post_user_creation(backend, user, response, *args, **kwargs):
         user.save()
         UserMetrics.objects.create(user=user).save()
     else:
-        try:
-            user = UserProfile.objects.get(email=response['user']['email'])
-            if user.yammer_url != response['user']['mugshot_url_template']:
-                user.yammer_url = response['user']['mugshot_url_template']
-                user.save()
-        except ObjectDoesNotExist:
-            return
+        user = UserProfile.objects.get(email=response['user']['email'])
+        if user.yammer_url != response['user']['mugshot_url_template']:
+            user.yammer_url = response['user']['mugshot_url_template']
+            user.save()
 
