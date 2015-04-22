@@ -43,8 +43,7 @@ Scenario: check competitive mode
   And the user clicks the first card
   Then all the cards should not flip
 
-#Not implemented fully
-#Scenario: Full competitive game play
-#  Given the user has logged into the Face Off application
-#  When they play through the competitive mode
-#  Then they should arrive at the results page
+Scenario: Full competitive game play
+  Given the user has logged into the Face Off application
+  When they are in competitive mode
+  W

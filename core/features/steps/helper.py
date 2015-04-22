@@ -1,4 +1,5 @@
 from selenium.webdriver.support.wait import WebDriverWait
+
 # Helper methods to consolidate steps.py
 def login(context, username, password):
     context.browser.find_element_by_name('signIn').click()
@@ -37,3 +38,4 @@ def play_through_education_mode(driver):
     click_next_round(driver)
     click_card(driver, 0)
     driver.find_element_by_id('resultsSubmit').click()
+
