@@ -44,16 +44,9 @@ def step(context):
 def step(context):
     context.browser.find_element_by_id('hardGame').click()
 
-@when('they play through the competitive mode')
+@when('they play through the Educational Mode')
 def step(context):
-    context.browser.find_element_by_id('hardGame').click()
-    click_card(context.browser, 0)
-    context.browser.implicitly_wait(5000)
-    click_card(context.browser, 2)
-    context.browser.implicitly_wait(4)
-    click_card(context.browser, 3)
-    context.browser.implicitly_wait(4)
-    click_card(context.browser, 1)
+    play_through_education_mode(context.browser)
 
 
 
@@ -63,6 +56,14 @@ def step(context):
 @then('they should arrive at the results page')
 def step(context):
     assert 'Results' in context.browser.title
+
+@then('they should arrive at the metrics page')
+def step(context):
+    assert 'Metrics' in context.browser.title
+
+@then('they should be able to select metrics')
+def step(context):
+    context.browser.find_element_by_id('metrics').click()
 
 @then('they should arrive at the no photo game screen')
 def step(context):
