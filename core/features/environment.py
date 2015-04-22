@@ -1,7 +1,5 @@
 from selenium import webdriver
 
-
-
 BEHAVE_DEBUG_ON_ERROR = True
 
 
@@ -11,7 +9,6 @@ def setup_debug_on_error(userdata):
 
 
 def before_all(context):
-
     setup_debug_on_error(context.config.userdata)
 
     # Use for remote headless testing when pushing
@@ -24,6 +21,7 @@ def before_all(context):
     #
     # context.browser = webdriver.Remote(desired_capabilities=desired_capabilities,
     #                                    command_executor="http://hub.testingbot.com:4444/wd/hub")
+
 
 def after_step(context, step):
     if BEHAVE_DEBUG_ON_ERROR and step.status == "failed":
@@ -38,4 +36,7 @@ def before_scenario(context, scenario):
 
 
 def after_scenario(context, scenario):
+
     context.browser.quit()
+
+
