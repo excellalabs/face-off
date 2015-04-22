@@ -1,7 +1,10 @@
 from .base import *
 import dj_database_url
 
-DEBUG = False
+if os.environ.get('DEBUG') == 'False':
+    DEBUG = False
+else:
+    DEBUG = True
 
 try:
     from .local import *
