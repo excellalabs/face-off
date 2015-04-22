@@ -170,6 +170,7 @@ def filter_previously_used_answer(card_matrix, round):
 def save_metric_results(results, user):
     for result in results:
         if result:
+            metric = {}
             try:
                 metric = ColleagueGraph.objects.get(user=user, yammer_id=result['id'])
             except ObjectDoesNotExist:
@@ -178,8 +179,10 @@ def save_metric_results(results, user):
                                                        yammer_url=result['user_url'])
             finally:
                 if 'wrong' in result:
+                    print metric
                     metric.times_incorrect += 1
                 else:
+                    print metric
                     metric.times_correct += 1
                 metric.save()
 
