@@ -1,6 +1,5 @@
 from selenium import webdriver
 
-
 BEHAVE_DEBUG_ON_ERROR = True
 
 
@@ -23,6 +22,7 @@ def before_all(context):
     # context.browser = webdriver.Remote(desired_capabilities=desired_capabilities,
     #                                    command_executor="http://hub.testingbot.com:4444/wd/hub")
 
+
 def after_step(context, step):
     if BEHAVE_DEBUG_ON_ERROR and step.status == "failed":
         # -- ENTER DEBUGGER: Zoom in on failure location.
@@ -33,8 +33,6 @@ def after_step(context, step):
 
 def before_scenario(context, scenario):
     context.browser = webdriver.Firefox()
-    context.browser.maximize_window()
-    context.browser.implicitly_wait(4)
 
 
 def after_scenario(context, scenario):

@@ -42,8 +42,22 @@ Scenario: check competitive mode
   When they are in competitive mode
   And the user clicks the first card
   Then all the cards should not flip
-  #And they should all be disabled
+
 
 Scenario: Full competitive game play
   Given the user has logged into the Face Off application
   When they are in competitive mode
+  When the user clicks a card
+  And the user clicks a card
+  And the user clicks a card
+  And the user clicks a card
+  And the user clicks a card
+  Then they should arrive at the results page
+
+Scenario: Play through game and play again
+  Given the user has logged into the Face Off application
+  When they play through the competitive mode
+  When they select play again
+  Then they should arrive at the begin game screen
+
+

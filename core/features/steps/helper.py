@@ -1,4 +1,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
+import random
+import time
+
 
 # Helper methods to consolidate steps.py
 def login(context, username, password):
@@ -20,11 +23,9 @@ def get_user(driver):
     return driver.find_element_by_id('userName')
 
 
-def driver_wait_four_seconds(driver):
-    driver = WebDriverWait(4)
-
 def click_next_round(driver):
     driver.find_element_by_id('nextRound').click()
+
 
 def play_through_education_mode(driver):
     driver.find_element_by_id('easyGame').click()
@@ -39,3 +40,29 @@ def play_through_education_mode(driver):
     click_card(driver, 0)
     driver.find_element_by_id('resultsSubmit').click()
 
+def play_through_competitive_mode(driver):
+    # First round
+    random_card = random.randint(1, 3)
+    print(random_card)
+    click_card(driver, random_card)
+    time.sleep(5)
+    # Second round
+    random_card = random.randint(1, 3)
+    print(random_card)
+    click_card(driver, random_card)
+    time.sleep(5)
+    # Third round
+    random_card = random.randint(1, 3)
+    print(random_card)
+    click_card(driver, random_card)
+    time.sleep(5)
+    # Fourth round
+    random_card = random.randint(1, 3)
+    print(random_card)
+    click_card(driver, random_card)
+    time.sleep(5)
+    # Fifth round
+    random_card = random.randint(1, 3)
+    print(random_card)
+    click_card(driver, random_card)
+    time.sleep(5)

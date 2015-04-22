@@ -1,5 +1,7 @@
 from behave import given, when, then
 from helper import *
+import random
+import time
 
 # Given statements
 # -----------------
@@ -24,6 +26,21 @@ def step(context):
 
 # When statements
 # ---------------
+@when('they select play again')
+def step(context):
+    context.browser.find_element_by_id('endGame').click()
+
+@when('they play through the competitive mode')
+def step(context):
+    context.browser.find_element_by_id('hardGame').click()
+    play_through_competitive_mode(context.browser)
+
+@when('the user clicks a card')
+def step(context):
+    random_card = random.randint(0, 3)
+    click_card(context.browser, random_card)
+    time.sleep(3)
+
 @when('the user clicks the first card')
 def step(context):
     click_card(context.browser, 0)
@@ -55,6 +72,7 @@ def step(context):
 def step(context):
     assert 'Results' in context.browser.title
 
+
 @then('they should arrive at the metrics page')
 def step(context):
     assert 'Metrics' in context.browser.title
@@ -83,7 +101,7 @@ def step(context):
 
 @then('all the cards should not flip')
 def step(context):
-    for i in range(1, 4):
+    for i in range(1, 3):
         assert "greyOut" in get_card(context.browser, i).get_attribute("class")
 
 @then('all the cards should flip')
