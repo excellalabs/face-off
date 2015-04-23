@@ -13,28 +13,24 @@
         <ul id="cards" class="text-center clearfix" style="white-space: normal;">
         {% for card in cards %}
             <div id="colleague{{ forloop.counter0 }}" class="resultCards">
-                <li class="no-bullets" style="overflow: hidden;">
-                 <a href="{{ card.user_url }}">
-                    <div class="panel cardpanel" >
-                        <div class="panel-body">
-                            <img src='{{ card.mugshot|replace:"/{width}/200"|replace:"/{height}/200"}}' >
-                        </div>
-                        {% if not card.wrong %}
-                            <div class="panel-footer">
-                                <div class="resizableText">
-                                    <span>{{ card.name }}<i class="fa fa-check-circle-o fa-6"></i></span>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="panel-footer">
-                                <div class="resizableText">
-                                    <span>{{ card.name }}<i class="fa fa-times-circle-o fa-6"></i></span>
-                                </div>
-                            </div>
-                        {% endif %}
+                <a href="{{ card.user_url }}" class="thumbnail">
+                    <img src='{{ card.mugshot|replace:"/{width}/200"|replace:"/{height}/200"}}'>
+                </a>
+                <div class="caption">
+                {% if not card.wrong %}
+                    <div class="resizableText">
+                        <a href="{{ card.user_url }}">
+                            <span>{{ card.name }}<i class="fa fa-check-circle-o fa-6"></i></span>
+                        </a>
                     </div>
-                  </a>
-                </li>
+                {% elif card.wrong %}
+                    <div class="resizableText">
+                        <a href="{{ card.user_url }}">
+                            <span>{{ card.name }}<i class="fa fa-times-circle-o fa-6"></i></span>
+                        </a>
+                    </div>
+                {% endif %}
+                </div>
             </div>
         {% endfor %}
         </ul>
