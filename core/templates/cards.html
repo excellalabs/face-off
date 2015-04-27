@@ -172,12 +172,12 @@
                 html = html + "<i class='glyphicon glyphicon-ok-sign'></i>";
             }
             else if(stars[i] == 'False'){
-                html = html + "<i class='glyphicon glyphicon-minus-sign'></i>";
+                html = html + "<i class='glyphicon glyphicon-remove-sign'></i>";
             }
         }
         for(var j = 0; j < leftover_count; j++){
 
-        html = html + "<i class='fa fa-circle-o'></i>";
+        html = html + "<i id='emptyStars'class='fa fa-circle-o'></i>";
         }
 
         $('#stars').html(html);
@@ -227,9 +227,13 @@
         timer.start();
     }
 
-    function updateStars(starIndex) {
-        $('#0star-empty').removeClass('fa fa-circle-o');
-        $('#0star-empty').addClass('glyphicon glyphicon-ok-sign');
+    function updateCorrectStars(starIndex) {
+        $('#emptyStars').removeClass('fa fa-circle-o');
+        $('#emptyStars').addClass('glyphicon glyphicon-ok-sign');
+    }
+    function updateIncorrectStars(starIndex){
+        $('#emptyStars').removeClass('fa fa-circle-o');
+        $('#emptyStars').addClass('glyphicon glyphicon-remove-sign');
     }
 
     function nextRound() {
@@ -244,9 +248,11 @@
     function flip(id, choice) {
         if (choice == '{{ answer.id }}') {
             score += 1;
-            updateStars(score - 1);
+            updateCorrectStars(score - 1);
             correct = 'True';
         }
+        else
+            updateIncorrectStars(score - 1);
 
         $('#colleague' + id).addClass('clickFlip');
 
