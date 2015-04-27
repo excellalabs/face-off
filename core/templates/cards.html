@@ -56,7 +56,7 @@
     <div class="row">
 </div>
 <div class="row">
-    <h2 style="float: left; width: 30%;">Round: {% show_stars score %}</h2>
+    <h2 id="stars" style="float: left; width: 30%;"></h2>
     <div style="float: right; width: 30%;" id="countdown"></div>
     <div style="float: right; width:30%;" id="nextRoundCountdown"></div>
     <button  id="nextRound" onclick="nextRound()" class="btn btn-primary invisible" style="width: 160px; height: 60px; margin-right: 30%">
@@ -141,9 +141,11 @@
     var resized = false;
     var gameMode;
     var correct = 'False';
+    var stars = {{ stars|safe }};
 
 
     $(document).ready(function () {
+        showStars();
         $('#easyHeader').hide();
         $('#hardHeader').hide();
 
@@ -162,6 +164,25 @@
         correct = 'False';
     });
 
+    function showStars(){
+        leftover_count = 5 - stars.length;
+        html = "Round: ";
+        for(var i = 0; i < stars.length; i++){
+            if(stars[i] == 'True'){
+                html = html + "<i class='glyphicon glyphicon-ok-sign'></i>";
+            }
+            else if(stars[i] == 'False'){
+                html = html + "<i class='glyphicon glyphicon-remove-sign'></i>";
+            }
+        }
+        for(var j = 0; j < leftover_count; j++){
+
+        html = html + "<i id='emptyStars'class='fa fa-circle-o'></i>";
+        }
+
+        $('#stars').html(html);
+
+    }
 
     function showGameMenu() {
         $('#gameMenu').removeClass('invisible');
@@ -206,15 +227,19 @@
         timer.start();
     }
 
-    function updateStars(starIndex) {
-        $('#0star-empty').removeClass('fa fa-circle-o');
-        $('#0star-empty').addClass('glyphicon glyphicon-ok-sign');
+    function updateCorrectStars(starIndex) {
+        $('#emptyStars').removeClass('fa fa-circle-o');
+        $('#emptyStars').addClass('glyphicon glyphicon-ok-sign');
+    }
+    function updateIncorrectStars(starIndex){
+        $('#emptyStars').removeClass('fa fa-circle-o');
+        $('#emptyStars').addClass('glyphicon glyphicon-remove-sign');
     }
 
     function nextRound() {
         var cards = '{{ cards }}';
         formlessAjaxPostCSRFSetup();
-        $.post('/rounds/', {matrix: cards, round: round, score: score, answer_id: '{{ answer.id }}', correct:correct},
+        $.post('/rounds/', {matrix: cards, round: round, score: score, answer_id: '{{ answer.id }}', stars: stars, correct:correct},
                 function (data) {
                     $('#cards').html(data);
                 });
@@ -223,9 +248,11 @@
     function flip(id, choice) {
         if (choice == '{{ answer.id }}') {
             score += 1;
-            updateStars(score - 1);
+            updateCorrectStars(score - 1);
             correct = 'True';
         }
+        else
+            updateIncorrectStars(score - 1);
 
         $('#colleague' + id).addClass('clickFlip');
 

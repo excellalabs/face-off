@@ -1,9 +1,0 @@
-{% for star in star_count %}
-    <i id="{{ forloop.counter0 }}star" class="glyphicon glyphicon-ok-sign"></i>
-{% endfor %}
-
-{% if leftover_count %}
-    {% for star in leftover_count %}
-        <i id="{{ forloop.counter0 }}star-empty" class="fa fa-circle-o" ></i>
-    {% endfor %}
-{% endif %}

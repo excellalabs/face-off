@@ -32,9 +32,10 @@ def cards(request):
 
     user_round_matrix = [four_random_cards(redis_con, network, request.user) for x in range(5)]
     answer = random.choice(user_round_matrix[0])
+    stars = []
 
     context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer,
-                                       'round': 0, 'score': 0})
+                                       'round': 0, 'score': 0, 'stars': stars})
     return render_to_response('game.html', context_instance=context)
 
 
@@ -44,6 +45,10 @@ def next_round(request):
     score = int(request.POST['score'])
     answer_id = int(request.POST['answer_id'])
     correct = ast.literal_eval(str(request.POST['correct']))
+    stars = request.POST.getlist('stars[]')
+    stars.append(str(correct))
+    stars = json.dumps(stars)
+
 
     card_matrix = HTMLParser.HTMLParser().unescape(request.POST['matrix'])
     card_matrix = ast.literal_eval(card_matrix)
@@ -55,8 +60,9 @@ def next_round(request):
     round += 1
     answer = filter_previously_used_answer(card_matrix, round)
 
+
     context = RequestContext(request, {'cards': card_matrix, 'round': round, 'answer': answer,
-                                       'score': score, 'resultsForm': ResultForm()})
+                                       'score': score, 'stars': stars, 'resultsForm': ResultForm()})
 
     return render_to_response('cards.html', context_instance=context)
 
