@@ -141,9 +141,11 @@
     var resized = false;
     var gameMode;
     var correct = 'False';
+    var stars = {{ stars|safe }};
 
 
     $(document).ready(function () {
+        console.log(stars);
         $('#easyHeader').hide();
         $('#hardHeader').hide();
 
@@ -214,7 +216,7 @@
     function nextRound() {
         var cards = '{{ cards }}';
         formlessAjaxPostCSRFSetup();
-        $.post('/rounds/', {matrix: cards, round: round, score: score, answer_id: '{{ answer.id }}', correct:correct},
+        $.post('/rounds/', {matrix: cards, round: round, score: score, answer_id: '{{ answer.id }}', stars: stars, correct:correct},
                 function (data) {
                     $('#cards').html(data);
                 });
