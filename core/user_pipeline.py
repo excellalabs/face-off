@@ -1,5 +1,4 @@
-from core.models import UserMetrics, UserProfile
-from django.core.exceptions import ObjectDoesNotExist
+from core.models import UserMetrics
 
 
 def post_user_creation(backend, user, response, *args, **kwargs):

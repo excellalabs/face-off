@@ -4,6 +4,9 @@
 {% block content %}
     <div class="page-header" id="banner">
         <div class="row">
+            <div class="text-center inline-block" style="margin-top: 3%">
+                <a id="endGame" href="{% url 'core:cards' %}" class="btn btn-primary">Play Again!</a>
+            </div>
         </div>
     </div>
 
@@ -40,17 +43,19 @@
                 <ul class="text-center">
                     {% for item in leastknown %}
                         <div class="resultCards">
-                            <h5>{{ item.name }}</h5>
                             <a href="{{ item.yammer_url }}" class="thumbnail">
                                 <img src='{{ item.img_url|replace:"/{width}/100"|replace:"/{height}/100"}}'>
                             </a>
+                            <h5>{{ item.name }}</h5>
                         </div>
                     {% endfor %}
                 </ul>
             </div>
         </div>
     </div>
-
+     <div class="text-center inline-block" style="margin-top: 3%">
+        <a id="endGame" href="{% url 'core:cards' %}" class="btn btn-primary">Play Again!</a>
+     </div>
 
 {% endblock %}
 
