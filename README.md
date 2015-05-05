@@ -35,8 +35,9 @@ A Yammer/Django Application application built for the gamification of learning t
 * Redis Server
 * AWS Bucket
 * Postgres Server
---------------
 
+--------------
+####Steps
 * `heroku create {appName}`
 * `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`
 * `git push heroku master`
