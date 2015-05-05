@@ -8,6 +8,13 @@ A Yammer/Django Application application built for the gamification of learning t
 -----
 ### 1. Yammer Client Application
 * [Register An App With Yammer](https://developer.yammer.com/v1.0/docs/app-registration)
+* **Note** the Redirect URI & Javascript Origins field
+    * Dev:
+        * Redirect URI - `http://localhost:8111/auth/yammer/callback`
+        * Javascript Origins - `http://localhost:8111`
+    * Production:
+        * replace dev fields with respective hostname 
+    * Once you register, you'll receive a `Client ID` and `Client Secret`. Copy these keys, as you'll need to plug them into your application settings.
 
 
 ### 2. Development Environment Setup
