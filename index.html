@@ -19,99 +19,74 @@
     </section>
 
     <section class="main-content">
-      <p>Face-Off <img src="https://travis-ci.org/excellalabs/face-off.svg?branch=master" alt="Build Status"> <a href="https://coveralls.io/r/excellaco/face_it"><img src="https://coveralls.io/repos/excellaco/face_it/badge.svg" alt="Coverage Status"></a></p>
-
-<h1></h1>
-
-<p>A Yammer/Django Application application built for the gamification of learning the names of your fellow colleagues. The hardest part of starting a with a new company is putting names to faces and so this application can be used to ease the onboarding of new employees.</p>
-
-<h1>
-<a id="quick-start-guide" class="anchor" href="#quick-start-guide" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick-Start Guide</h1>
+      <h1>
+<a id="yammer-application" class="anchor" href="#yammer-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>Yammer Application</h1>
 
 <hr>
 
 <h3>
-<a id="1-yammer-client-application" class="anchor" href="#1-yammer-client-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Yammer Client Application</h3>
+<a id="1-registering-a-yammer-application" class="anchor" href="#1-registering-a-yammer-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Registering a Yammer Application</h3>
+
+<p><img src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png" alt="alt text" title="Register Application"></p>
 
 <ul>
-<li><a href="https://developer.yammer.com/v1.0/docs/app-registration">Register An App With Yammer</a></li>
+<li><p>Go to <a href="https://www.yammer.com/client_applications">https://www.yammer.com/client_applications</a>. Click on the “Register new App” button. Please note, when you create an app, this app will be linked to that related Yammer network. This is the network you will use to access, edit, and test your application.</p></li>
+<li><p>Consider using a service account when registering your app at <a href="https://www.yammer.com/client_applications">https://www.yammer.com/client_applications</a>. i.e. “<a href="mailto:apps@yourcompany.com">apps@yourcompany.com</a>” - This will ensure your app continues to work if you or the app creator leaves the company.</p></li>
 </ul>
 
-<h3>
-<a id="2-development-environment-setup" class="anchor" href="#2-development-environment-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Development Environment Setup</h3>
+<p><img src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png" alt="alt text" title="Application Configuration"></p>
+
+<table>
+<thead>
+<tr>
+<th>Required Fields</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application Name</td>
+<td align="left">The app name which will appear in Yammer’s activity stream.</td>
+</tr>
+<tr>
+<td>Organization</td>
+<td align="left">The name of the organization affiliated with your app.</td>
+</tr>
+<tr>
+<td>Support e-mail</td>
+<td align="left">An email address, which users of your app can contact for support.</td>
+</tr>
+<tr>
+<td>Website</td>
+<td align="left">Your organization’s website.</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<p><strong>Note</strong> the Redirect URI &amp; Javascript Origins field</p>
 
 <ul>
-<li>Clone this repo</li>
-<li>Copy <code>face_it/settings/local.py.example</code> to <code>face_it/settings/local.py</code>
-</li>
-<li>Add your keys (created in step 1) to <code>face_it/settings/local.py</code>
-</li>
-<li>Install <a href="https://www.vagrantup.com/">Vagrant</a> and <a href="https://www.virtualbox.org/">Virtualbox</a>
-</li>
-<li>Initialize the vagrant box - <code>vagrant up</code>
-</li>
-<li>Log into the server - <code>vagrant ssh</code>
-</li>
-<li>Create a super user using the command <code>python manage.py createsuperuser</code>
-</li>
-<li>Install &amp; Start <a href="http://redis.io/">Redis Cache server</a> prior in a separate shell - <code>redis-server</code> </li>
-<li>Launch the app - <code>python manage.py runserver 0.0.0.0:8000</code>
-</li>
-<li>Access the app in your browser - <code>http://localhost:8111</code>
-</li>
-</ul>
-
-<h3>
-<a id="3-heroku-deployment-optional" class="anchor" href="#3-heroku-deployment-optional" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Heroku Deployment (Optional)</h3>
+<li>Development:
 
 <ul>
-<li><code>heroku create {appName}</code></li>
-<li><code>heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git</code></li>
-<li><code>git push heroku master</code></li>
-<li><code>heroku addons:add heroku-postgresql</code></li>
-<li>Create a <a href="https://redistogo.com">RedisToGo</a> account
-
-<ul>
-<li><code>heroku addons:add redistogo</code></li>
 <li>
-<code>heroku config:add REDISTOGO_URL={instanceName}</code> 
+<strong>Redirect URI</strong> - http://localhost:8111/auth/yammer/callback</li>
+<li>
+<strong>Javascript Origins</strong> - http://localhost:8111</li>
+</ul>
+</li>
+<li>Production:
 
 <ul>
-<li> i.e instanceName = redis://redistogo:<a href="mailto:xxxx@test.redistogo.com">xxxx@test.redistogo.com</a>:10355/</li>
-</ul>
+<li>replace dev fields with respective <code>hostname</code>
 </li>
 </ul>
 </li>
-<li><code>heroku ps:scale web=1</code></li>
-<li><code>heroku run python manage.py syncdb</code></li>
 </ul>
 
-<h2>
-<a id="tests" class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests</h2>
-
-<hr>
-
-<h3>
-<a id="unit-tests" class="anchor" href="#unit-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unit Tests</h3>
-
-<ul>
-<li>Load test fixture data <code>./manage.py loaddata "core/fixtures/core-test.json"</code>
-
-<ul>
-<li>Applying fixtures pushes pre-populated data into your application.</li>
-</ul>
-</li>
-<li>Run unit-tests - <code>python manage.py test</code>
-</li>
-</ul>
-
-<h4>
-<a id="selenium-tests-w-behave" class="anchor" href="#selenium-tests-w-behave" aria-hidden="true"><span class="octicon octicon-link"></span></a>Selenium Tests w/ Behave</h4>
-
-<ul>
-<li>start behave instance - <code>behave core/features</code>
-</li>
-</ul>
+<p>Once you register, you'll receive a <code>Client ID</code> and <code>Client Secret</code>. Copy these keys, as you'll need to plug them into your application settings.</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/kave/Face-Off">Face-off</a> is maintained by <a href="https://github.com/kave">kave</a>.</span>
