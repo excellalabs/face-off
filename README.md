@@ -30,6 +30,13 @@ A Yammer/Django Application application built for the gamification of learning t
 * Access the app in your browser - `http://localhost:8111`
 
 ### 3. Heroku Deployment (Optional)
+---
+**Required Items**
+* Redis Server
+* AWS Bucket
+* Postgres Server
+--------------
+
 * `heroku create {appName}`
 * `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`
 * `git push heroku master`
@@ -38,8 +45,26 @@ A Yammer/Django Application application built for the gamification of learning t
     * `heroku addons:add redistogo`
     * `heroku config:add REDISTOGO_URL={instanceName}` 
         *  i.e instanceName = redis://redistogo:xxxx@test.redistogo.com:10355/
+* Create an [AWS account](http://aws.amazon.com/s3/) to have access to an [AWS Bucket](http://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html)
+    * Create environment variables specific for the created aws bucket:
+        *  AWS_ACCESS_KEY_ID
+        *  AWS_SECRET_ACCESS_KEY
+        *  AWS_STORAGE_BUCKET_NAME
 * `heroku ps:scale web=1`
 * `heroku run python manage.py syncdb`
+
+####**Required Environment Variables Checklist**
+
+|Environmental Variable Name|Value (example)|
+|---------------------------|:-------------:|
+|SOCIAL_AUTH_YAMMER_KEY|xxxxxxx|
+|SOCIAL_AUTH_YAMMER_SECRET|xxxxxxx|
+|NPM_CONFIG_PRODUCTION|true|
+|DJANGO_SETTINGS_MODULE|face-off.settings.production|
+|REDISTOGO_URL|redis://redistogo:xxxx@test.redistogo.com:10355/|
+|AWS_ACCESS_KEY_ID|xxxx|
+|AWS_SECRET_ACCESS_KEY|xxxx|
+|AWS_STORAGE_BUCKET_NAME|xxx-bucket|
 
 ## Tests
 ---
