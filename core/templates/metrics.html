@@ -4,6 +4,9 @@
 {% block content %}
     <div class="page-header" id="banner">
         <div class="row">
+            <div class="text-center inline-block" style="margin-top: 3%">
+                <a id="endGame" href="{% url 'core:cards' %}" class="btn btn-primary">Play Again!</a>
+            </div>
         </div>
     </div>
 
@@ -50,7 +53,9 @@
             </div>
         </div>
     </div>
-
+     <div class="text-center inline-block" style="margin-top: 3%">
+        <a id="endGame" href="{% url 'core:cards' %}" class="btn btn-primary">Play Again!</a>
+     </div>
 
 {% endblock %}
 
