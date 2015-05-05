@@ -64,6 +64,21 @@
 <h3>
 <a id="3-heroku-deployment-optional" class="anchor" href="#3-heroku-deployment-optional" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Heroku Deployment (Optional)</h3>
 
+<hr>
+
+<p><strong>Required Items</strong></p>
+
+<ul>
+<li>Redis Server</li>
+<li>AWS Bucket</li>
+<li>Postgres Server</li>
+</ul>
+
+<hr>
+
+<h4>
+<a id="steps" class="anchor" href="#steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Steps</h4>
+
 <ul>
 <li><code>heroku create {appName}</code></li>
 <li><code>heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git</code></li>
@@ -82,9 +97,69 @@
 </li>
 </ul>
 </li>
+<li>Create an <a href="http://aws.amazon.com/s3/">AWS account</a> to have access to an <a href="http://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html">AWS Bucket</a>
+
+<ul>
+<li>Create environment variables specific for the created aws bucket:
+
+<ul>
+<li> AWS_ACCESS_KEY_ID</li>
+<li> AWS_SECRET_ACCESS_KEY</li>
+<li> AWS_STORAGE_BUCKET_NAME</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><code>heroku ps:scale web=1</code></li>
 <li><code>heroku run python manage.py syncdb</code></li>
 </ul>
+
+<h4>
+<a id="required-environment-variables-checklist" class="anchor" href="#required-environment-variables-checklist" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Required Environment Variables Checklist</strong>
+</h4>
+
+<table>
+<thead>
+<tr>
+<th>Environmental Variable Name</th>
+<th align="center">Value (example)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOCIAL_AUTH_YAMMER_KEY</td>
+<td align="center">xxxxxxx</td>
+</tr>
+<tr>
+<td>SOCIAL_AUTH_YAMMER_SECRET</td>
+<td align="center">xxxxxxx</td>
+</tr>
+<tr>
+<td>NPM_CONFIG_PRODUCTION</td>
+<td align="center">true</td>
+</tr>
+<tr>
+<td>DJANGO_SETTINGS_MODULE</td>
+<td align="center">face-off.settings.production</td>
+</tr>
+<tr>
+<td>REDISTOGO_URL</td>
+<td align="center">redis://redistogo:<a href="mailto:xxxx@test.redistogo.com">xxxx@test.redistogo.com</a>:10355/</td>
+</tr>
+<tr>
+<td>AWS_ACCESS_KEY_ID</td>
+<td align="center">xxxx</td>
+</tr>
+<tr>
+<td>AWS_SECRET_ACCESS_KEY</td>
+<td align="center">xxxx</td>
+</tr>
+<tr>
+<td>AWS_STORAGE_BUCKET_NAME</td>
+<td align="center">xxx-bucket</td>
+</tr>
+</tbody>
+</table>
 
 <h2>
 <a id="tests" class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests</h2>
