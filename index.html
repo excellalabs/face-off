@@ -19,53 +19,98 @@
     </section>
 
     <section class="main-content">
-      <p>Col-league <img src="https://travis-ci.org/excellalabs/face-off.svg?branch=master" alt="Build Status"> <a href="https://coveralls.io/r/excellaco/face_it"><img src="https://coveralls.io/repos/excellaco/face_it/badge.svg" alt="Coverage Status"></a></p>
+      <p>Face-Off <img src="https://travis-ci.org/excellalabs/face-off.svg?branch=master" alt="Build Status"> <a href="https://coveralls.io/r/excellaco/face_it"><img src="https://coveralls.io/repos/excellaco/face_it/badge.svg" alt="Coverage Status"></a></p>
 
 <h1></h1>
 
 <p>A Yammer/Django Application application built for the gamification of learning the names of your fellow colleagues. The hardest part of starting a with a new company is putting names to faces and so this application can be used to ease the onboarding of new employees.</p>
 
-<h2>
-<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h2>
+<h1>
+<a id="application-hosting" class="anchor" href="#application-hosting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Application Hosting</h1>
+
+<hr>
+
+<h3>
+<a id="1-yammer-client-application" class="anchor" href="#1-yammer-client-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Yammer Client Application</h3>
+
+<ul>
+<li><a href="https://developer.yammer.com/v1.0/docs/app-registration">Register An App With Yammer</a></li>
+</ul>
+
+<h3>
+<a id="2-development-environment-setup" class="anchor" href="#2-development-environment-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Development Environment Setup</h3>
 
 <ul>
 <li>Clone this repo</li>
-<li>Follow the instructions for setting up your Yammer App Keys <a href="https://github.com/excellaco/yammer-hackathon/wiki/Yammer-OAuth-Setup">here</a>
-</li>
 <li>Copy <code>face_it/settings/local.py.example</code> to <code>face_it/settings/local.py</code>
 </li>
-<li>Add your keys to <code>face_it/settings/local.py</code>
+<li>Add your keys (created in step 1) to <code>face_it/settings/local.py</code>
 </li>
-<li>Install Vagrant and Virtualbox</li>
+<li>Install <a href="https://www.vagrantup.com/">Vagrant</a> and <a href="https://www.virtualbox.org/">Virtualbox</a>
+</li>
 <li>Initialize the vagrant box - <code>vagrant up</code>
 </li>
 <li>Log into the server - <code>vagrant ssh</code>
 </li>
-<li>Load fixture data <code>./manage.py loaddata "core/fixtures/core-test.json"</code> (optional)
--Applying fixtures pushes pre-populated data into your application. This is
-   generally used for testing purposes.
-*</li>
 <li>Create a super user using the command <code>python manage.py createsuperuser</code>
 </li>
-<li>Start Redis Cache server prior in a separate tab - <code>redis-server</code> </li>
-<li>Launch the app - <code>./manage.py runserver 0.0.0.0:8000</code>
+<li>Install &amp; Start <a href="http://redis.io/">Redis Cache server</a> prior in a separate shell - <code>redis-server</code> </li>
+<li>Launch the app - <code>python manage.py runserver 0.0.0.0:8000</code>
 </li>
 <li>Access the app in your browser - <code>http://localhost:8111</code>
 </li>
 </ul>
 
-<h2>
-<a id="running-behave" class="anchor" href="#running-behave" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running Behave</h2>
-
-<p>To run selenium with behave:</p>
+<h3>
+<a id="3-heroku-deployment-optional" class="anchor" href="#3-heroku-deployment-optional" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Heroku Deployment (Optional)</h3>
 
 <ul>
-<li>1) Run <code>pip install behave</code>
+<li><code>heroku create {appName}</code></li>
+<li><code>heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git</code></li>
+<li><code>git push heroku master</code></li>
+<li><code>heroku addons:add heroku-postgresql</code></li>
+<li>Create a <a href="https://redistogo.com">RedisToGo</a> account
+
+<ul>
+<li><code>heroku addons:add redistogo</code></li>
+<li>
+<code>heroku config:add REDISTOGO_URL={instanceName}</code> 
+
+<ul>
+<li> i.e instanceName = redis://redistogo:<a href="mailto:xxxx@test.redistogo.com">xxxx@test.redistogo.com</a>:10355/</li>
+</ul>
 </li>
-<li>2) Run <code>pip install selenium</code>
+</ul>
 </li>
-<li>3) Change directory to "application"/core</li>
-<li>4) Run behave</li>
+<li><code>heroku ps:scale web=1</code></li>
+<li><code>heroku run python manage.py syncdb</code></li>
+</ul>
+
+<h2>
+<a id="tests" class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests</h2>
+
+<hr>
+
+<h3>
+<a id="unit-tests" class="anchor" href="#unit-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unit Tests</h3>
+
+<ul>
+<li>Load test fixture data <code>./manage.py loaddata "core/fixtures/core-test.json"</code>
+
+<ul>
+<li>Applying fixtures pushes pre-populated data into your application.</li>
+</ul>
+</li>
+<li>Run unit-tests - <code>python manage.py test</code>
+</li>
+</ul>
+
+<h4>
+<a id="selenium-tests-w-behave" class="anchor" href="#selenium-tests-w-behave" aria-hidden="true"><span class="octicon octicon-link"></span></a>Selenium Tests w/ Behave</h4>
+
+<ul>
+<li>start behave instance - <code>behave core/features</code>
+</li>
 </ul>
 
       <footer class="site-footer">
