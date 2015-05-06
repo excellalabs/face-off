@@ -2,7 +2,8 @@ Face-Off ![Build Status](https://travis-ci.org/excellalabs/face-off.svg?branch=m
 
 =======================
 
-A Yammer/Django Application application built for the gamification of learning the names of your fellow colleagues. The hardest part of starting a with a new company is putting names to faces and so this application can be used to ease the onboarding of new employees.
+A Yammer/Django Application application built for the gamification of learning the names of your fellow colleagues.
+One difficult part of joining a new company is putting names to faces. Utilizing Yammer OAuth, this webapp can make the learning process more fun.
 
 # Quick-Start Guide
 -----
