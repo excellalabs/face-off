@@ -90,18 +90,15 @@ def results(request):
 
 @login_required
 def metrics(request):
-    # Colleagues you should get to know
+     # Colleagues you should get to know
     most_incorrect_colleagues = ColleagueGraph.objects.order_by('-times_incorrect').filter(user=request.user)[:5]
 
-    # Global Known Colleagues
-    globally_known = globally_known_colleagues()
-    names = []
-    times_correct = []
+    context = RequestContext(request, {'leastknown': most_incorrect_colleagues})
 
-    for metric in globally_known:
-        names.append(str(metric.name))
-        times_correct.append(metric.times_correct)
+    return render_to_response('metrics.html', context_instance=context)
 
+@login_required
+def encountered(request):
     # Colleagues Encountered Data
     encountered = ColleagueGraph.objects.filter(user=request.user)
     correct_arr = []
@@ -114,12 +111,25 @@ def metrics(request):
     times_not_known = {"key": "Guessed Incorrectly", "color": "blue", "values": incorrect_arr}
     jsondata = [times_known, times_not_known]
 
-    context = RequestContext(request, {'names': names, 'times_correct': times_correct,
-                                       'leastknown': most_incorrect_colleagues,
-                                       'data': json.dumps(jsondata)})
+    return HttpResponse(json.dumps(jsondata), content_type="application/json")
 
-    return render_to_response('metrics.html', context_instance=context)
+@login_required
+def globally_known(request):
+    # Global Known Colleagues
+    globally_known = globally_known_colleagues()
+    names = []
+    times_correct = []
 
+    for metric in globally_known:
+        names.append(str(metric.name))
+        times_correct.append(metric.times_correct)
+
+    known = {
+        'names': names,
+        'times_correct': times_correct
+    }
+    print known
+    return HttpResponse(json.dumps(known), content_type="application/json")
 
 # Helper Functions
 def yammer_user_restcall(request):
