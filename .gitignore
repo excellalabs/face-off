@@ -4,7 +4,8 @@
 *.idea
 bower_components
 .DS_Store
-static/bower_components
+static
+!core/static
 MYENV
 node_modules
 *.sublime-workspace
