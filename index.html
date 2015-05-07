@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>Face-off by kave</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,197 +8,219 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Face-off</h1>
-      <h2 class="project-tagline">A Yammer Application application used for the onboarding of new employees.</h2>
-      <a href="https://github.com/kave/Face-Off" class="btn">View on GitHub</a>
-      <a href="https://github.com/kave/Face-Off/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/kave/Face-Off/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+</head>
+<body>
+<section class="page-header">
+    <h1 class="project-name">Face-off</h1>
 
-    <section class="main-content">
-      <h1>
-<a id="" class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><img src="https://travis-ci.org/excellalabs/face-off.svg?branch=master" alt="Build Status">
-</h1>
+    <h2 class="project-tagline">A Yammer Application application used for the onboarding of new employees.</h2>
+    <a href="https://github.com/kave/Face-Off" class="btn">View on GitHub</a>
+    <a href="https://github.com/kave/Face-Off/zipball/master" class="btn">Download .zip</a>
+    <a href="https://github.com/kave/Face-Off/tarball/master" class="btn">Download .tar.gz</a>
+</section>
 
-<p><img src="https://raw.githubusercontent.com/kave/Face-Off/gh-pages/imgs/game.png" alt="Face-Off Game Screen" title="Face-Off Game Screen"></p>
+<section class="main-content">
+    <h1>
+        <a id="" class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><img
+            src="https://travis-ci.org/excellalabs/face-off.svg?branch=master" alt="Build Status">
+    </h1>
 
-<p>A Yammer/Django Application application built for the gamification of learning the names of your fellow colleagues. One difficult part of joining a new company is putting names to faces. Utilizing Yammer OAuth, this webapp can make the learning process more fun.</p>
+    <p><img src="https://raw.githubusercontent.com/kave/Face-Off/gh-pages/imgs/game.png" alt="Face-Off Game Screen"
+            title="Face-Off Game Screen"></p>
 
-<h1>
-<a id="quick-start-guide" class="anchor" href="#quick-start-guide" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick-Start Guide</h1>
+    <p>A Yammer/Django Application application built for the gamification of learning the names of your fellow
+        colleagues. One difficult part of joining a new company is putting names to faces. Utilizing Yammer OAuth, this
+        webapp can make the learning process more fun.</p>
 
-<hr>
+    <h1>
+        <a id="quick-start-guide" class="anchor" href="#quick-start-guide" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Quick-Start Guide</h1>
 
-<h3>
-<a id="1-yammer-client-application" class="anchor" href="#1-yammer-client-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Yammer Client Application</h3>
+    <hr>
 
-<ul>
-<li><a href="yammer_client_app.html">Register An App With Yammer</a></li>
-</ul>
+    <h3>
+        <a id="1-yammer-client-application" class="anchor" href="#1-yammer-client-application" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>1. Yammer Client Application</h3>
 
-<h3>
-<a id="2-development-environment-setup" class="anchor" href="#2-development-environment-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Development Environment Setup</h3>
+    <ul>
+        <li><a href="yammer_client_app.html">Register An App With Yammer</a></li>
+    </ul>
 
-<ul>
-<li>Clone this repo</li>
-<li>Copy <code>face_it/settings/local.py.example</code> to <code>face_it/settings/local.py</code>
-</li>
-<li>Add your keys (created in step 1) to <code>face_it/settings/local.py</code>
-</li>
-<li>Install <a href="https://www.vagrantup.com/">Vagrant</a> and <a href="https://www.virtualbox.org/">Virtualbox</a>
-</li>
-<li>Initialize the vagrant box - <code>vagrant up</code>
-</li>
-<li>Log into the server - <code>vagrant ssh</code>
-</li>
-<li>Create a super user using the command <code>python manage.py createsuperuser</code>
-</li>
-<li>Install &amp; Start <a href="http://redis.io/">Redis Cache server</a> prior in a separate shell - <code>redis-server</code> </li>
-<li>Launch the app - <code>python manage.py runserver 0.0.0.0:8000</code>
-</li>
-<li>Access the app in your browser - <code>http://localhost:8111</code>
-</li>
-</ul>
+    <h3>
+        <a id="2-development-environment-setup" class="anchor" href="#2-development-environment-setup"
+           aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Development Environment Setup</h3>
 
-<h3>
-<a id="3-heroku-deployment-optional" class="anchor" href="#3-heroku-deployment-optional" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Heroku Deployment (Optional)</h3>
+    <ul>
+        <li>Clone this repo</li>
+        <li>Copy <code>face_it/settings/local.py.example</code> to <code>face_it/settings/local.py</code>
+        </li>
+        <li>Add your keys (created in step 1) to <code>face_it/settings/local.py</code>
+        </li>
+        <li>Install <a href="https://www.vagrantup.com/">Vagrant</a> and <a href="https://www.virtualbox.org/">Virtualbox</a>
+        </li>
+        <li>Initialize the vagrant box - <code>vagrant up</code>
+        </li>
+        <li>Log into the server - <code>vagrant ssh</code>
+        </li>
+        <li>Create a super user using the command <code>python manage.py createsuperuser</code>
+        </li>
+        <li>Install &amp; Start <a href="http://redis.io/">Redis Cache server</a> prior in a separate shell - <code>redis-server</code>
+        </li>
+        <li>Launch the app - <code>python manage.py runserver 0.0.0.0:8000</code>
+        </li>
+        <li>Access the app in your browser - <code>http://localhost:8111</code>
+        </li>
+    </ul>
 
-<hr>
+    <h3>
+        <a id="3-heroku-deployment-optional" class="anchor" href="#3-heroku-deployment-optional"
+           aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Heroku Deployment (Optional)</h3>
 
-<p><strong>Required Items</strong></p>
+    <hr>
 
-<ul>
-<li>Redis Server</li>
-<li>AWS Bucket</li>
-<li>Postgres Server</li>
-</ul>
+    <p><strong>Required Items</strong></p>
 
-<hr>
+    <ul>
+        <li>Redis Server</li>
+        <li>AWS Bucket</li>
+        <li>Postgres Server</li>
+    </ul>
 
-<h4>
-<a id="steps" class="anchor" href="#steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Steps</h4>
+    <hr>
 
-<ul>
-<li><code>heroku create {appName}</code></li>
-<li><code>heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git</code></li>
-<li><code>git push heroku master</code></li>
-<li><code>heroku addons:add heroku-postgresql</code></li>
-<li>Create a <a href="https://redistogo.com">RedisToGo</a> account
+    <h4>
+        <a id="steps" class="anchor" href="#steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Steps
+    </h4>
 
-<ul>
-<li><code>heroku addons:add redistogo</code></li>
-<li>
-<code>heroku config:add REDISTOGO_URL={instanceName}</code> 
+    <ul>
+        <li><code>heroku create {appName}</code></li>
+        <li><code>heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git</code></li>
+        <li><code>git push heroku master</code></li>
+        <li><code>heroku addons:add heroku-postgresql</code></li>
+        <li>Create a <a href="https://redistogo.com">RedisToGo</a> account
 
-<ul>
-<li> i.e instanceName = redis://redistogo:<a href="mailto:xxxx@test.redistogo.com">xxxx@test.redistogo.com</a>:10355/</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Create an <a href="http://aws.amazon.com/s3/">AWS account</a> to have access to an <a href="http://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html">AWS Bucket</a>
+            <ul>
+                <li><code>heroku addons:add redistogo</code></li>
+                <li>
+                    <code>heroku config:add REDISTOGO_URL={instanceName}</code>
 
-<ul>
-<li>Create environment variables specific for the created aws bucket:
+                    <ul>
+                        <li> i.e instanceName = redis://redistogo:<a href="mailto:xxxx@test.redistogo.com">xxxx@test.redistogo.com</a>:10355/
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Create an <a href="http://aws.amazon.com/s3/">AWS account</a> to have access to an <a
+                href="http://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html">AWS Bucket</a>
 
-<ul>
-<li> AWS_ACCESS_KEY_ID</li>
-<li> AWS_SECRET_ACCESS_KEY</li>
-<li> AWS_STORAGE_BUCKET_NAME</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>heroku ps:scale web=1</code></li>
-<li><code>heroku run python manage.py syncdb</code></li>
-</ul>
+            <ul>
+                <li>Create environment variables specific for the created aws bucket:
 
-<h4>
-<a id="required-environment-variables-checklist" class="anchor" href="#required-environment-variables-checklist" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Required Environment Variables Checklist</strong>
-</h4>
+                    <ul>
+                        <li> AWS_ACCESS_KEY_ID</li>
+                        <li> AWS_SECRET_ACCESS_KEY</li>
+                        <li> AWS_STORAGE_BUCKET_NAME</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><code>heroku ps:scale web=1</code></li>
+        <li><code>heroku run python manage.py syncdb</code></li>
+    </ul>
 
-<table>
-<thead>
-<tr>
-<th>Environmental Variable Name</th>
-<th align="center">Value (example)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SOCIAL_AUTH_YAMMER_KEY</td>
-<td align="center">xxxxxxx</td>
-</tr>
-<tr>
-<td>SOCIAL_AUTH_YAMMER_SECRET</td>
-<td align="center">xxxxxxx</td>
-</tr>
-<tr>
-<td>NPM_CONFIG_PRODUCTION</td>
-<td align="center">true</td>
-</tr>
-<tr>
-<td>DJANGO_SETTINGS_MODULE</td>
-<td align="center">face-off.settings.production</td>
-</tr>
-<tr>
-<td>REDISTOGO_URL</td>
-<td align="center">redis://redistogo:<a href="mailto:xxxx@test.redistogo.com">xxxx@test.redistogo.com</a>:10355/</td>
-</tr>
-<tr>
-<td>AWS_ACCESS_KEY_ID</td>
-<td align="center">xxxx</td>
-</tr>
-<tr>
-<td>AWS_SECRET_ACCESS_KEY</td>
-<td align="center">xxxx</td>
-</tr>
-<tr>
-<td>AWS_STORAGE_BUCKET_NAME</td>
-<td align="center">xxx-bucket</td>
-</tr>
-</tbody>
-</table>
+    <h4>
+        <a id="required-environment-variables-checklist" class="anchor" href="#required-environment-variables-checklist"
+           aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Required Environment Variables
+        Checklist</strong>
+    </h4>
 
-<h2>
-<a id="tests" class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Environmental Variable Name</th>
+            <th align="center">Value (example)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>SOCIAL_AUTH_YAMMER_KEY</td>
+            <td align="center">xxxxxxx</td>
+        </tr>
+        <tr>
+            <td>SOCIAL_AUTH_YAMMER_SECRET</td>
+            <td align="center">xxxxxxx</td>
+        </tr>
+        <tr>
+            <td>NPM_CONFIG_PRODUCTION</td>
+            <td align="center">true</td>
+        </tr>
+        <tr>
+            <td>DJANGO_SETTINGS_MODULE</td>
+            <td align="center">face-off.settings.production</td>
+        </tr>
+        <tr>
+            <td>REDISTOGO_URL</td>
+            <td align="center">redis://redistogo:<a href="mailto:xxxx@test.redistogo.com">xxxx@test.redistogo.com</a>:10355/
+            </td>
+        </tr>
+        <tr>
+            <td>AWS_ACCESS_KEY_ID</td>
+            <td align="center">xxxx</td>
+        </tr>
+        <tr>
+            <td>AWS_SECRET_ACCESS_KEY</td>
+            <td align="center">xxxx</td>
+        </tr>
+        <tr>
+            <td>AWS_STORAGE_BUCKET_NAME</td>
+            <td align="center">xxx-bucket</td>
+        </tr>
+        </tbody>
+    </table>
 
-<hr>
+    <h2>
+        <a id="tests" class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests
+    </h2>
 
-<h3>
-<a id="unit-tests" class="anchor" href="#unit-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unit Tests</h3>
+    <hr>
 
-<ul>
-<li>Load test fixture data <code>./manage.py loaddata "core/fixtures/core-test.json"</code>
+    <h3>
+        <a id="unit-tests" class="anchor" href="#unit-tests" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Unit Tests</h3>
 
-<ul>
-<li>Applying fixtures pushes pre-populated data into your application.</li>
-</ul>
-</li>
-<li>Run unit-tests - <code>python manage.py test</code>
-</li>
-</ul>
+    <ul>
+        <li>Load test fixture data <code>./manage.py loaddata "core/fixtures/core-test.json"</code>
 
-<h4>
-<a id="selenium-tests-w-behave" class="anchor" href="#selenium-tests-w-behave" aria-hidden="true"><span class="octicon octicon-link"></span></a>Selenium Tests w/ Behave</h4>
+            <ul>
+                <li>Applying fixtures pushes pre-populated data into your application.</li>
+            </ul>
+        </li>
+        <li>Run unit-tests - <code>python manage.py test</code>
+        </li>
+    </ul>
 
-<ul>
-<li>start behave instance - <code>behave core/features</code>
-</li>
-</ul>
+    <h4>
+        <a id="selenium-tests-w-behave" class="anchor" href="#selenium-tests-w-behave" aria-hidden="true"><span
+                class="octicon octicon-link"></span></a>Selenium Tests w/ Behave</h4>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/kave/Face-Off">Face-off</a> is maintained by <a href="https://github.com/kave">kave</a>.</span>
+    <ul>
+        <li>start behave instance - <code>behave core/features</code>
+        </li>
+    </ul>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+    <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/excellalabs/face-off">Face-off</a> is maintained by <a
+                href="https://github.com/excellalabs">excellalabs</a>.</span>
 
-    </section>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a
+                href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a
+                href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+    </footer>
 
-  
-  </body>
+</section>
+
+
+</body>
 </html>
 
