@@ -1,5 +1,6 @@
 {% load replace %}
 {% load resolve %}
+{% load staticfiles %}
 
 
 <div class="page-header" id="banner">
@@ -25,25 +26,27 @@
                         <div class="back panel panel-success cardpanel">
                             <div class="panel-heading"><h4></h4></div>
                             <div class="panel-body">
-                                <i class="fa fa-refresh fa-spin"></i>
-
                                 <div class="resizableText">
                                     <span>{{ card.name }}</span>
                                 </div>
                                 <h1><i class="fa fa-check-circle-o fa-6"></i></h1>
                             </div>
+                        <div style="margin-bottom: 100%; margin-left: 75%">
+                            <i class="fa fa-share fa-2x" ></i>
+                        </div>
                         </div>
                     {% else %}
                         <div class="back panel panel-danger cardpanel">
                             <div class="panel-heading"><h4></h4></div>
                             <div class="panel-body">
-                                <i class="fa fa-refresh fa-spin"></i>
-
                                 <div class="resizableText">
                                     <span>{{ card.name }}</span>
                                 </div>
                                 <h1><i class="fa fa-times-circle-o fa-6"></i></h1>
                             </div>
+                        <div style="margin-bottom: 100%; margin-left: 75%">
+                            <i class="fa fa-share fa-2x" ></i>
+                        </div>
                         </div>
                     {% endif %}
                 </li>
@@ -131,7 +134,9 @@
     </div>
 </div>
 
+<script type="text/javascript"  src="{% static 'bower_components/jquery.jrumble.1.3/jquery.jrumble.1.3.js' %}"></script>
 <script>
+
     var maxRound = 4;
     var trigger = true;
     var score = {{ score }};
@@ -142,6 +147,7 @@
     var gameMode;
     var correct = 'False';
     var stars = {{ stars|safe }};
+
 
 
     $(document).ready(function () {
@@ -163,6 +169,20 @@
         //resets game round, selected value
         correct = 'False';
     });
+
+
+    function shake(){
+        for (var index = 0; index < maxRound; index++) {
+            var card = $('#colleague' + index);
+            card.jrumble({ speed: 75,x:.5,y:.5,rotation:0});
+            card.hover(function(){
+                $(this).trigger('startRumble');
+            },
+            function(){
+	            $(this).trigger('stopRumble');
+            });
+        }
+    }
 
     function showStars(){
         leftover_count = 5 - stars.length;
@@ -250,6 +270,7 @@
             score += 1;
             updateCorrectStars(score - 1);
             correct = 'True';
+
         }
         else
             updateIncorrectStars(score - 1);
@@ -266,9 +287,15 @@
     function flipNoScore(id) {
         var card = $('#colleague' + id);
         if (card.hasClass('clickFlip'))
+        {
             card.removeClass('clickFlip');
+            card.trigger('stopRumble');
+
+
+        }
         else
             card.addClass('clickFlip');
+
     }
 
     function renderResultsLnk() {
@@ -285,8 +312,10 @@
                 }
 
                     card.removeAttr('onclick');
+                    card.addClass('disabled');
             }
             else {
+                shake();
                 card.addClass('clickFlip');
                 card.removeAttr('onclick');
                 card.attr('onclick', 'flipNoScore(' + index + ')');
