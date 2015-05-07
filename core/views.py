@@ -128,7 +128,6 @@ def globally_known(request):
         'names': names,
         'times_correct': times_correct
     }
-    print known
     return HttpResponse(json.dumps(known), content_type="application/json")
 
 # Helper Functions
