@@ -9,7 +9,6 @@ from django_redis import get_redis_connection
 from core.models import UserMetrics, ColleagueGraph
 from django.core.exceptions import ObjectDoesNotExist
 from core.forms import SuggestionForm, ResultForm
-from django.conf import settings
 
 
 
@@ -250,10 +249,11 @@ def ajax_suggestion(request):
             suggestion = data['suggestion']
             email = data['email']
             form.save(commit=True)
-            
+
             # Sends an email to the site administrators - currently Sean and Emmanuel
             send_mail('New Suggestion for Face-Off from ' + first_name + " " + last_name, suggestion, email,
                       ['sean.lewis@excella.com', 'emmanuel.apau@excella.com'])
+
             return HttpResponse("Thank you for your suggestion!")
         else:
             return HttpResponse("Invalid Data!")
