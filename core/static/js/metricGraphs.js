@@ -20,7 +20,8 @@ function loadColleaguesEncounteredGraph() {
                     .showValues(false)           //Show bar value next to each bar.
                     .tooltips(true)             //Show tooltips on hover.
                     .barColor(d3.scale.category20().range())
-                    .showControls(true);        //Allow user to switch between "Grouped" and "Stacked" mode.
+                    .showControls(false)        //Allow user to switch between "Grouped" and "Stacked" mode.
+                    .stacked(true);
 
                 chart.yAxis
                     .tickFormat(d3.format('d'));
