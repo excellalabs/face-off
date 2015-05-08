@@ -4,10 +4,13 @@ from django.template.context import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 from django_redis import get_redis_connection
 from core.models import UserMetrics, ColleagueGraph
 from django.core.exceptions import ObjectDoesNotExist
 from core.forms import SuggestionForm, ResultForm
+from django.conf import settings
+
 
 
 def custom_login(request):
@@ -241,7 +244,16 @@ def ajax_suggestion(request):
     if request.method == 'POST' and request.is_ajax():
         form = SuggestionForm(request.POST)
         if form.is_valid():
+            data = form.cleaned_data
+            first_name = data['first_name']
+            last_name = data['last_name']
+            suggestion = data['suggestion']
+            email = data['email']
             form.save(commit=True)
+            
+            # Sends an email to the site administrators - currently Sean and Emmanuel
+            send_mail('New Suggestion for Face-Off from ' + first_name + " " + last_name, suggestion, email,
+                      ['sean.lewis@excella.com', 'emmanuel.apau@excella.com'])
             return HttpResponse("Thank you for your suggestion!")
         else:
             return HttpResponse("Invalid Data!")
