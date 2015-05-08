@@ -79,4 +79,10 @@ One difficult part of joining a new company is putting names to faces. Utilizing
 * start behave instance - `behave core/features`
 
 
-
+## Data Stored
+* Yammer related Data
+    * First Name
+    * Last Name
+    * Email
+    * Yammer profile page link
+    * Network Name

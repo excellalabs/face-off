@@ -27,7 +27,7 @@ function startEasyGame() {
 function startHardGame() {
     startTimer();
     $('#hardHeader').show();
-    $('.fa-spin').hide()
+    $('.fa-share').hide()
 }
 
 function startTimer() {
@@ -69,12 +69,18 @@ function flip(id, choice) {
 
 function flipNoScore(id) {
     var card = $('#colleague' + id);
-    if (card.hasClass('clickFlip'))
+    if (card.hasClass('clickFlip')) {
         card.removeClass('clickFlip');
+        card.trigger('stopRumble');
+
+
+    }
     else
         card.addClass('clickFlip');
+
 }
 
+// disable onclick on other images, disable them & present next round button
 function disableCards(id, disableALL) {
     for (var index = 0; index < maxRound; index++) {
         var card = $('#colleague' + index);
@@ -84,8 +90,10 @@ function disableCards(id, disableALL) {
             }
 
             card.removeAttr('onclick');
+            card.addClass('disabled');
         }
         else {
+            shake();
             card.addClass('clickFlip');
             card.removeAttr('onclick');
             card.attr('onclick', 'flipNoScore(' + index + ')');
@@ -148,6 +156,19 @@ function nextRound() {
 }
 
 //Display Functions
+function shake() {
+    for (var index = 0; index < maxRound; index++) {
+        var card = $('#colleague' + index);
+        card.jrumble({speed: 75, x: .5, y: .5, rotation: 0});
+        card.hover(function () {
+                $(this).trigger('startRumble');
+            },
+            function () {
+                $(this).trigger('stopRumble');
+            });
+    }
+}
+
 function updateCorrectStars(starIndex) {
     $('#emptyStars').removeClass('fa fa-circle-o');
     $('#emptyStars').addClass('glyphicon glyphicon-ok-sign');
