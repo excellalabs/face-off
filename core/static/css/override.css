@@ -28,10 +28,6 @@
 }
 
 .positive {
-    fill:#01DF01 !important;
-    stroke:#01DF01 !important;
-}
-
-.nv-series{
-    display:none !important;
+    fill:#4caf50 !important;
+    stroke:#4caf50 !important;
 }

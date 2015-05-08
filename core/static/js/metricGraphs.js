@@ -20,7 +20,8 @@ function loadColleaguesEncounteredGraph() {
                     .showValues(false)           //Show bar value next to each bar.
                     .tooltips(true)             //Show tooltips on hover.
                     .barColor(d3.scale.category20().range())
-                    .showControls(true);        //Allow user to switch between "Grouped" and "Stacked" mode.
+                    .showControls(false)        //Allow user to switch between "Grouped" and "Stacked" mode.
+                    .stacked(true);
 
                 chart.yAxis
                     .tickFormat(d3.format('d'));
@@ -56,7 +57,7 @@ function loadGlobalTopTenGraph() {
             labels: labels,
             datasets: [
                 {
-                    fillColor: "rgba(51, 102, 153,0.5)",
+                    fillColor: "rgba(76, 175, 80,1)",
                     strokeColor: "rgba(220,220,220,0.8)",
                     highlightFill: "rgba(220,220,220,0.75)",
                     highlightStroke: "rgba(220,220,220,1)",

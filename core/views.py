@@ -102,7 +102,7 @@ def metrics(request):
 @login_required
 def encountered(request):
     # Colleagues Encountered Data
-    encountered = ColleagueGraph.objects.filter(user=request.user)
+    encountered = ColleagueGraph.objects.filter(user=request.user).order_by('name')
     correct_arr = []
     incorrect_arr = []
     for colleague in encountered:
