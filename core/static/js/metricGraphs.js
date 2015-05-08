@@ -57,7 +57,7 @@ function loadGlobalTopTenGraph() {
             labels: labels,
             datasets: [
                 {
-                    fillColor: "rgba(51, 102, 153,0.5)",
+                    fillColor: "rgba(76, 175, 80,1)",
                     strokeColor: "rgba(220,220,220,0.8)",
                     highlightFill: "rgba(220,220,220,0.75)",
                     highlightStroke: "rgba(220,220,220,1)",
