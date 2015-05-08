@@ -11,7 +11,9 @@ try:
 except ImportError:
     pass
 
+
 ALLOWED_HOSTS = ['*']
+
 
 DATABASES = {'default': dj_database_url.config()}
 
