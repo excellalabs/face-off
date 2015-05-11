@@ -15,4 +15,5 @@ class ResultForm(forms.Form):
     answer_id = forms.IntegerField(widget=forms.HiddenInput())
     results = forms.CharField(widget=forms.HiddenInput())
     correct = forms.CharField(widget=forms.HiddenInput())
+    mode = forms.CharField(widget=forms.HiddenInput())
 

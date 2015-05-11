@@ -76,6 +76,12 @@ def results(request):
     if request.method == 'POST':
         form = ResultForm(request.POST)
         if form.is_valid():
+
+            if form.cleaned_data['mode']:
+                print 'Mode: ' + form.cleaned_data['mode']
+            else:
+                print 'hard mode'
+
             metric.times_won = form.cleaned_data['score']
             metric.save()
 
