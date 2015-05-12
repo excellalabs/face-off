@@ -136,6 +136,10 @@ function setForm() {
     $('[name=answer_id]').val(answer);
     $('[name=results]').val(result_cards);
     $('[name=correct]').val(correct);
+    if(gameMode != undefined)
+        $('[name=mode]').val(gameMode);
+    else
+        $('[name=mode]').val('hard');
     $('#resultsForm').submit();
 }
 
