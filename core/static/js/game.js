@@ -138,6 +138,8 @@ function setForm() {
     $('[name=correct]').val(correct);
     if(gameMode != undefined)
         $('[name=mode]').val(gameMode);
+    else
+        $('[name=mode]').val('hard');
     $('#resultsForm').submit();
 }
 
