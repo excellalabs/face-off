@@ -76,15 +76,15 @@ def results(request):
     if request.method == 'POST':
         form = ResultForm(request.POST)
         if form.is_valid():
-            metric.times_won = form.cleaned_data['score']
-            metric.save()
-
             results = ast.literal_eval(HTMLParser.HTMLParser().unescape(form.cleaned_data['results']))
             answer_id = form.cleaned_data['answer_id']
             correct = ast.literal_eval(str(form.cleaned_data['correct']))
-
             update_results_list(results, answer_id, 4, correct)  # 4 representing the last round (zero-based)
-            save_metric_results(results, request.user)
+
+            if form.cleaned_data['mode'] != 'easy':
+                metric.times_won = form.cleaned_data['score']
+                metric.save()
+                save_metric_results(results, request.user)
 
             context = RequestContext(request, {'score': form.cleaned_data['score'], 'cards': results})
             return render_to_response('results.html', context_instance=context)
