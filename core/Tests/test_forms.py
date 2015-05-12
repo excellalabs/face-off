@@ -62,6 +62,7 @@ class FormTests(TestCase):
             'answer_id': 3,
             'results': 'hello',
             'correct': 'True',
+            'mode': 'easy'
         })
 
         self.assertEqual(form.is_valid(), True)
