@@ -30,8 +30,8 @@
                                 </div>
                                 <h1><i class="fa fa-check-circle-o fa-6"></i></h1>
                             </div>
-                        <div style="margin-bottom: 100%; margin-left: 75%">
-                            <i class="fa fa-share fa-2x" ></i>
+                        <div style="margin-bottom: 100%; margin-left: 75%" >
+                            <i id="turnFlag {{ forloop.counter0 }}" class="fa fa-share fa-2x" ></i>
                         </div>
                         </div>
                     {% else %}
@@ -44,7 +44,7 @@
                                 <h1><i class="fa fa-times-circle-o fa-6"></i></h1>
                             </div>
                         <div style="margin-bottom: 100%; margin-left: 75%">
-                            <i class="fa fa-share fa-2x" ></i>
+                            <i id="turnFlag {{ forloop.counter0 }}" class="fa fa-share fa-2x" ></i>
                         </div>
                         </div>
                     {% endif %}

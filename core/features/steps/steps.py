@@ -41,6 +41,10 @@ def step(context):
     click_card(context.browser, random_card)
     time.sleep(3)
 
+@when('they hover over a card')
+def step(context):
+    get_hover(context.browser, 0)
+
 @when('the user clicks the first card')
 def step(context):
     click_card(context.browser, 0)
@@ -64,6 +68,8 @@ def step(context):
 @when('they play through the Educational Mode')
 def step(context):
     play_through_education_mode(context.browser)
+
+
 
 
 # Then statements
@@ -112,3 +118,22 @@ def step(context):
 @then('they logout')
 def step(context):
     context.browser.find_element_by_id('logout').click()
+
+@then('the share icon is visible')
+def step(context):
+    for i in range(0, 3):
+        assert "block" in context.browser.find_element_by_class_name('fa-share').value_of_css_property('display')
+
+@then('the share icon is not visible')
+def step(context):
+    for i in range(0, 3):
+        assert "none" in context.browser.find_element_by_class_name('fa-share').value_of_css_property('display')
+
+@then('the card rumbles')
+def step(context):
+    assert not "0" in context.browser.find_element_by_id('colleague0').value_of_css_property('left')
+
+@then('the cards are disabled')
+def step(context):
+    for i in range(0, 3):
+        context.browser.find_elements_by_xpath('//colleague'+str(i)+'[contains(@class, "disabled")]')
