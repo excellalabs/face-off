@@ -1,6 +1,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 import random
 import time
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 # Helper methods to consolidate steps.py
@@ -18,6 +19,13 @@ def click_card(driver, index):
 def get_card(driver, index):
     return driver.find_element_by_id('colleague' + str(index))
 
+def get_share_icon(driver, index):
+    return driver.find_element_by_id('turnFlag ' + str(index))
+
+def get_hover(driver, index):
+    #element = wd.find_element_by_link_text(self.locator)
+    hov = ActionChains(driver).move_to_element(driver.find_element_by_id('colleague' + str(index)))
+    hov.perform()
 
 def get_user(driver):
     return driver.find_element_by_id('userName')
