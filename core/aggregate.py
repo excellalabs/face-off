@@ -31,9 +31,10 @@ time_played = {}
 for name in usernames:
     times_corr = ColleagueGraph.objects.filter(user__username=name)\
         .aggregate(Sum('times_correct'))['times_correct__sum']
-    times_wrong = ColleagueGraph.objects.filter(user__username=name)\
-        .aggregate(Sum('times_incorrect'))['times_incorrect__sum']
-    time_played.update({name:str(times_corr + times_wrong)})
+    if times_corr:
+        times_wrong = ColleagueGraph.objects.filter(user__username=name)\
+            .aggregate(Sum('times_incorrect'))['times_incorrect__sum']
+        time_played.update({name:str(times_corr + times_wrong)})
 
 print 'Colleagues Played the Most'
 print sorted(time_played.items())
@@ -45,9 +46,33 @@ time_played = {}
 for name in usernames:
     times_corr = ColleagueGraph.objects.filter(user__username=name)\
         .aggregate(Sum('times_correct'))['times_correct__sum']
-    times_wrong = ColleagueGraph.objects.filter(user__username=name)\
-        .aggregate(Sum('times_incorrect'))['times_incorrect__sum']
-    time_played.update({name:str(times_corr/(times_corr+times_wrong))})
+    if times_corr:
+        times_wrong = ColleagueGraph.objects.filter(user__username=name)\
+            .aggregate(Sum('times_incorrect'))['times_incorrect__sum']
+        if times_wrong:
+            time_played.update({name:str(times_corr/(times_corr+times_wrong)) + 'times played: ' + str(times_corr+times_wrong)})
+        else:
+            time_played.update({name:str(1) + 'times played: ' + str(times_corr)})
 
 print 'Colleagues most likely to know you'
 print sorted(time_played.items())
+
+times_corr = ColleagueGraph.objects.filter(name='Emmanuel Apau')\
+    .aggregate(Sum('times_correct'))['times_correct__sum']
+
+print 'Guessed Correctly: ' + str(times_corr)
+
+avg = 0
+for name in usernames:
+    times_corr = ColleagueGraph.objects.filter(user__username=name, name='Emmanuel Apau')\
+        .aggregate(Sum('times_correct'))['times_correct__sum']
+    if times_corr:
+        times_wrong = ColleagueGraph.objects.filter(user__username=name)\
+            .aggregate(Sum('times_incorrect'))['times_incorrect__sum']
+        if times_wrong:
+            if avg == 0:
+                avg = (times_corr/(times_corr+times_wrong))
+            else:
+                avg = (avg + (times_corr/(times_corr+times_wrong)))/2
+
+print 'Average chance to know Emmanuel: ' + str(avg)
