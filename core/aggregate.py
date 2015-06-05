@@ -57,11 +57,6 @@ for name in usernames:
 print 'Colleagues most likely to know you'
 print sorted(time_played.items())
 
-times_corr = ColleagueGraph.objects.filter(name='Emmanuel Apau')\
-    .aggregate(Sum('times_correct'))['times_correct__sum']
-
-print 'Guessed Correctly: ' + str(times_corr)
-
 avg = 0
 for name in usernames:
     times_corr = ColleagueGraph.objects.filter(user__username=name, name='Emmanuel Apau')\
@@ -76,3 +71,11 @@ for name in usernames:
                 avg = (avg + (times_corr/(times_corr+times_wrong)))/2
 
 print 'Average chance to know Emmanuel: ' + str(avg)
+
+
+times_corr = ColleagueGraph.objects.filter(name='Emmanuel Apau')\
+    .aggregate(Sum('times_correct'))['times_correct__sum']
+
+print 'Guessed Correctly: ' + str(times_corr)
+
+print 'Donzo'
