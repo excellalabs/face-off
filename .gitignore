@@ -11,3 +11,4 @@ node_modules
 *.sublime-workspace
 *.sublime-project
 dump.rdb
+.env

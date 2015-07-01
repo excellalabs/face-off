@@ -206,6 +206,8 @@ INSTALLED_APPS = (
     'face-off',
     'import_export',
     'storages',
+    's3direct',
+    'crispy_forms',
 )
 
 EMAIL_SUBJECT_PREFIX = '[face-off] '
@@ -288,4 +290,23 @@ SUIT_CONFIG = {
     'MENU_EXCLUDE': ('auth.group', 'auth'),
     'SHOW_REQUIRED_ASTERISK': True,
     'CONFIRM_UNSAVED_CHANGES': True,
+}
+
+#Crispy Forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# S3 Configuration
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+
+S3DIRECT_ENDPOINT = 'colleague-bucket.s3.amazonaws.com'
+S3DIRECT_REGION = 'us-east-1'
+# Destinations in the following format:
+# {destination_key: (path_or_function, auth_test, [allowed_mime_types], permissions, custom_bucket)}
+#
+# 'destination_key' is the key to use for the 'dest' attribute on your widget or model field
+S3DIRECT_DESTINATIONS = {
+    # Allow anybody to upload jpeg's and png's.
+    'imgs': ('uploads/profile-images', lambda u: True, ['image/jpeg', 'image/png'],),
 }

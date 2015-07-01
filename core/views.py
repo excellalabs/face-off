@@ -6,9 +6,23 @@ from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django_redis import get_redis_connection
-from core.models import UserMetrics, ColleagueGraph
+from core.models import UserMetrics, ColleagueGraph, UserProfile
 from django.core.exceptions import ObjectDoesNotExist
-from core.forms import SuggestionForm, ResultForm
+from core.forms import SuggestionForm, ResultForm, UserProfileForm
+from django.views.generic import FormView, CreateView
+
+
+class RegistrationView(CreateView):
+    template_name = 'registration/register.html'
+    form_class = UserProfileForm
+    success_url = '/'
+
+    def get_success_url(self):
+        user = self.object
+        user.is_custom_user = True
+        user.save()
+
+        return '/'
 
 
 
