@@ -78,4 +78,4 @@ times_corr = ColleagueGraph.objects.filter(name='Emmanuel Apau')\
 
 print 'Guessed Correctly: ' + str(times_corr)
 
-print 'Donzo'
+print 'Done'
