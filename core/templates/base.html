@@ -22,7 +22,7 @@
     <script type="text/javascript" src="{% static "js/util.min.js" %}"></script>
     <script type="text/javascript" data-app-id="{{ app_id }}" src="{% static "js/yammer_sdk.min.js" %}"></script>
     <script>
-        function yammerLogout(){
+        function yammerLogout() {
             yam.logout(function (response) {
                 window.location.href = "{% url 'auth:logout' %}?next={{ request.path }}";
             })
@@ -42,19 +42,32 @@
             <span class="icon-bar"></span>
         </button>
     </div>
-    <a class="navbar-brand" href="{% url 'core:cards'%}">{{ request.user.network|capfirst|replace:"/.com/" }} Face Off</a>
+    <a class="navbar-brand" href="{% url 'core:cards' %}">{{ request.user.network|capfirst|replace:"/.com/" }} Face
+        Off</a>
+
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-left">
-            {% if request.user.is_authenticated %}
-            <li><img src='{{ user.yammer_url|replace:"/{width}/70"|replace:"/{height}/70" }}'></li>
-            <li><a id="userName">{{ request.user.get_full_name }}</a></li>
+            {% if request.user.is_authenticated and not request.user.is_custom_user %}
+
+                <li><img src='{{ user.yammer_url|replace:"/{width}/70"|replace:"/{height}/70" }}'></li>
+                <li><a id="userName">{{ request.user.get_full_name }}</a></li>
+            {% elif request.user.is_authenticated and request.user.is_custom_user %}
+                <li><img src='{{ user.upload_img_file }}' style="width:70px;height:70px"></li>
+                <li><a id="userName">{{ request.user.get_full_name }}</a></li>
             {% endif %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_authenticated %}
-            <li><a class="btn" id="logout" onclick="yammerLogout()" >Logout</a></li>
-            <li><a></a></li>
-            {%  endif %}
+                <li><a class="btn" id="logout" onclick="yammerLogout()">Logout</a></li>
+                <li><a></a></li>
+            {% endif %}
+        </ul>
+        <ul class="nav navbar-nav navbar-left">
+            {% if not request.user.is_authenticated %}
+                <li style="display:none"><a class="btn btn-default" name="register" href="{% url 'core:register' %}"
+                   style="padding:20px;">Register
+                </a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
@@ -87,7 +100,7 @@
     http://developer.yahoo.com/performance/rules.html#js_bottom
 {% endcomment %}
 
- <!-- compressed tags is created by Django Pipeline. -->
+<!-- compressed tags is created by Django Pipeline. -->
 {% javascript 'js' %}
 
 {% block extra_js %}{% endblock %}

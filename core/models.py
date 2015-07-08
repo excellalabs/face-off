@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, User
+from s3direct.fields import S3DirectField
 
 # App specific user model
 class UserProfile(AbstractUser):
@@ -7,6 +8,8 @@ class UserProfile(AbstractUser):
     yammer_url = models.URLField(blank=True)
     upload_image_url = models.URLField(blank=True)
     network = models.CharField(max_length=50)
+    upload_img_file = S3DirectField(dest='imgs', blank=True, null=True)
+    is_custom_user = models.BooleanField(blank=True, default=False)
 
     def __unicode__(self):
         return self.username

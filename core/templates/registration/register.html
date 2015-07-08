@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Player Registration {% endblock %}
+{% block extra_js_css %} {{ form.media }} {% endblock %}
+{% block content %}
+    <div class="page-header" id="banner">
+        <div class="row">
+        </div>
+    </div>
+    <br>
+
+    {% crispy form %}
+{% endblock %}
