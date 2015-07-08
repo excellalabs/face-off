@@ -297,9 +297,13 @@ SUIT_CONFIG = {
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # S3 Configuration
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+try:
+    AWS_STORAGE_BUCKET_NAME = os.environ['1AWS_STORAGE_BUCKET_NAME']
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+except KeyError:
+    print 'Set up AWS Global Variables'
+    pass
 
 S3DIRECT_ENDPOINT = 'colleague-bucket.s3.amazonaws.com'
 S3DIRECT_REGION = 'us-east-1'
