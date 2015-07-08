@@ -2,15 +2,15 @@ import requests, re, ast, random, HTMLParser, json
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.views import login
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django_redis import get_redis_connection
 from core.models import UserMetrics, ColleagueGraph, UserProfile
 from django.core.exceptions import ObjectDoesNotExist
-from core.forms import SuggestionForm, ResultForm, UserProfileForm
+from core.forms import SuggestionForm, ResultForm, UserProfileForm, UserAuthenticationForm
 from django.views.generic import FormView, CreateView
-
+import django.contrib.auth.views
+from django.contrib.auth import authenticate, login
 
 class RegistrationView(CreateView):
     template_name = 'registration/register.html'
@@ -19,6 +19,7 @@ class RegistrationView(CreateView):
 
     def get_success_url(self):
         user = self.object
+        user.set_password(user.password)
         user.is_custom_user = True
         user.save()
 
@@ -29,30 +30,46 @@ class RegistrationView(CreateView):
 def custom_login(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
-    else:
-        return login(request)
+    elif request.method == 'POST':
+        form = UserAuthenticationForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            username = data['username']
+            password = data['password']
+
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect('/')
+
+    return django.contrib.auth.views.login(request, extra_context={'userAuthForm': UserAuthenticationForm()})
 
 @login_required()
 def cards(request):
     redis_con = get_redis_connection("default")
 
-    # Unique Set per Network
-    if request.user.email:
-        network = str(request.user.email.split('@')[1]) + '_users'
+    # Yammer Authenticated Game
+    if not request.user.is_custom_user:
+        if request.user.email:
+            network = str(request.user.email.split('@')[1]) + '_users'
+        else:
+            network = 'default_users'
+
+        if not redis_con.exists(network):
+            users = yammer_user_restcall(request)
+            load_users_to_cache(redis_con, users, network)
+
+        user_round_matrix = [four_random_cards(redis_con, network, request.user) for x in range(5)]
+        answer = random.choice(user_round_matrix[0])
+        stars = []
+
+        context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer,
+                                           'round': 0, 'score': 0, 'stars': stars})
+        return render_to_response('game.html', context_instance=context)
     else:
-        network = 'default_users'
-
-    if not redis_con.exists(network):
-        users = yammer_user_restcall(request)
-        load_users_to_cache(redis_con, users, network)
-
-    user_round_matrix = [four_random_cards(redis_con, network, request.user) for x in range(5)]
-    answer = random.choice(user_round_matrix[0])
-    stars = []
-
-    context = RequestContext(request, {'cards': user_round_matrix, 'answer': answer,
-                                       'round': 0, 'score': 0, 'stars': stars})
-    return render_to_response('game.html', context_instance=context)
+        context = RequestContext(request)
+        return render_to_response('custom_game.html', context)
 
 
 @login_required

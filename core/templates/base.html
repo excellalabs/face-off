@@ -47,8 +47,12 @@
 
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-left">
-            {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated and not request.user.is_custom_user %}
+
                 <li><img src='{{ user.yammer_url|replace:"/{width}/70"|replace:"/{height}/70" }}'></li>
+                <li><a id="userName">{{ request.user.get_full_name }}</a></li>
+            {% elif request.user.is_authenticated and request.user.is_custom_user %}
+                <li><img src='{{ user.upload_img_file }}' style="width:70px;height:70px"></li>
                 <li><a id="userName">{{ request.user.get_full_name }}</a></li>
             {% endif %}
         </ul>
@@ -60,7 +64,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-left">
             {% if not request.user.is_authenticated %}
-                <li><a class="btn btn-default" name="register" href="{% url 'core:register' %}"
+                <li style="display:none"><a class="btn btn-default" name="register" href="{% url 'core:register' %}"
                    style="padding:20px;">Register
                 </a></li>
             {% endif %}

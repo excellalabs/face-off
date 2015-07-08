@@ -171,6 +171,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.yammer.YammerOAuth2',
+    'core.custom_authenticate.UserProfileAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -310,3 +311,13 @@ S3DIRECT_DESTINATIONS = {
     # Allow anybody to upload jpeg's and png's.
     'imgs': ('uploads/profile-images', lambda u: True, ['image/jpeg', 'image/png'],),
 }
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.CryptPasswordHasher',
+)

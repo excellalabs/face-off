@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-8 col-sm-offset-2 text-center">
         <div style="margin-top:10%">
-            <a class="btn btn-block btn-social" name="register"  href="{% url 'core:register' %}" style="height: 50px">
+            <a class="btn btn-block btn-social" name="signIn" data-toggle="modal"  href="#signIn" style="height: 50px;display:none">
                 <i class="fa fa-sign-in" style="padding:10px;width:50px;height:50px"></i><font size="3"> Login as an Individual</font></img>
             </a>
             <a class="btn btn-block btn-social" name="signIn"  href="{% url 'social:begin' 'yammer' %}?next={{ request.path }}" style="height: 50px">
@@ -16,4 +16,5 @@
             <p class="disclaimer">Reminder – your yammer credentials are different from your Company Domain credentials</p>
         </div>
     </div>
+    {% include 'registration/signIn.html' %}
 {% endblock %}

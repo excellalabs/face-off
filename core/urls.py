@@ -5,6 +5,7 @@ urlpatterns = patterns('',
 
     url(r'^$', 'core.views.cards', name='cards'),
     url(r'^login/$', 'core.views.custom_login', name='login'),
+    url(r'^sign_in/$', 'django.contrib.auth.views.login'),
     url('^register/', RegistrationView.as_view(), name='register'),
     url(r'^rounds/$', 'core.views.next_round', name='rounds'),
     url(r'^results/$', 'core.views.results', name='results'),

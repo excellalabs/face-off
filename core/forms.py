@@ -4,6 +4,29 @@ from crispy_forms.layout import Fieldset, Layout, ButtonHolder, Button, Submit, 
 from crispy_forms.bootstrap import FormActions
 from core.models import Suggestions, UserProfile
 
+class UserAuthenticationForm(forms.Form):
+    username = forms.CharField(required=True)
+    password = forms.CharField(required=True)
+
+    def __init__(self, *args, **kwargs):
+        super(UserAuthenticationForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.layout = Layout()
+
+        self.helper.layout.append(Div('username'))
+        self.helper.layout.append(Div('password'))
+
+        self.helper.layout.append(FormActions(
+            Submit('Submit', 'Submit', css_class='btn btn-primary pull-right'),
+            HTML("<button id=\"close\" type=\"button\" class=\"btn btn-default pull-right\" data-dismiss=\"modal\">Close</button>"),
+        ))
+
+    def save(self):
+        user = super(UserAuthenticationForm, self)
+        user.save()
+        return user
+
 class UserProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
