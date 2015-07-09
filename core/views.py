@@ -5,10 +5,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django_redis import get_redis_connection
-from core.models import UserMetrics, ColleagueGraph, UserProfile
+from core.models import UserMetrics, ColleagueGraph
 from django.core.exceptions import ObjectDoesNotExist
 from core.forms import SuggestionForm, ResultForm, UserProfileForm, UserAuthenticationForm
-from django.views.generic import FormView, CreateView
+from django.views.generic import CreateView
 import django.contrib.auth.views
 from django.contrib.auth import authenticate, login
 
@@ -74,7 +74,7 @@ def cards(request):
 
 @login_required
 def next_round(request):
-    round = int(request.POST['round'])
+    round_num = int(request.POST['round'])
     score = int(request.POST['score'])
     answer_id = int(request.POST['answer_id'])
     correct = ast.literal_eval(str(request.POST['correct']))
@@ -87,14 +87,14 @@ def next_round(request):
     card_matrix = ast.literal_eval(card_matrix)
 
     # Sets the Winner of the round to the cardMatrix
-    update_results_list(card_matrix, answer_id, round, correct)
+    update_results_list(card_matrix, answer_id, round_num, correct)
 
     # Prepares data for next round
     round += 1
-    answer = filter_previously_used_answer(card_matrix, round)
+    answer = filter_previously_used_answer(card_matrix, round_num)
 
 
-    context = RequestContext(request, {'cards': card_matrix, 'round': round, 'answer': answer,
+    context = RequestContext(request, {'cards': card_matrix, 'round': round_num, 'answer': answer,
                                        'score': score, 'stars': stars, 'resultsForm': ResultForm()})
 
     return render_to_response('cards.html', context_instance=context)
@@ -291,4 +291,3 @@ def ajax_suggestion(request):
 
     else:
         return HttpResponse('Service unavailable')
-
