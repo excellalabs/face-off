@@ -282,7 +282,7 @@ def ajax_suggestion(request):
             email = data['email']
             form.save(commit=True)
 
-            # Sends an email to the site administrators - currently Sean and Emmanuel
+            # Sends an email to the site administrators
             send_mail('New Suggestion for Face-Off from ' + first_name + " " + last_name, suggestion, email,
                       [email for (name, email) in settings.ADMINS])
 
