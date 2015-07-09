@@ -23,17 +23,30 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 ADMINS = (
 )
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'face-off',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': '',  # Set to empty string for localhost.
-        'PORT': '',  # Set to empty string for default.
-        'CONN_MAX_AGE': 600,  # number of seconds database connections should persist for
+if 'test' in sys.argv or 'testserver' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            # path to collab sqlite3 database file
+            'NAME': '',
+            'USER': '',      # leave empty
+            'PASSWORD': '',  # leave empty
+            'HOST': '',      # leave empty
+            'PORT': '',      # leave empty
+        },
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'face-off',
+            'USER': 'postgres',
+            'PASSWORD': '',
+            'HOST': '',  # Set to empty string for localhost.
+            'PORT': '',  # Set to empty string for default.
+            'CONN_MAX_AGE': 600,  # number of seconds database connections should persist for
+        }
+    }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
