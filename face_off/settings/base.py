@@ -1,4 +1,4 @@
-# Django settings for face-off project.
+# Django settings for face_off project.
 
 import os, sys, urlparse
 
@@ -178,8 +178,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social.apps.django_app.context_processors.backends',
     'social.apps.django_app.context_processors.login_redirect',
     'django.core.context_processors.request',
-    'face-off.context_processors.global_suggestion_form',
-    'face-off.context_processors.yammer_client_id',
+    'face_off.context_processors.global_suggestion_form',
+    'face_off.context_processors.yammer_client_id',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -188,10 +188,10 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-ROOT_URLCONF = 'face-off.urls'
+ROOT_URLCONF = 'face_off.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'face-off.wsgi.application'
+WSGI_APPLICATION = 'face_off.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -217,7 +217,6 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     'djangobower',
     'pipeline',
-    'face-off',
     'import_export',
     'storages',
     's3direct',
