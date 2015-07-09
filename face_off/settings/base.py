@@ -20,7 +20,9 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# Override in local.py
 ADMINS = (
+#    ('John', 'john@example.com'),
 )
 
 if 'test' in sys.argv or 'testserver' in sys.argv:

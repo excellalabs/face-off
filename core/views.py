@@ -11,6 +11,7 @@ from core.forms import SuggestionForm, ResultForm, UserProfileForm, UserAuthenti
 from django.views.generic import CreateView
 import django.contrib.auth.views
 from django.contrib.auth import authenticate, login
+from django.conf import settings
 
 class RegistrationView(CreateView):
     template_name = 'registration/register.html'
@@ -283,7 +284,7 @@ def ajax_suggestion(request):
 
             # Sends an email to the site administrators - currently Sean and Emmanuel
             send_mail('New Suggestion for Face-Off from ' + first_name + " " + last_name, suggestion, email,
-                      ['sean.lewis@excella.com', 'emmanuel.apau@excella.com'])
+                      [email for (name, email) in settings.ADMINS])
 
             return HttpResponse("Thank you for your suggestion!")
         else:

@@ -3,3 +3,7 @@
 # local.py should not be checked in to version control.
 SOCIAL_AUTH_YAMMER_KEY = '<add yammer app key>'
 SOCIAL_AUTH_YAMMER_SECRET = '<add yammer app secret>'
+
+ADMINS = (
+#    ('John', 'john@example.com'),
+)
