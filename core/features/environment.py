@@ -1,5 +1,6 @@
 from selenium import webdriver
 
+
 BEHAVE_DEBUG_ON_ERROR = True
 
 
@@ -38,5 +39,7 @@ def before_scenario(context, scenario):
 def after_scenario(context, scenario):
 
     context.browser.quit()
+
+
 
 

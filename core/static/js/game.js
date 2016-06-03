@@ -164,7 +164,7 @@ function shake() {
     for (var index = 0; index < maxRound; index++) {
         var card = $('#colleague' + index);
         card.jrumble({speed: 75, x: .5, y: .5, rotation: 0});
-        card.hover(function () {
+        card.hover (function () {
                 $(this).trigger('startRumble');
             },
             function () {
