@@ -23,8 +23,8 @@ One difficult part of joining a new company is putting names to faces. Utilizing
 
 ### 2. Development Environment Setup
 * Clone this repo
-* Copy `face_it/settings/local.py.example` to `face_it/settings/local.py`
-* Add your keys (created in step 1) to `face_it/settings/local.py`
+* Copy `face_off/settings/local.py.example` to `face_off/settings/local.py`
+* Add your keys (created in step 1) to `face_off/settings/local.py`
 * Install [Vagrant](https://www.vagrantup.com/) and [Virtualbox](https://www.virtualbox.org/)
 * Initialize the vagrant box - `vagrant up`
 * Log into the server - `vagrant ssh`
@@ -65,7 +65,7 @@ One difficult part of joining a new company is putting names to faces. Utilizing
 |SOCIAL_AUTH_YAMMER_KEY|xxxxxxx|
 |SOCIAL_AUTH_YAMMER_SECRET|xxxxxxx|
 |NPM_CONFIG_PRODUCTION|true|
-|DJANGO_SETTINGS_MODULE|face-off.settings.production|
+|DJANGO_SETTINGS_MODULE|face_off.settings.production|
 |REDISTOGO_URL|redis://redistogo:xxxx@test.redistogo.com:10355/|
 |AWS_ACCESS_KEY_ID|xxxx|
 |AWS_SECRET_ACCESS_KEY|xxxx|

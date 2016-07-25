@@ -11,6 +11,8 @@ try:
 except ImportError:
     pass
 
+ADMINS = ADMINS + (
+)
 
 ALLOWED_HOSTS = ['*']
 

@@ -1,6 +1,6 @@
 from __future__ import division
-from core.models import UserMetrics, ColleagueGraph, UserProfile
-from django.db.models import *
+from core.models import ColleagueGraph, UserProfile
+from django.db.models import Sum
 
 
 names = list(ColleagueGraph.objects.order_by('name')

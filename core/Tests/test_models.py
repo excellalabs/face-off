@@ -4,9 +4,8 @@ from core.models import Suggestions, UserMetrics
 
 class FormTests(TestCase):
 
-    def create_suggestion(self, first_name="Sean", last_name="Lewis", email="sean.lewis@excella.com", suggestion="Hello World"):
-        return Suggestions.objects.create(first_name=first_name, last_name=last_name, email=email, suggestion=suggestion
-                                          )
+    def create_suggestion(first_name="John", last_name="Doe", email="john.doe@example.com", suggestion="Hello World"):
+        return Suggestions.objects.create(first_name=first_name, last_name=last_name, email=email, suggestion=suggestion)
 
     def test_suggestion_creation(self):
         suggestion = self.create_suggestion()

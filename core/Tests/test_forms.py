@@ -6,9 +6,9 @@ class FormTests(TestCase):
     #Test all SuggestionForm data
     def test_all_suggestion_fields(self):
         form = SuggestionForm({
-            'first_name': 'Sean',
-            'last_name': 'Lewis',
-            'email': 'sean.lewis@excella.com',
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'email': 'john.doe@example.com',
             'suggestion': 'Hello world',
         })
 
@@ -17,8 +17,8 @@ class FormTests(TestCase):
     #Test first_name is required
     def test_suggestion_first_name_required(self):
         form = SuggestionForm({
-            'last_name': 'Lewis',
-            'email': 'sean.lewis@excella.com',
+            'last_name': 'Doe',
+            'email': 'john.doe@example.com',
             'suggestion': 'Hello world',
         })
 
@@ -27,8 +27,8 @@ class FormTests(TestCase):
     #Test last_name is required
     def test_suggestion_last_name_required(self):
         form = SuggestionForm({
-            'first_name': 'Sean',
-            'email': 'sean.lewis@excella.com',
+            'first_name': 'John',
+            'email': 'john.doe@example.com',
             'suggestion': 'Hello world',
         })
 
@@ -37,8 +37,8 @@ class FormTests(TestCase):
     #Test email is required
     def test_suggestion_email_required(self):
         form = SuggestionForm({
-            'first_name': 'Sean',
-            'last_name': 'Lewis',
+            'first_name': 'John',
+            'last_name': 'Doe',
             'suggestion': 'Hello world',
         })
 
@@ -47,9 +47,9 @@ class FormTests(TestCase):
     #Test suggestion is required
     def test_suggestion_suggestion_required(self):
         form = SuggestionForm({
-            'first_name': 'Sean',
-            'last_name': 'Lewis',
-            'email': 'sean.lewis@excella.com',
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'email': 'john.doe@example.com',
 
         })
 

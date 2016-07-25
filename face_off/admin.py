@@ -5,6 +5,7 @@ from core.models import UserMetrics, UserProfile, GlobalMetrics, MostKnown, Sugg
 
 
 class ColleagueGraphResource(resources.ModelResource):
+
     class Meta:
         model = ColleagueGraph
 
@@ -16,20 +17,26 @@ class UserMetricsResource(resources.ModelResource):
 
 
 class GlobalMetricsResource(resources.ModelResource):
+
     class Meta:
         model = GlobalMetrics
 
 
 class MostKnownResource(resources.ModelResource):
+
     class Meta:
         model = MostKnown
 
+
 class SuggestionsResource(resources.ModelResource):
+
     class Meta:
         model = Suggestions
 
+
 class ColleagueGraphAdmin(ImportExportActionModelAdmin):
     resource_class = ColleagueGraphResource
+
 
 class UserMetricsAdmin(ImportExportActionModelAdmin):
     resource_class = UserMetricsResource
@@ -42,14 +49,16 @@ class GlobalMetricsAdmin(ImportExportActionModelAdmin):
 class MostKnownAdmin(ImportExportActionModelAdmin):
     resource_class = MostKnown
 
+
 class SuggestionsAdmin(ImportExportActionModelAdmin):
     resource_class = SuggestionsResource
+
 
 class UserProfileAdmin(admin.ModelAdmin):
     fields = []
 
 
-admin.site.register(UserProfile),
+admin.site.register(UserProfile)
 admin.site.register(GlobalMetrics, GlobalMetricsAdmin)
 admin.site.register(MostKnown, MostKnownAdmin)
 admin.site.register(UserMetrics, UserMetricsAdmin)
