@@ -1,4 +1,7 @@
-Face-Off ![Build Status](https://travis-ci.org/excellalabs/face-off.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/excellaco/face_it/badge.svg)](https://coveralls.io/r/excellaco/face_it)
+# Face-Off
+
+[![Build Status](https://travis-ci.org/excellalabs/face-off.svg?branch=master)](https://travis-ci.org/excellalabs/face-off)
+[![Coverage Status](https://coveralls.io/repos/github/excellalabs/face-off/badge.svg?branch=master)](https://coveralls.io/github/excellalabs/face-off?branch=master)
 
 =======================
 
