@@ -11,7 +11,7 @@ One difficult part of joining a new company is putting names to faces. Utilizing
 * [Register An App With Yammer](https://developer.yammer.com/v1.0/docs/app-registration)
 * **Note** the Redirect URI & Javascript Origins field
     * Dev:
-        * Redirect URI - `http://localhost:8111/auth/yammer/callback`
+        * Redirect URI - `http://localhost:8111/complete/yammer/`
         * Javascript Origins - `http://localhost:8111`
     * Production:
         * replace dev fields with respective hostname 
