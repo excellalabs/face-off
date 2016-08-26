@@ -91,7 +91,7 @@ def next_round(request):
     update_results_list(card_matrix, answer_id, round_num, correct)
 
     # Prepares data for next round
-    round += 1
+    round_num += 1
     answer = filter_previously_used_answer(card_matrix, round_num)
 
 
