@@ -9,8 +9,8 @@ after_success: coveralls
 deploy:
   provider: heroku
   api_key:
-   secure: "MCOnZy0l2idbcSEmaAZdU36F56leMfWI34s6Kg53zte6pN6rlTEw2G25gh4gdS4cPiUKsmcB9ykwB/J/X8ckWE1WeoSlYBkaOx8mnzd2tFoeU1NBZWNgoayUVKwR8FbRp/7P+LEn1h7JdXvw2edp9aKSuoi9ol4vvPK0eYDxvYg="
+    secure: PqeiMLIzmymRN1Mi39H+nxA1plORwmhL6zm2xGD1XA5ULqmGevrfQmmGSYwpZPzVri/5qacCZGn4u3yM04d3H0NWoVGuNJEkPlZfQA6UCNx2SNUvn3PXaKIioKX+6iyqoaGYYl5BAC1p2atk0RV0/O6j+/vr2/LiMkN8yW6u0PI=
   app: face-off-staging
   on:
     repo: excellalabs/face-off
-  run: "python manage.py migrate"
+  run: python manage.py migrate
